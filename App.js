@@ -12,6 +12,7 @@ const HomeScreen = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <Button title="Go to Dashboard" onPress={() => navigation.navigate('Dashboard')} />
+    <Dashboard></Dashboard>
     </View>
   );
 };
