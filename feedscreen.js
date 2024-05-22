@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, Button, StyleSheet } from 'react-native';
+import { View, Text, Button, StyleSheet, ScrollView, Image } from 'react-native';
 
 const FeedScreen = ({ navigation }) => {
   const [posts, setPosts] = useState([]);
@@ -26,26 +26,31 @@ const FeedScreen = ({ navigation }) => {
   }, []);
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.header}>Your Personalized Feed</Text>
-      {posts.map((post) => (
-        <View key={post.id} style={styles.post}>
-          <Text style={styles.postTitle}>{post.name}</Text>
-          <Text style={styles.postContent}>{post.description}</Text>
-          <Button
-  title="Read More"
-  onPress={() => navigation.navigate('FeedDetail', { post })}
-  style={styles.readMoreButton}
-/>
-
-        </View>
-      ))}
-      <Button title="Load More" onPress={() => {}} style={styles.loadMoreButton} />
-    </View>
+    <ScrollView contentContainerStyle={styles.scrollView}>
+      <View style={styles.container}>
+        <Text style={styles.header}>Your Personalized Feed</Text>
+        {posts.map((post) => (
+          <View key={post.id} style={styles.post}>
+            <Text style={styles.postTitle}>{post.name}</Text>
+            <Image source={{ uri: post.img }} style={styles.image} />
+            <Text style={styles.postContent}>{post.description}</Text>
+            <Button
+              title="Read More"
+              onPress={() => navigation.navigate('FeedDetail', { post })}
+              style={styles.readMoreButton}
+            />
+          </View>
+        ))}
+        <Button title="Load More" onPress={() => {}} style={styles.loadMoreButton} />
+      </View>
+    </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
+  scrollView: {
+    flexGrow: 1,
+  },
   container: {
     flex: 1,
     padding: 20,
@@ -70,6 +75,11 @@ const styles = StyleSheet.create({
   },
   postContent: {
     fontSize: 16,
+    marginBottom: 10,
+  },
+  image: {
+    width: '100%',
+    height: 200,
     marginBottom: 10,
   },
   readMoreButton: {
