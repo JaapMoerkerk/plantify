@@ -6,7 +6,7 @@ import { View, Text, Button, StyleSheet } from 'react-native';
 const Dashboard = ({ navigation }) => {
   return (
     <View style={styles.container}>
-      <Text>This is your dashboard!</Text>
+      <Text>This is your Dashboard!</Text>
       <Button title="Go Back" onPress={() => navigation.goBack()} />
     </View>
   );
