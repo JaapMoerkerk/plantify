@@ -1,13 +1,13 @@
-// FeedDetail.js
-
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 
-const FeedDetail = () => {
+const FeedDetail = ({ route }) => {
+  const { post } = route.params;
+
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Feed Detail</Text>
-      <Text style={styles.content}>Detail content goes here...</Text>
+      <Text style={styles.title}>{post.name}</Text>
+      <Text style={styles.content}>{post.description}</Text>
     </View>
   );
 };

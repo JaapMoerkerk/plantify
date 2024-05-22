@@ -33,10 +33,11 @@ const FeedScreen = ({ navigation }) => {
           <Text style={styles.postTitle}>{post.name}</Text>
           <Text style={styles.postContent}>{post.description}</Text>
           <Button
-            title="Read More"
-            onPress={() => navigation.navigate('FeedDetail', { postId: post.id })}
-            style={styles.readMoreButton}
-          />
+  title="Read More"
+  onPress={() => navigation.navigate('FeedDetail', { post })}
+  style={styles.readMoreButton}
+/>
+
         </View>
       ))}
       <Button title="Load More" onPress={() => {}} style={styles.loadMoreButton} />
