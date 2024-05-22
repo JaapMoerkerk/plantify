@@ -1,0 +1,14 @@
+{
+  "Stekjes": {
+    "1": {
+      "id": 1,
+      "name": "Lilac",
+      "description": "purple and beautiful"
+    },
+    "2": {
+      "id": 2,
+      "name": "Roos",
+      "description": "rood en vol vrolijkheid"
+    }
+  }
+}

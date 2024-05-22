@@ -1,22 +1,44 @@
-// FeedScreen.js
-
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, Button, StyleSheet } from 'react-native';
 
 const FeedScreen = ({ navigation }) => {
+  const [posts, setPosts] = useState([]);
+
+  // Fetch data from Firebase Realtime Database
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch('https://plantify-50b4e-default-rtdb.europe-west1.firebasedatabase.app/Stekjes.json');
+        const data = await response.json();
+        if (data) {
+          const postArray = Object.entries(data).map(([id, post]) => ({
+            id,
+            ...post
+          }));
+          setPosts(postArray);
+        }
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
   return (
     <View style={styles.container}>
       <Text style={styles.header}>Your Personalized Feed</Text>
-      <View style={styles.post}>
-        <Text style={styles.postTitle}>Post Title</Text>
-        <Text style={styles.postContent}>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed tempor, nunc nec viverra mollis, lectus neque feugiat est, sit amet lacinia dolor ligula ac libero.</Text>
-        <Button title="Read More" onPress={() => navigation.navigate('FeedDetail')} style={styles.readMoreButton} />
-      </View>
-      <View style={styles.post}>
-        <Text style={styles.postTitle}>Another Post Title</Text>
-        <Text style={styles.postContent}>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed tempor, nunc nec viverra mollis, lectus neque feugiat est, sit amet lacinia dolor ligula ac libero.</Text>
-        <Button title="Read More" onPress={() => navigation.navigate('FeedDetail')} style={styles.readMoreButton} />
-      </View>
+      {posts.map((post) => (
+        <View key={post.id} style={styles.post}>
+          <Text style={styles.postTitle}>{post.name}</Text>
+          <Text style={styles.postContent}>{post.description}</Text>
+          <Button
+            title="Read More"
+            onPress={() => navigation.navigate('FeedDetail', { postId: post.id })}
+            style={styles.readMoreButton}
+          />
+        </View>
+      ))}
       <Button title="Load More" onPress={() => {}} style={styles.loadMoreButton} />
     </View>
   );
