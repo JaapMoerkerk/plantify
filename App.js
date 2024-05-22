@@ -5,6 +5,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import Dashboard from './dashboard';
 import FeedScreen from './feedscreen';
 import FeedDetail from './feeddetail';
+import AddPlant from './addPlant';
 
 const Stack = createStackNavigator();
 
@@ -18,6 +19,7 @@ const HomeScreen = ({ navigation }) => {
           <Button title="Go to Dashboard" onPress={() => navigation.navigate('Dashboard')} />
           <View style={styles.space} />
           <Button title="Go to Feed" onPress={() => navigation.navigate('Feed')} />
+          <Button title="Add Plant" onPress={() => navigation.navigate('AddPlant')} />
         </View>
       </View>
     </View>
@@ -32,6 +34,7 @@ const App = () => {
         <Stack.Screen name="Dashboard" component={Dashboard} />
         <Stack.Screen name="Feed" component={FeedScreen} />
         <Stack.Screen name="FeedDetail" component={FeedDetail} />
+        <Stack.Screen name="AddPlant" component={AddPlant} />
       </Stack.Navigator>
     </NavigationContainer>
   );
