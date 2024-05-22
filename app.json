@@ -4,7 +4,7 @@
     "slug": "Plantify",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/iconplant.png",
+    "icon": "./assets/planticon.png",
     "userInterfaceStyle": "light",
     "splash": {
       "image": "./assets/plantje.png",
