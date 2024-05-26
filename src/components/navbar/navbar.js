@@ -14,10 +14,10 @@ const Navbar = () => {
 
       <View style={styles.nav}>
         <View style={styles.navItem}>
-          <Image source={require('./img/navbar/star.png')} style={styles.navbarImg} />
+          <Image source={require('.../navbar-img/star.png')} style={styles.navbarImg} />
         </View>
         <View style={styles.navItem}>
-          <Image source={require('./img/navbar/gear.png')} style={styles.navbarImg} />
+          <Image source={require('.../navbar-img/gear.png')} style={styles.navbarImg} />
         </View>
       </View>
 

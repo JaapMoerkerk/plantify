@@ -2,7 +2,7 @@
 
 var React = require('react-native');
 
-var contactStyles = React.StyleSheet.create({
+var containerStyles = React.StyleSheet.create({
      container: {
        flex: 1,
        backgroundColor: '#e07a5f',

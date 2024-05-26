@@ -2,7 +2,7 @@
 
 var React = require('react-native');
 
-var contactStyles = React.StyleSheet.create({
+var contactBoxStyles = React.StyleSheet.create({
 
      main: {
        flexDirection: 'column',
