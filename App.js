@@ -5,6 +5,8 @@ import { StyleSheet, View, Button } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import Dashboard from './dashboard';
+import Dashboard from './src/screens/contact/contact';
+
 
 const Stack = createStackNavigator();
 
@@ -13,6 +15,9 @@ const HomeScreen = ({ navigation }) => {
     <View style={styles.container}>
       <Button title="Go to Dashboard" onPress={() => navigation.navigate('Dashboard')} />
     </View>
+        <View style={styles.container}>
+          <Button title="Go to contact" onPress={() => navigation.navigate('Contact')} />
+        </View>
   );
 };
 
@@ -22,6 +27,8 @@ const App = () => {
       <Stack.Navigator initialRouteName="Home">
         <Stack.Screen name="Home" component={HomeScreen} />
         <Stack.Screen name="Dashboard" component={Dashboard} />
+                <Stack.Screen name="Contact" component={Contact} />
+
       </Stack.Navigator>
     </NavigationContainer>
   );
