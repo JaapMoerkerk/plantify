@@ -1,16 +1,8 @@
-'use strict';
+// 'use strict';
+import { StyleSheet } from 'react-native';
 
-var React = require('react-native');
 
-var containerStyles = React.StyleSheet.create({
-     container: {
-       flex: 1,
-       backgroundColor: '#e07a5f',
-       fontFamily: 'Arial',
-       margin: 0,
-       padding: 0,
-     },
-
+const footerStyles = StyleSheet.create({
      footer: {
        position: 'fixed',
        bottom: 0,
@@ -67,7 +59,6 @@ var containerStyles = React.StyleSheet.create({
      }
    });
 
-   export default App;
-)}
 
-module.exports = footerStyles;
+
+export default footerStyles;

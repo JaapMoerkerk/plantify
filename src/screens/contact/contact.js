@@ -1,32 +1,22 @@
 import React from 'react';
-import "contact.sass";
-import React from 'react';
 import { View, Text, Image, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
-import Container from '../components/container';
-import Navbar from '../components/navbar';
-import Footer from '../components/footer';
-import ContactBox from '.../contact-box/contact-box';
 
-var styles = require(.../contact-styles');
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
 
-const App = () => {
+import Container from '../../components/container/container.js';
+import Navbar from '../../components/navbar/navbar.js';
+import Footer from '../../components/footer/footer.js';
+import ContactBox from '../../components/contact-box/contact-box.js';
+
+let styles = require('./contact-styles');
+
+const Contact = ({ navigation }) => {
   return (
-    <NavigationContainer>
-      <Stack.Navigator initialRouteName="Contact">
-
-        <Container>
-            <Navbar />
-
-      <ScrollView contentContainerStyle={styles.main}>
-        <ContactBox />
-      </ScrollView>
-
-            <Footer />
-
-    </Container>
-
-          </Stack.Navigator>
-        </NavigationContainer>
-  );
+      <Container>
+          <Navbar/>
+          <ContactBox/>
+      </Container>
+  )
 };
-export default App;
+export default Contact;

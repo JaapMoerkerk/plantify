@@ -1,12 +1,11 @@
 'use strict';
 
-var React = require('react-native');
+import { StyleSheet } from 'react-native';
 
-var navbarStyles = React.StyleSheet.create({
+const navbarStyles = StyleSheet.create({
      container: {
        flex: 1,
        backgroundColor: '#e07a5f',
-       fontFamily: 'Arial',
        margin: 0,
        padding: 0,
      },
@@ -29,7 +28,4 @@ var navbarStyles = React.StyleSheet.create({
      }
         });
 
-   export default App;
-)}
-
-module.exports = navbarStyles;
+export default navbarStyles;

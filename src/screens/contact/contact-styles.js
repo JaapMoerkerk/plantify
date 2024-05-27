@@ -1,20 +1,13 @@
-'use strict';
+import { StyleSheet } from 'react-native';
 
-var React = require('react-native');
-
-var contactStyles = React.StyleSheet.create({
-
+const contactStyles = StyleSheet.create({
      main: {
        flexDirection: 'column',
        alignItems: 'center',
        width: '100vw',
        margin: 0,
        padding: 0,
-     },
-
+     }
    });
 
-   export default App;
-)}
-
-module.exports = contactStyles;
+export default contactStyles;

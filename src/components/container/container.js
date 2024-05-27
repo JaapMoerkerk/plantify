@@ -1,7 +1,6 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
-
-var styles = require(.../container-styles');
+import styles from './container-styles'
 
 
 const Container = ({ children }) => {

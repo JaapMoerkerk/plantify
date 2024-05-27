@@ -1,33 +1,31 @@
-'use strict';
+// 'use strict';
+// import React from 'react';
+import { StyleSheet } from 'react-native';
 
-var React = require('react-native');
-
-var contactBoxStyles = React.StyleSheet.create({
+const contactBoxStyles = StyleSheet.create({
 
      main: {
        flexDirection: 'column',
        alignItems: 'center',
-       width: '100vw',
+       width: 100,
        margin: 0,
        padding: 0,
      },
      contactContainer: {
-       width: '100%',
+       width: 100,
        alignItems: 'center',
      },
       header: {
         color: 'white',
         textAlign: 'center',
-        fontSize: '2.5em',
+        fontSize: 2.5,
       },
      contactBox: {
-       width: '70vw',
+       width: 70,
        backgroundColor: 'white',
        borderRadius: 10,
        padding: 20,
-       margin: '50px auto',
-       maxHeight: 'calc(100vh - 300px)',
-       overflow: 'auto',
+       margin: 50,
        display: 'flex',
        flexDirection: 'column',
      },
@@ -45,7 +43,7 @@ var contactBoxStyles = React.StyleSheet.create({
      },
      contactAddress: {
        color: '#f0c6ba',
-       fontSize: '0.7em',
+       fontSize: 0.7,
      },
      contactOption: {
        backgroundColor: '#f0c6ba',
@@ -58,23 +56,22 @@ var contactBoxStyles = React.StyleSheet.create({
      contactCircle: {
        borderRadius: 50,
        backgroundColor: 'white',
-       height: '16vw',
-       width: '16vw',
+       height: 16,
+       width: 16,
        justifyContent: 'center',
        alignItems: 'center',
-       margin: '2vw',
+       margin: 2,
      },
      contactLogo: {
-       height: '10vw',
-       width: '10vw',
+       height: 10,
+       width: 10,
      },
      contactInfo: {
-       fontSize: '0.9em',
+       fontSize: 0.9,
      },
 
    });
 
-   export default App;
-)}
 
-module.exports = contactBoxStyles;
+
+export default contactBoxStyles;

@@ -1,43 +1,38 @@
 import React from 'react';
-import "contact.sass";
-import React from 'react';
 import { View, Text, Image, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
+import styles from './footer-styles';
 
-var styles = require(.../footer-styles');
-
-const App = () => {
+const Footer = () => {
   return (
-    <NavigationContainer>
-      <Stack.Navigator initialRouteName="Contact">
-
-    <View style={styles.container}>
-
       <View style={styles.footer}>
+
         <View style={styles.buttonsContainer}>
           <TouchableOpacity style={styles.footerButton}>
             <Text style={styles.footerButtonText}>terug naar post</Text>
           </TouchableOpacity>
         </View>
+
         <View style={styles.footerItems}>
+
           <View style={[styles.footerItem, styles.home]}>
-            <Image source={require('./img/footer/home.png')} style={styles.footerImg} />
+            <Image source={require('./footer-img/home.png')} style={styles.footerImg} />
           </View>
+
           <View style={[styles.footerItem, styles.trade]}>
-            <Image source={require('./img/footer/plant.png')} style={styles.footerImg} />
+            <Image source={require('./footer-img/plant.png')} style={styles.footerImg} />
           </View>
+
           <View style={[styles.footerItem, styles.find]}>
-            <Image source={require('./img/footer/creativity.png')} style={styles.footerImg} />
+            <Image source={require('./footer-img/creativity.png')} style={styles.footerImg} />
           </View>
+
           <View style={[styles.footerItem, styles.collection]}>
-            <Image source={require('./img/footer/greenhouse.png')} style={styles.footerImg} />
+            <Image source={require('./footer-img/greenhouse.png')} style={styles.footerImg} />
           </View>
+
         </View>
+
       </View>
-
-    </View>
-
-          </Stack.Navigator>
-        </NavigationContainer>
   );
 };
-export default App;
+export default Footer;
