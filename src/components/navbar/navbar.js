@@ -4,7 +4,6 @@ import styles from './navbar-styles'
 
 const Navbar = () => {
   return (
-    <View style={styles.container}>
       <View style={styles.nav}>
         <View style={styles.navItem}>
           <Image source={require('./navbar-img/star.png')} style={styles.navbarImg} />
@@ -13,7 +12,7 @@ const Navbar = () => {
           <Image source={require('./navbar-img/gear.png')} style={styles.navbarImg} />
         </View>
       </View>
-    </View>
+
   );
 };
 export default Navbar;

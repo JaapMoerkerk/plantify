@@ -4,7 +4,7 @@ const contactStyles = StyleSheet.create({
      main: {
        flexDirection: 'column',
        alignItems: 'center',
-       width: '100vw',
+       width: '100%',
        margin: 0,
        padding: 0,
      }

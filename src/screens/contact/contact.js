@@ -8,14 +8,14 @@ import Container from '../../components/container/container.js';
 import Navbar from '../../components/navbar/navbar.js';
 import Footer from '../../components/footer/footer.js';
 import ContactBox from '../../components/contact-box/contact-box.js';
-
-let styles = require('./contact-styles');
+import styles from './contact-styles';
 
 const Contact = ({ navigation }) => {
   return (
       <Container>
           <Navbar/>
           <ContactBox/>
+          <Footer/>
       </Container>
   )
 };

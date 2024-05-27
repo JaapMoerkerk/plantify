@@ -4,23 +4,17 @@ import { StyleSheet } from 'react-native';
 
 const footerStyles = StyleSheet.create({
      footer: {
-       position: 'fixed',
-       bottom: 0,
-       width: '100%',
-       flexDirection: 'column',
+         bottom: 0,
+         flex: 3
      },
      buttonsContainer: {
        width: '100%',
-       padding: '3vw',
+       padding: '3%',
      },
      footerButton: {
        borderRadius: 10,
-       height: '8vw',
-       justifyContent: 'center',
-       alignItems: 'center',
+       height: '8%',
        borderColor: 'white',
-       marginRight: 'auto',
-       paddingHorizontal: '2vw',
      },
      footerButtonText: {
        color: '#143635',
@@ -29,17 +23,17 @@ const footerStyles = StyleSheet.create({
        width: '100%',
        justifyContent: 'center',
        backgroundColor: 'white',
-       height: '22vw',
+       height: 80,
        flexDirection: 'row',
      },
      footerItem: {
        backgroundColor: 'gray',
-       height: '16vw',
-       width: '16vw',
-       borderRadius: 10,
+       height: 60,
+       width: 60,
+       borderRadius: 30,
        justifyContent: 'center',
        alignItems: 'center',
-       margin: '3vw',
+       margin: '3%',
      },
      home: {
        backgroundColor: '#f0c6ba',
@@ -54,8 +48,8 @@ const footerStyles = StyleSheet.create({
        backgroundColor: '#ffe5e5',
      },
      footerImg: {
-       height: '10vw',
-       width: '10vw',
+       height: '70%',
+       width: '70%',
      }
    });
 
