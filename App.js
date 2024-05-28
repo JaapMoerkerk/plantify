@@ -5,7 +5,7 @@ import { StyleSheet, View, Button } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import Dashboard from './dashboard';
-import Contact   from './src/screens/contact/contact';
+import Contact   from './src/screens/ruilScreens/ruilContact/contact';
 
 
 const Stack = createStackNavigator();
