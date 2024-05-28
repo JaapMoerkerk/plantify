@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, Image } from 'react-native';
 
 const FeedDetail = ({ route }) => {
   const { post } = route.params;
@@ -7,6 +7,7 @@ const FeedDetail = ({ route }) => {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>{post.name}</Text>
+      <Image source={{ uri: post.img }} style={styles.image} />
       <Text style={styles.content}>{post.description}</Text>
     </View>
   );
@@ -25,6 +26,11 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginBottom: 20,
     textAlign: 'center',
+  },
+  image: {
+    width: '100%',
+    height: 200,
+    marginBottom: 10,
   },
   content: {
     fontSize: 18,
