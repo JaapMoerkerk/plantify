@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, Image, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
-import styles from './contact-box-styles'
+import styles from './contactBoxStyles'
 
 const ContactBox = () => {
   return (

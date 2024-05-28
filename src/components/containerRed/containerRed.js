@@ -1,13 +1,13 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
-import styles from './container-styles'
+import styles from './containerRedStyles'
 
 
-const Container = ({ children }) => {
+const ContainerRed = ({ children }) => {
     return (
         <View style={styles.container}>
             {children}
         </View>
     );
 };
-export default Container;
+export default ContainerRed;

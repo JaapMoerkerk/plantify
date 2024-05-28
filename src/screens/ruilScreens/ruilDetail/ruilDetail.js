@@ -1,5 +1,5 @@
 import React from 'react';
-import Container from '../../../components/container/container.js';
+import Container from '../../../components/containerRed/containerRed.js';
 import Navbar from '../../../components/navbar/navbar.js';
 import ButtonBox from '../../../components/button-box/button-box.js';
 import Footer from '../../../components/footer/footer.js';
