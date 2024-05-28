@@ -3,12 +3,10 @@ import { StyleSheet } from 'react-native';
 
 
 const footerStyles = StyleSheet.create({
-     footer: {
-         bottom: 0,
-         flex: 3
-     },
+
      buttonsContainer: {
-       width: '100%',
+         flex: 4,
+         width: '100%',
        padding: '3%',
      },
      footerButton: {

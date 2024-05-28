@@ -4,14 +4,6 @@ import styles from './footer-styles';
 
 const Footer = () => {
   return (
-      <View style={styles.footer}>
-
-        <View style={styles.buttonsContainer}>
-          <Pressable style={styles.footerButton}>
-            <Text style={styles.footerButtonText}>terug naar post</Text>
-          </Pressable>
-        </View>
-
         <View style={styles.footerItems}>
 
           <Pressable style={[styles.footerItem, styles.home]}>
@@ -31,8 +23,6 @@ const Footer = () => {
           </Pressable>
 
         </View>
-
-      </View>
   );
 };
 export default Footer;

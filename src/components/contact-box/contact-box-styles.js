@@ -19,6 +19,7 @@ const contactBoxStyles = StyleSheet.create({
         color: 'white',
         textAlign: 'center',
         fontSize: 30,
+          fontWeight: 'bold',
       },
      contactBox: {
        width: '85%',
@@ -28,6 +29,8 @@ const contactBoxStyles = StyleSheet.create({
        margin: '5%',
        display: 'flex',
        flexDirection: 'column',
+         elevation: 3,
+
      },
      userInfo: {
        borderRadius: 10,
