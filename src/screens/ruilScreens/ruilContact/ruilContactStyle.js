@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native';
 
-const contactStyles = StyleSheet.create({
+const ruilContactStyle = StyleSheet.create({
      main: {
        flexDirection: 'column',
        alignItems: 'center',
@@ -10,4 +10,4 @@ const contactStyles = StyleSheet.create({
      }
    });
 
-export default contactStyles;
+export default ruilContactStyle;

@@ -1,17 +1,13 @@
 import React from 'react';
-import { View, Text, Image, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
-
-import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
 
 import Container from '../../../components/container/container.js';
 import Navbar from '../../../components/navbar/navbar.js';
-import ContactBox from '../../../components/contact-box/contact-box.js';
+import ContactBox from './contactBox/contactBox.js';
 import ButtonBox from '../../../components/button-box/button-box.js';
 import Footer from '../../../components/footer/footer.js';
-import styles from './contact-styles';
+import styles from './ruilContactStyle';
 
-const Contact = ({ navigation }) => {
+const RuilContact = ({ navigation }) => {
   return (
       <Container>
           <Navbar/>
@@ -21,4 +17,4 @@ const Contact = ({ navigation }) => {
       </Container>
   )
 };
-export default Contact;
+export default RuilContact;

@@ -5,7 +5,7 @@ import { StyleSheet, View, Button } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import Dashboard from './dashboard';
-import Contact   from './src/screens/ruilScreens/ruilContact/contact';
+import RuilContact   from './src/screens/ruilScreens/ruilContact/ruilContact';
 
 
 const Stack = createStackNavigator();
@@ -26,7 +26,7 @@ const App = () => {
       <Stack.Navigator screenOptions={{animationEnabled:false}} initialRouteName="Home">
         <Stack.Screen name="Home" component={HomeScreen} />
         <Stack.Screen name="Dashboard" component={Dashboard} />
-        <Stack.Screen name="Contact" component={Contact} />
+        <Stack.Screen name="Contact" component={RuilContact} />
 
       </Stack.Navigator>
     </NavigationContainer>
