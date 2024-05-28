@@ -2,16 +2,21 @@ import React from 'react';
 import { View, Text, Button, StyleSheet } from 'react-native';
 
 const Dashboard = ({ navigation }) => {
+
   return (
-    <View style={styles.container}>
-      <Text>This is your dashboard!</Text>
+    <View style={styles.containerMain}>
+
       <Button title="Go Back" onPress={() => navigation.goBack()} />
+
+      <View>
+
+      </View>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
+  containerMain: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
