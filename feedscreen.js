@@ -38,12 +38,19 @@ const FeedScreen = ({ navigation, route }) => {
         const { userId } = route.params;
 
         try {
-          // console.log(get(query(ref(db, "/Stekjes"), orderByChild("userId"), equalTo(1))))
-          console.log(await get(query(ref(db, "/Stekjes"), orderByChild("userId"), equalTo(1))))
-          
-          // ref(db, "/Stekjes").isEqual(1).on("userId", function (snapshot) {
-          //   console.log(snapshot.key);
-          // });
+          let data = await get(
+            query(ref(db, "/Stekjes"), orderByChild("userId"), equalTo(1))
+          );
+
+          if (data) {
+            const postArray = Object.entries(data).map(([id, post]) => ({
+              id,
+              ...post,
+            }));
+
+            console.log([...postArray.entries()]);
+            setPosts(postArray);
+          }
         } catch (error) {
           console.error("Error fetching data:", error);
         }
