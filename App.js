@@ -9,6 +9,11 @@ import AddPlant from './addPlant';
 
 const Stack = createStackNavigator();
 
+// const auth = getAuth();
+
+// const userId = auth.currentUser.uid;
+const userId = 1;
+
 const HomeScreen = ({ navigation }) => {
   return (
     <View style={styles.container}>
@@ -20,6 +25,7 @@ const HomeScreen = ({ navigation }) => {
           <View style={styles.space} />
           <Button title="Go to Feed" onPress={() => navigation.navigate('Feed')} />
           <Button title="Add Plant" onPress={() => navigation.navigate('AddPlant')} />
+          <Button title="Ruilplanten" onPress={() => navigation.navigate('Feed', { userId })} />
         </View>
       </View>
     </View>
@@ -35,6 +41,7 @@ const App = () => {
         <Stack.Screen name="Feed" component={FeedScreen} />
         <Stack.Screen name="FeedDetail" component={FeedDetail} />
         <Stack.Screen name="AddPlant" component={AddPlant} />
+        <Stack.Screen name="Ruilplanten" component={FeedScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );
