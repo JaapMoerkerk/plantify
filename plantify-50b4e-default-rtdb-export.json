@@ -3,12 +3,54 @@
     "1": {
       "id": 1,
       "name": "Lilac",
-      "description": "purple and beautiful"
+      "description": "purple and beautiful",
+      "img": "https://www.marthastewart.com/thmb/pNHFsp2dFxUH5KBkO9zlDpBQy-0=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/grow-care-for-lilac-varieties-common-lilac-getty-0623-c5dbb272ad06401ca36910b6a154d12d.jpg"
     },
     "2": {
       "id": 2,
       "name": "Roos",
-      "description": "rood en vol vrolijkheid"
+      "description": "rood en vol vrolijkheid",
+      "img": "https://www.marthastewart.com/thmb/pNHFsp2dFxUH5KBkO9zlDpBQy-0=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/grow-care-for-lilac-varieties-common-lilac-getty-0623-c5dbb272ad06401ca36910b6a154d12d.jpg"
+    }
+  },
+  "Tags": {
+    "1": {
+      "id": 1,
+      "name": "flower"
+    },
+    "2": {
+      "id": 2,
+      "name": "fragrant"
+    },
+    "3": {
+      "id": 3,
+      "name": "red"
+    },
+    "4": {
+      "id": 4,
+      "name": "purple"
+    }
+  },
+  "StekjesTags": {
+    "1": {
+      "plantId": 1,
+      "tagId": 1
+    },
+    "2": {
+      "plantId": 1,
+      "tagId": 4
+    },
+    "3": {
+      "plantId": 2,
+      "tagId": 1
+    },
+    "4": {
+      "plantId": 2,
+      "tagId": 2
+    },
+    "5": {
+      "plantId": 2,
+      "tagId": 3
     }
   }
 }
