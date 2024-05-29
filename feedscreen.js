@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, Button, StyleSheet } from "react-native";
+import { View, Text, Button, StyleSheet, ScrollView, TouchableOpacity, Image } from 'react-native';
 import { initializeApp } from "firebase/app";
 import { getDatabase, orderByChild, isEqual, equalTo } from "firebase/database";
 import {
@@ -24,8 +24,7 @@ const firebaseConfig = {
   databaseURL:
     "https://plantify-50b4e-default-rtdb.europe-west1.firebasedatabase.app/",
 };
-import React, { useState, useEffect } from 'react';
-import { View, Text, Button, StyleSheet, ScrollView, TouchableOpacity, Image } from 'react-native';
+
 
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
@@ -39,29 +38,29 @@ const FeedScreen = ({ navigation, route }) => {
   // Fetch data from Firebase Realtime Database
   useEffect(() => {
     const fetchData = async () => {
-      try {
-        const responsePosts = await fetch('https://plantify-50b4e-default-rtdb.europe-west1.firebasedatabase.app/Stekjes.json');
-        const dataPosts = await responsePosts.json();
-        if (dataPosts) {
-          const postArray = Object.entries(dataPosts).map(([id, post]) => ({
-            id,
-            ...post
-          }));
-          setPosts(postArray);
-          setAllPosts(postArray);  // Save all posts initially
-        }
+      // try {
+      //   const responsePosts = await fetch('https://plantify-50b4e-default-rtdb.europe-west1.firebasedatabase.app/Stekjes.json');
+      //   const dataPosts = await responsePosts.json();
+      //   if (dataPosts) {
+      //     const postArray = Object.entries(dataPosts).map(([id, post]) => ({
+      //       id,
+      //       ...post
+      //     }));
+      //     setPosts(postArray);
+      //     setAllPosts(postArray);  // Save all posts initially
+      //   }
 
-        const responseTags = await fetch('https://plantify-50b4e-default-rtdb.europe-west1.firebasedatabase.app/Tags.json');
-        const dataTags = await responseTags.json();
-        if (dataTags) {
-          const tagArray = Object.entries(dataTags).map(([id, tag]) => ({
-            id,
-            ...tag
-          }));
-          setTags(tagArray);
-        }
-      } catch (error) {
-        console.error('Error fetching data:', error);
+      //   const responseTags = await fetch('https://plantify-50b4e-default-rtdb.europe-west1.firebasedatabase.app/Tags.json');
+      //   const dataTags = await responseTags.json();
+      //   if (dataTags) {
+      //     const tagArray = Object.entries(dataTags).map(([id, tag]) => ({
+      //       id,
+      //       ...tag
+      //     }));
+      //     setTags(tagArray);
+      //   }
+      // } catch (error) {
+      //   console.error('Error fetching data:', error);
       if (route.params) {
         const { userId } = route.params;
 
@@ -69,16 +68,25 @@ const FeedScreen = ({ navigation, route }) => {
           let data = await get(
             query(ref(db, "/Stekjes"), orderByChild("userId"), equalTo(1))
           );
+          console.log("obj:")
+          console.log(data)
+          let arr = Object.values(data);
+          console.log("array:")
+          console.log(arr)
 
-          if (data) {
-            const postArray = Object.entries(data).map(([id, post]) => ({
-              id,
-              ...post,
-            }));
+          // {"1": {"description": "purple and beautiful", "id": 1, "img": "https://www.marthastewart.com/thmb/pNHFsp2dFxUH5KBkO9zlDpBQy-0=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/grow-care-for-lilac-varieties-common-lilac-getty-0623-c5dbb272ad06401ca36910b6a154d12d.jpg", "name": "Lilac", "userId": 1}}
 
-            console.log([...postArray.entries()]);
-            setPosts(postArray);
-          }
+          //
+          // if (data) {
+          //   const postArray = Object.entries(data).map(([id, post]) => ({
+          //     id,
+          //     ...post,
+          //   }));
+
+          //   console.log([...postArray.entries()]);
+          //   setPosts(postArray);
+          // }
+          setPosts(arr);
         } catch (error) {
           console.error("Error fetching data:", error);
         }
@@ -103,28 +111,28 @@ const FeedScreen = ({ navigation, route }) => {
     fetchData();
   }, []);
 
-  const filterPostsByTag = async (tagId) => {
-    if (selectedTag === tagId) {
-      setSelectedTag(null);
-      setPosts(allPosts);
-      return;
-    }
-    setSelectedTag(tagId);
-    try {
-      const responsePlantTags = await fetch('https://plantify-50b4e-default-rtdb.europe-west1.firebasedatabase.app/StekjesTags.json');
-      const dataPlantTags = await responsePlantTags.json();
-      if (dataPlantTags) {
-        const plantTagArray = Object.entries(dataPlantTags)
-          .filter(([id, plantTag]) => plantTag && plantTag.tagId === tagId)
-          .map(([id, plantTag]) => plantTag.plantId);
+  // const filterPostsByTag = async (tagId) => {
+  //   if (selectedTag === tagId) {
+  //     setSelectedTag(null);
+  //     setPosts(allPosts);
+  //     return;
+  //   }
+  //   setSelectedTag(tagId);
+  //   try {
+  //     const responsePlantTags = await fetch('https://plantify-50b4e-default-rtdb.europe-west1.firebasedatabase.app/StekjesTags.json');
+  //     const dataPlantTags = await responsePlantTags.json();
+  //     if (dataPlantTags) {
+  //       const plantTagArray = Object.entries(dataPlantTags)
+  //         .filter(([id, plantTag]) => plantTag && plantTag.tagId === tagId)
+  //         .map(([id, plantTag]) => plantTag.plantId);
 
-        const filteredPosts = allPosts.filter((post) => plantTagArray.includes(post.id));
-        setPosts(filteredPosts);
-      }
-    } catch (error) {
-      console.error('Error filtering posts:', error);
-    }
-  };
+  //       const filteredPosts = allPosts.filter((post) => plantTagArray.includes(post.id));
+  //       setPosts(filteredPosts);
+  //     }
+  //   } catch (error) {
+  //     console.error('Error filtering posts:', error);
+  //   }
+  // };
 
   return (
     <ScrollView style={styles.container}>
@@ -152,26 +160,16 @@ const FeedScreen = ({ navigation, route }) => {
           {post.img && <Image source={{ uri: post.img }} style={styles.postImage} />}
           <Button
             title="Read More"
-            onPress={() => navigation.navigate("FeedDetail", { post })}
-            style={styles.readMoreButton}
-          />
-            title="Read More"
             onPress={() => navigation.navigate('FeedDetail', { post })}
             style={styles.readMoreButton}
           />
         </View>
       ))}
-      <Button
-        title="Load More"
-        onPress={() => {}}
-        style={styles.loadMoreButton}
-      />
-    </View>
 
       <Button title="Load More" onPress={() => {}} style={styles.loadMoreButton} />
     </ScrollView>
   );
-};
+}
 
 const styles = StyleSheet.create({
   container: {
