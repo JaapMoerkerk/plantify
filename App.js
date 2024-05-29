@@ -5,6 +5,9 @@ import { StyleSheet, View, Button, Text } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import Dashboard from './dashboard';
+import Test from './test';
+import Test1 from './test1';
+import Test2 from './test2';
 
 const Stack = createStackNavigator();
 
@@ -25,6 +28,9 @@ const App = () => {
       <Stack.Navigator initialRouteName="Home">
         <Stack.Screen name="Home" component={HomeScreen} />
         <Stack.Screen name="Dashboard" component={Dashboard} />
+        <Stack.Screen name="test" component={Test} />
+        <Stack.Screen name="test1" component={Test1} />
+        <Stack.Screen name="test2" component={Test2} />
       </Stack.Navigator>
     </NavigationContainer>
 

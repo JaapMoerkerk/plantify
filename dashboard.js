@@ -1,16 +1,29 @@
 import React from 'react';
-import { View, Text, Button, StyleSheet } from 'react-native';
+import { View, Text, Button, StyleSheet, Pressable } from 'react-native';
 
 const Dashboard = ({ navigation }) => {
 
   return (
     <View style={styles.containerMain}>
 
-      <Button title="Go Back" onPress={() => navigation.goBack()} />
+      <Pressable onPress={() => navigation.navigate('test')}>
+        <View style={styles.marketBox} >
+          <Text> Ruil kas </Text>
+        </View>
+      </Pressable>
 
-      <View>
+      <Pressable onPress={() => navigation.navigate('test1')}>
+        <View style={styles.plantfinderBox}>
+          <Text> Plant verkenner </Text>
+        </View>
+      </Pressable>
 
-      </View>
+      <Pressable onPress={() => navigation.navigate('test2')}>
+        <View style={styles.galleryBox}>
+          <Text> Mijn kas </Text>
+        </View>
+      </Pressable>
+
     </View>
   );
 };
@@ -21,6 +34,38 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+
+  marketBox: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: 300,
+    height: 100,
+    borderRadius: 20,
+    backgroundColor: '#e07a5f',
+    marginBottom: 10,
+  },
+  
+  plantfinderBox: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#9ed267',
+    width: 300,
+    height: 100,
+    borderRadius: 20,
+    marginBottom: 10,
+  },
+
+  galleryBox: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: 300,
+    height: 100,
+    borderRadius: 20,
+    backgroundColor: '#7cd3c3',
+  }
 });
 
 export default Dashboard;
