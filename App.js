@@ -7,6 +7,7 @@ import Register from './Register';
 import Login from './Login';
 import FeedScreen from './feedscreen';
 import FeedDetail from './feeddetail';
+import Chat from './Chat';
 
 const Stack = createStackNavigator();
 
@@ -19,6 +20,8 @@ const HomeScreen = ({ navigation }) => {
                 <View style={styles.space} />
                 <Button className="account-btn" title="Login" onPress={() => navigation.navigate('Login')} />
                 </View>
+                <View style={styles.space} />
+                <Button className="account-btn" title="Chat" onPress={() => navigation.navigate('Chat')} />
       <View style={styles.content}>
         <View style={styles.horizontalLine} />
         <View style={styles.buttonContainer}>
@@ -41,6 +44,7 @@ const App = () => {
         <Stack.Screen name="FeedDetail" component={FeedDetail} />
         <Stack.Screen name="Register" component={Register} />
         <Stack.Screen name="Login" component={Login} />
+        <Stack.Screen name="Chat" component={Chat} />
       </Stack.Navigator>
     </NavigationContainer>
   );
