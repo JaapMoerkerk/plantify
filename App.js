@@ -5,10 +5,13 @@ import { createStackNavigator } from '@react-navigation/stack';
 import Dashboard from './dashboard';
 import Register from './Register';
 import Login from './Login';
+import firebase from './firebaseConfig';
 import FeedScreen from './feedscreen';
 import FeedDetail from './feeddetail';
 
 const Stack = createStackNavigator();
+
+
 
 const HomeScreen = ({ navigation }) => {
   return (

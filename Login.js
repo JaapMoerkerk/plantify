@@ -1,6 +1,7 @@
+// Login.js
 import React, { useState } from 'react';
-import { StyleSheet, View, TextInput, Button, Alert } from 'react-native';
-import auth from '@react-native-firebase/auth';
+import { View, Text, TextInput, Button, StyleSheet, Alert } from 'react-native';
+import firebase from './firebaseConfig';
 
 const Login = ({ navigation }) => {
   const [email, setEmail] = useState('');
@@ -8,32 +9,39 @@ const Login = ({ navigation }) => {
 
   const handleLogin = async () => {
     try {
-      await auth().signInWithEmailAndPassword(email, password);
-      Alert.alert('Login Successful', 'Welcome back!');
-      // Here you can navigate to your dashboard or any other screen
+      await firebase.auth().signInWithEmailAndPassword(email, password);
+      Alert.alert('Success', 'Logged in successfully');
+      navigation.navigate('Dashboard'); // Navigate to home screen after successful login
     } catch (error) {
-      Alert.alert('Login Failed', error.message);
+      console.error(error);
+      Alert.alert('Error', error.message);
     }
   };
 
   return (
     <View style={styles.container}>
+      <Text style={styles.title}>Login</Text>
       <TextInput
         style={styles.input}
         placeholder="Email"
-        onChangeText={(text) => setEmail(text)}
         value={email}
+        onChangeText={setEmail}
         keyboardType="email-address"
-        autoCapitalize="none"
       />
       <TextInput
         style={styles.input}
         placeholder="Password"
-        onChangeText={(text) => setPassword(text)}
         value={password}
+        onChangeText={setPassword}
         secureTextEntry
       />
       <Button title="Login" onPress={handleLogin} />
+      <Text
+        style={styles.registerText}
+        onPress={() => navigation.navigate('Register')}
+      >
+        Don't have an account? Register
+      </Text>
     </View>
   );
 };
@@ -42,15 +50,25 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#fff',
+    padding: 16,
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    marginBottom: 24,
   },
   input: {
-    width: '80%',
-    marginBottom: 10,
-    padding: 10,
-    borderBottomWidth: 1,
-    borderBottomColor: '#ccc',
+    borderWidth: 1,
+    borderColor: '#ccc',
+    padding: 8,
+    marginBottom: 16,
+    borderRadius: 4,
+  },
+  registerText: {
+    marginTop: 16,
+    color: 'blue',
+    textAlign: 'center',
   },
 });
 
