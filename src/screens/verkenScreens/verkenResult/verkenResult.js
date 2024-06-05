@@ -6,13 +6,16 @@ import Footer from '../../../components/footer/footer.js';
 import styles from './verkenStyle';
 // bij verkenScreens kan je alle onderdelen vinden die te maken hebben de Plantverkennert, die voorheen plantswiper heette
 
-const verken = ({ navigation }) => {
-    // komt vanuit navbar of home
+const verkenResult = ({ navigation }) => {
+    // komt vanuit Verken
     return (
         <Container>
             <Navbar/>
-            {/*swipe*/}
-            {/*button: ONTDEK DE BESTE PLANT VOOR JOU*/}
+            {/*aanbevolen planten:
+            -in categorie envirement
+            -in categorie preferences
+            -in categorie care
+            -ULTIEME AANRADER uit alle categorien*/}
             <Footer/>
         </Container>
     )
