@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, Button, StyleSheet, Alert } from 'react-native';
 import firebase from './firebaseConfig';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Login = ({ navigation }) => {
   const [email, setEmail] = useState('');
@@ -9,7 +10,9 @@ const Login = ({ navigation }) => {
 
   const handleLogin = async () => {
     try {
-      await firebase.auth().signInWithEmailAndPassword(email, password);
+      const userCredential = await firebase.auth().signInWithEmailAndPassword(email, password);
+      const user = userCredential.user;
+      await AsyncStorage.setItem('user', JSON.stringify(user));
       Alert.alert('Success', 'Logged in successfully');
       navigation.navigate('Dashboard'); // Navigate to home screen after successful login
     } catch (error) {
