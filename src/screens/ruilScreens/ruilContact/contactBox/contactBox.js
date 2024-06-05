@@ -12,7 +12,7 @@ const ContactBox = () => {
             <View style={styles.userInfo}>
 
               <View style={styles.contactCircle}>
-                <Image source={require('./contact-box-img/woman.png')} style={styles.contactLogo} />
+                <Image source={require('../../../../../assets/img/contact/woman.png')} style={styles.contactLogo} />
               </View>
 
               <View style={styles.userInfoText}>
@@ -24,21 +24,21 @@ const ContactBox = () => {
 
             <View style={styles.contactOption}>
               <View style={styles.contactCircle}>
-                <Image source={require('./contact-box-img/email.png')} style={styles.contactLogo} />
+                <Image source={require('../../../../../assets/img/contact/email.png')} style={styles.contactLogo} />
               </View>
               <Text style={styles.contactInfo}>mailadress@mail.com</Text>
             </View>
 
             <View style={styles.contactOption}>
               <View style={styles.contactCircle}>
-                <Image source={require('./contact-box-img/camera.png')} style={styles.contactLogo} />
+                <Image source={require('../../../../../assets/img/contact/camera.png')} style={styles.contactLogo} />
               </View>
               <Text style={styles.contactInfo}>@instagram_user</Text>
             </View>
 
             <View style={styles.contactOption}>
               <View style={styles.contactCircle}>
-                <Image source={require('./contact-box-img/bird.png')} style={styles.contactLogo} />
+                <Image source={require('../../../../../assets/img/contact/bird.png')} style={styles.contactLogo} />
               </View>
               <Text style={styles.contactInfo}>@twitter_user</Text>
             </View>

@@ -1,5 +1,5 @@
 import {Pressable, Text, View} from "react-native";
-import styles from "../button-box/button-box-style";
+import styles from "./buttonBoxStyle";
 import React from "react";
 
 const buttonBox = () => {
