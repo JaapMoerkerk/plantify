@@ -9,7 +9,7 @@ const KnnVerken = () => {
             const response = await fetch("https://stud.hosted.hr.nl/1064361/stekkie/data.json");
             console.log(response)
             let ApiData = JSON.parse(await response.text())
-            setPlantData(ApiData)
+            setPlantData(JSON.stringify(ApiData))
         } catch (error) {
             console.log("there is a problem loading the data", error)
         }
@@ -19,7 +19,7 @@ const KnnVerken = () => {
         <View>
             <Text>This is the api: {plantData}</Text>
             <Pressable onPress={loadAPI}>
-                <Text>load text</Text>
+                <Text>load api</Text>
             </Pressable>
         </View>
     );
