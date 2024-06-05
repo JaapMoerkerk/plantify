@@ -6,7 +6,7 @@ import Dashboard from './dashboard';
 import FeedScreen from './feedscreen';
 import FeedDetail from './feeddetail';
 import AddPlant from './addPlant';
-import RuilContact   from './src/screens/ruilScreens/ruilContact/ruilContact';
+import RuilContact from './src/screens/ruilScreens/ruilContact/ruilContact.js';
 
 
 const Stack = createStackNavigator();
@@ -20,7 +20,7 @@ const HomeScreen = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <Button title="Go to Dashboard" onPress={() => navigation.navigate('Dashboard')} />
-       <Button title="Go to contact" onPress={() => navigation.navigate('Contact')} />
+       <Button title="Go to contact" onPress={() => navigation.navigate('ruilContact')} />
       <Text style={styles.title}>Welcome to Your App</Text>
       <View style={styles.content}>
         <View style={styles.horizontalLine} />
@@ -46,7 +46,7 @@ const App = () => {
         <Stack.Screen name="FeedDetail" component={FeedDetail} />
         <Stack.Screen name="AddPlant" component={AddPlant} />
         <Stack.Screen name="Ruilplanten" component={FeedScreen} />
-        <Stack.Screen name="Contact" component={RuilContact} />
+        <Stack.Screen name="ruilContact" component={RuilContact} />
       </Stack.Navigator>
     </NavigationContainer>
   );
