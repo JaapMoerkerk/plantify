@@ -1,6 +1,6 @@
 import React from 'react';
 import {View, Text, Image, StyleSheet, ScrollView, TouchableOpacity, Pressable} from 'react-native';
-import styles from './footer-styles';
+import styles from './footerStyles';
 
 const Footer = () => {
   return (
