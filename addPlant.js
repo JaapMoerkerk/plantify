@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Alert, View, Text, Button, StyleSheet } from "react-native";
 import {TextInput} from "react-native-paper";
 import { getInstance, ref, set, get, push, child } from "firebase/database";
@@ -60,7 +60,7 @@ const NewPlant = ({ navigation }) => {
         id: newPostKey,
         userId: userId,
         name: plantName,
-        image: image,
+        img: image,
         location: location,
         description: description
       });
@@ -69,21 +69,21 @@ const NewPlant = ({ navigation }) => {
 
     
 
-    useEffect(() => {
-      if (route.params) {
-        const { plantToEdit } = route.params;
-        const {
-          plantName: editedPlantName,
-          image: editedImage,
-          location: editedLocation,
-          description: editedDescription,
-        } = plantToEdit;
-        setName(editedPlantName);
-        setPhone(editedImage);
-        setEmail(editedLocation);
-        setCompany(editedDescription);
-      }
-    }, [plantToEdit]);
+    // useEffect(() => {
+    //   if (route.params) {
+    //     const { plantToEdit } = route.params;
+    //     const {
+    //       plantName: editedPlantName,
+    //       image: editedImage,
+    //       location: editedLocation,
+    //       description: editedDescription,
+    //     } = plantToEdit;
+    //     setName(editedPlantName);
+    //     setPhone(editedImage);
+    //     setEmail(editedLocation);
+    //     setCompany(editedDescription);
+    //   }
+    // }, [plantToEdit]);
     
   return (
     <View>
