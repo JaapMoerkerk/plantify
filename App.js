@@ -3,6 +3,9 @@ import { StyleSheet, View, Text, Button } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import Dashboard from './dashboard';
+import Register from './Register';
+import Login from './Login';
+import firebase from './firebaseConfig';
 import FeedScreen from './feedscreen';
 import FeedDetail from './feeddetail';
 import AddPlant from './addPlant';
@@ -22,6 +25,11 @@ const HomeScreen = ({ navigation }) => {
       <Button title="Go to Dashboard" onPress={() => navigation.navigate('Dashboard')} />
        <Button title="Go to contact" onPress={() => navigation.navigate('ruilContact')} />
       <Text style={styles.title}>Welcome to Your App</Text>
+      <View style={styles.buttonContainer}>
+      <Button className="account-btn" title="Register" onPress={() => navigation.navigate('Register')} />
+                <View style={styles.space} />
+                <Button className="account-btn" title="Login" onPress={() => navigation.navigate('Login')} />
+                </View>
       <View style={styles.content}>
         <View style={styles.horizontalLine} />
         <View style={styles.buttonContainer}>
@@ -47,6 +55,8 @@ const App = () => {
         <Stack.Screen name="AddPlant" component={AddPlant} />
         <Stack.Screen name="Ruilplanten" component={FeedScreen} />
         <Stack.Screen name="ruilContact" component={RuilContact} />
+        <Stack.Screen name="Register" component={Register} />
+        <Stack.Screen name="Login" component={Login} />
       </Stack.Navigator>
     </NavigationContainer>
   );
