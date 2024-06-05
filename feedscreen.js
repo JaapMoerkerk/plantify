@@ -65,31 +65,47 @@ const FeedScreen = ({ navigation, route }) => {
         const { userId } = route.params;
 
         try {
-          let data = await get(
-            query(ref(db, "/Stekjes"), orderByChild("userId"), equalTo(1))
-          );
-          console.log("obj:")
-          console.log(data)
-          let arr = Object.values(data);
-          console.log("array:")
-          console.log(arr)
+              const response = await fetch('https://plantify-50b4e-default-rtdb.europe-west1.firebasedatabase.app/Stekjes.json');
+              const data = await response.json();
+              if (data) {
+                const plantArray = Object.entries(data)
+                  .filter(([id, plantUser]) => plantUser && plantUser.userId === userId)
+                  .map(([id, plantUser]) => plantUser);
+        
+                  // console.log("here: " + plantArray);
+                // const filteredPosts = allPosts.filter((post) => plantTagArray.includes(post.id));
+                setAllPosts(plantArray);
+              }
+            } catch (error) {
+              console.error('Error filtering posts:', error);
+            }
 
-          // {"1": {"description": "purple and beautiful", "id": 1, "img": "https://www.marthastewart.com/thmb/pNHFsp2dFxUH5KBkO9zlDpBQy-0=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/grow-care-for-lilac-varieties-common-lilac-getty-0623-c5dbb272ad06401ca36910b6a154d12d.jpg", "name": "Lilac", "userId": 1}}
+        // try {
+        //   let data = await get(
+        //     query(ref(db, "/Stekjes"), orderByChild("userId"), equalTo(1))
+        //   );
+        //   console.log("obj:")
+        //   console.log(data)
+        //   let arr = Object.values(data);
+        //   console.log("array:")
+        //   console.log(arr)
 
-          //
-          // if (data) {
-          //   const postArray = Object.entries(data).map(([id, post]) => ({
-          //     id,
-          //     ...post,
-          //   }));
+        //   // {"1": {"description": "purple and beautiful", "id": 1, "img": "https://www.marthastewart.com/thmb/pNHFsp2dFxUH5KBkO9zlDpBQy-0=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/grow-care-for-lilac-varieties-common-lilac-getty-0623-c5dbb272ad06401ca36910b6a154d12d.jpg", "name": "Lilac", "userId": 1}}
 
-          //   console.log([...postArray.entries()]);
-          //   setPosts(postArray);
-          // }
-          setPosts(arr);
-        } catch (error) {
-          console.error("Error fetching data:", error);
-        }
+        //   //
+        //   // if (data) {
+        //   //   const postArray = Object.entries(data).map(([id, post]) => ({
+        //   //     id,
+        //   //     ...post,
+        //   //   }));
+
+        //   //   console.log([...postArray.entries()]);
+        //   //   setPosts(postArray);
+        //   // }
+        //   setPosts(arr);
+        // } catch (error) {
+        //   console.error("Error fetching data:", error);
+        // }
       } else {
         try {
           const response = await fetch(
@@ -111,28 +127,28 @@ const FeedScreen = ({ navigation, route }) => {
     fetchData();
   }, []);
 
-  // const filterPostsByTag = async (tagId) => {
-  //   if (selectedTag === tagId) {
-  //     setSelectedTag(null);
-  //     setPosts(allPosts);
-  //     return;
-  //   }
-  //   setSelectedTag(tagId);
-  //   try {
-  //     const responsePlantTags = await fetch('https://plantify-50b4e-default-rtdb.europe-west1.firebasedatabase.app/StekjesTags.json');
-  //     const dataPlantTags = await responsePlantTags.json();
-  //     if (dataPlantTags) {
-  //       const plantTagArray = Object.entries(dataPlantTags)
-  //         .filter(([id, plantTag]) => plantTag && plantTag.tagId === tagId)
-  //         .map(([id, plantTag]) => plantTag.plantId);
+  const filterPostsByTag = async (tagId) => {
+    if (selectedTag === tagId) {
+      setSelectedTag(null);
+      setPosts(allPosts);
+      return;
+    }
+    setSelectedTag(tagId);
+    try {
+      const responsePlantTags = await fetch('https://plantify-50b4e-default-rtdb.europe-west1.firebasedatabase.app/StekjesTags.json');
+      const dataPlantTags = await responsePlantTags.json();
+      if (dataPlantTags) {
+        const plantTagArray = Object.entries(dataPlantTags)
+          .filter(([id, plantTag]) => plantTag && plantTag.tagId === tagId)
+          .map(([id, plantTag]) => plantTag.plantId);
 
-  //       const filteredPosts = allPosts.filter((post) => plantTagArray.includes(post.id));
-  //       setPosts(filteredPosts);
-  //     }
-  //   } catch (error) {
-  //     console.error('Error filtering posts:', error);
-  //   }
-  // };
+        const filteredPosts = allPosts.filter((post) => plantTagArray.includes(post.id));
+        setPosts(filteredPosts);
+      }
+    } catch (error) {
+      console.error('Error filtering posts:', error);
+    }
+  };
 
   return (
     <ScrollView style={styles.container}>

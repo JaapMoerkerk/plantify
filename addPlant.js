@@ -25,6 +25,7 @@ const db = getDatabase(app);
 // const auth = getAuth();
 
 // const userId = auth.currentUser.uid;
+const userId = 1;
 
 
 const NewPlant = ({ navigation }) => {
@@ -57,7 +58,7 @@ const NewPlant = ({ navigation }) => {
 
     set(ref(db, 'Stekjes/' + newPostKey), {
         id: newPostKey,
-        // userId: userId,
+        userId: userId,
         name: plantName,
         image: image,
         location: location,
@@ -68,20 +69,21 @@ const NewPlant = ({ navigation }) => {
 
     
 
-    // useEffect(() => {
-    //   if (clientToEdit) {
-    //     const {
-    //       plantName: editedPlantName,
-    //       image: editedImage,
-    //       location: editedLocation,
-    //       description: editedDescription,
-    //     } = clientToEdit;
-    //     setName(editedPlantName);
-    //     setPhone(editedImage);
-    //     setEmail(editedLocation);
-    //     setCompany(editedDescription);
-    //   }
-    // }, [clientToEdit]);
+    useEffect(() => {
+      if (route.params) {
+        const { plantToEdit } = route.params;
+        const {
+          plantName: editedPlantName,
+          image: editedImage,
+          location: editedLocation,
+          description: editedDescription,
+        } = plantToEdit;
+        setName(editedPlantName);
+        setPhone(editedImage);
+        setEmail(editedLocation);
+        setCompany(editedDescription);
+      }
+    }, [plantToEdit]);
     
   return (
     <View>
