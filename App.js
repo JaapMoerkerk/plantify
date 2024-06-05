@@ -6,6 +6,8 @@ import Dashboard from './dashboard';
 import FeedScreen from './feedscreen';
 import FeedDetail from './feeddetail';
 import AddPlant from './addPlant';
+import RuilContact   from './src/screens/ruilScreens/ruilContact/ruilContact';
+
 
 const Stack = createStackNavigator();
 
@@ -17,6 +19,8 @@ const userId = 1;
 const HomeScreen = ({ navigation }) => {
   return (
     <View style={styles.container}>
+      <Button title="Go to Dashboard" onPress={() => navigation.navigate('Dashboard')} />
+       <Button title="Go to contact" onPress={() => navigation.navigate('Contact')} />
       <Text style={styles.title}>Welcome to Your App</Text>
       <View style={styles.content}>
         <View style={styles.horizontalLine} />
@@ -35,13 +39,14 @@ const HomeScreen = ({ navigation }) => {
 const App = () => {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Home">
+      <Stack.Navigator screenOptions={{animationEnabled:false}} initialRouteName="Home">
         <Stack.Screen name="Home" component={HomeScreen} />
         <Stack.Screen name="Dashboard" component={Dashboard} />
         <Stack.Screen name="Feed" component={FeedScreen} />
         <Stack.Screen name="FeedDetail" component={FeedDetail} />
         <Stack.Screen name="AddPlant" component={AddPlant} />
         <Stack.Screen name="Ruilplanten" component={FeedScreen} />
+        <Stack.Screen name="Contact" component={RuilContact} />
       </Stack.Navigator>
     </NavigationContainer>
   );
