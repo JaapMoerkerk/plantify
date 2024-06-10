@@ -21,7 +21,7 @@ const KnnVerken = () => {
                 if (key.startsWith("plant")) {
                     const plant = ApiData[key];
                     const { environment, preferences, care } = plant;
-                    //converting values true to 10 and false to 0 so its easier to compare with user data
+                    //converting values true to 10 and false to 0, so it is easier to compare with user data
                     const convertValue = (value) => (value === true ? 10 : value === false ? 0 : value);
 
                     //converting data to array
@@ -41,6 +41,8 @@ const KnnVerken = () => {
                 knn.learn(formattedData[plantKey], plantKey);})
 
                 setPrediction(knn.classify([4,9,2,7,0,8,2,8,6,5,7,4,8,1,8]))
+
+            // load in name of prediction
         } catch (error) {
             console.log("There is a problem loading the data", error);
         }
