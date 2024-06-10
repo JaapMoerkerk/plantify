@@ -66,6 +66,7 @@ const KnnVerken = () => {
             {/*<Text>This is the prediction: {plantData}</Text>*/}
             <Text>This is the prediction: {prediction}</Text>
             <Text>This is the prediction data: {predictionData}</Text>
+            <Text>This is the prediction data: {inputValues}</Text>
             <Pressable onPress={makePrediction}>
                 <Text>classify prediction</Text>
             </Pressable>
@@ -78,9 +79,6 @@ const KnnVerken = () => {
                             keyboardType="numeric"
                             style={{ borderWidth: 1, margin: 5, padding: 5 }}
                         />
-                        <Pressable onPress={() => handleInputChange(index, inputValues[index])}>
-                            <Text style={{ marginLeft: 10 }}>Update</Text>
-                        </Pressable>
                     </View>
                 ))}
             </ScrollView>
