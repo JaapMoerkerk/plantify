@@ -37,14 +37,19 @@ const HomeScreen = ({ navigation }) => {
                     <Button title="Go to Dashboard" onPress={() => navigation.navigate('Dashboard')} />
                      <View style={styles.space} />
                      <Button title="Go to Feed" onPress={() => navigation.navigate('Feed')} />
+                     </View>
+                     <View style={styles.horizontalLine} />
+                     <View style={styles.buttonContainer}>
                     <Button title="Add Plant" onPress={() => navigation.navigate('AddPlant')} />
+                    <View style={styles.space} />
                    <Button title="Ruilplanten" onPress={() => navigation.navigate('Feed', { userId })} />
+                   <View style={styles.space} />
                     <Button title="Go to KnnVerken" onPress={() => navigation.navigate('KnnVerken')} />
                       </View>
               </View>
               </View>
   );
-    );
+
 };
 
 
@@ -52,7 +57,6 @@ const App = () => {
     return (
         <NavigationContainer>
             <Stack.Navigator screenOptions={{animationEnabled:false}} initialRouteName="Home">
-                <Stack.Navigator initialRouteName="Home">
                         <Stack.Screen name="Home" component={HomeScreen} />
                         <Stack.Screen
                           name="Dashboard"

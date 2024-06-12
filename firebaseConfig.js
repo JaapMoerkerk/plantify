@@ -2,6 +2,8 @@
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/auth';
 import 'firebase/compat/database';
+import { initializeApp } from "firebase/app";
+
 
 const firebaseConfig = {
   apiKey: "AIzaSyA98nr6vTov2WqePz4Ueq5-ED9Bh6pBikM",
@@ -13,8 +15,6 @@ const firebaseConfig = {
   appId: "1:757675160517:android:0ffc0ab946c00e865811ac"
 };
 
-if (!firebase.apps.length) {
-  firebase.initializeApp(firebaseConfig);
-}
+const firebaseApp = firebase.apps.length === 0 ? initializeApp(firebaseConfig) : null;
 
-export default firebase;
+export default firebaseApp;

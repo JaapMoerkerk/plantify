@@ -6,22 +6,10 @@ import { initializeApp } from "firebase/app";
 import { getDatabase } from "firebase/database";
 import { getAuth } from "firebase/auth";
 import FeedScreen from './feedscreen';
+import firebaseApp from './firebaseConfig';
 
-const firebaseConfig = {
-  apiKey: "AIzaSyAILOfAvkTwyP1WRP_9WKPZN0MjmRRdw_8",
-  authDomain: "plantify-50b4e.firebaseapp.com",
-  databaseURL:
-    "https://plantify-50b4e-default-rtdb.europe-west1.firebasedatabase.app",
-  projectId: "plantify-50b4e",
-  storageBucket: "plantify-50b4e.appspot.com",
-  messagingSenderId: "757675160517",
-  appId: "1:757675160517:web:7086074b1a17ab545811ac",
-  // databaseURL:
-  // "https://plantify-50b4e-default-rtdb.europe-west1.firebasedatabase.app/",
-};
-
-const app = initializeApp(firebaseConfig);
-const db = getDatabase(app);
+//const app = initializeApp(firebaseConfig);
+const db = getDatabase(firebaseApp);
 // const auth = getAuth();
 
 // const userId = auth.currentUser.uid;
