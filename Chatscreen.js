@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { View, Text, Button, StyleSheet } from 'react-native';
 import firebase from './firebaseConfig';
 
+
+/* werkt nog niet*/
 const ChatScreen = ({ navigation }) => {
   const [users, setUsers] = useState([]);
   const [existingChats, setExistingChats] = useState([]);
