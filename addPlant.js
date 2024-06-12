@@ -16,8 +16,8 @@ const firebaseConfig = {
   storageBucket: "plantify-50b4e.appspot.com",
   messagingSenderId: "757675160517",
   appId: "1:757675160517:web:7086074b1a17ab545811ac",
-  databaseURL:
-  "https://plantify-50b4e-default-rtdb.europe-west1.firebasedatabase.app/",
+  // databaseURL:
+  // "https://plantify-50b4e-default-rtdb.europe-west1.firebasedatabase.app/",
 };
 
 const app = initializeApp(firebaseConfig);
