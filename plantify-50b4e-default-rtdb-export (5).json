@@ -1,0 +1,108 @@
+{
+  "Chats": {
+    "-O-BTSFPUaBxJwz9R3Oe": {
+      "messages": {
+        "-O-BTSm9D_FOX5XyQrVs": {
+          "content": "Eccec",
+          "sender": "jwMxXFRDZKXRbP5mLo99sJIgghH3",
+          "timestamp": 1718196231421
+        }
+      },
+      "participants": {
+        "jwMxXFRDZKXRbP5mLo99sJIgghH3": true,
+        "undefined": true
+      }
+    }
+  },
+  "Stekjes": {
+    "1": {
+      "description": "purple and beautiful",
+      "id": 1,
+      "img": "https://www.marthastewart.com/thmb/pNHFsp2dFxUH5KBkO9zlDpBQy-0=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/grow-care-for-lilac-varieties-common-lilac-getty-0623-c5dbb272ad06401ca36910b6a154d12d.jpg",
+      "name": "Lilac",
+      "userId": 1
+    },
+    "2": {
+      "description": "rood en vol vrolijkheid",
+      "id": 2,
+      "img": "https://www.marthastewart.com/thmb/pNHFsp2dFxUH5KBkO9zlDpBQy-0=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/grow-care-for-lilac-varieties-common-lilac-getty-0623-c5dbb272ad06401ca36910b6a154d12d.jpg",
+      "name": "Roos"
+    },
+    "-Nz2W3_Fxbf-4fGOXuSZ": {
+      "description": "T",
+      "id": "-Nz2W3_Fxbf-4fGOXuSZ",
+      "img": "https://static.vecteezy.com/system/resources/previews/024/856/600/original/pink-sakura-flower-isolated-on-transparent-background-ai-generated-free-png.png",
+      "location": "S",
+      "name": "T",
+      "userId": 1
+    }
+  },
+  "StekjesTags": [
+    null,
+    {
+      "plantId": 1,
+      "tagId": 1
+    },
+    {
+      "plantId": 1,
+      "tagId": 4
+    },
+    {
+      "plantId": 2,
+      "tagId": 1
+    },
+    {
+      "plantId": 2,
+      "tagId": 2
+    },
+    {
+      "plantId": 2,
+      "tagId": 3
+    }
+  ],
+  "Tags": [
+    null,
+    {
+      "id": 1,
+      "name": "flower"
+    },
+    {
+      "id": 2,
+      "name": "fragrant"
+    },
+    {
+      "id": 3,
+      "name": "red"
+    },
+    {
+      "id": 4,
+      "name": "purple"
+    }
+  ],
+  "users": {
+    "EPIFZjPsRiflYx0YMoJWObecspb2": {
+      "email": "ryan@test.nl",
+      "username": "Ryanisdik"
+    },
+    "F4XqhQmBjFWDI2kYeS2yv6ZghYp2": {
+      "email": "jaap.e3@gmail.com",
+      "username": "Jaaptest"
+    },
+    "ONiQNAp73DUnr4DI7QNKHiMhREJ3": {
+      "email": "jaapstinkt@gmail.com",
+      "username": "Jaap stinkveel"
+    },
+    "YPU7vf21adeTOlTQedID2xOqUyi1": {
+      "email": "jippie@gmail.com",
+      "username": "Jippie"
+    },
+    "jwMxXFRDZKXRbP5mLo99sJIgghH3": {
+      "email": "ryan.m.de.man@gmail.com",
+      "username": "Rinus"
+    },
+    "zd5s8WFLVuczIBXTmD9DxDqMSCD2": {
+      "email": "hivpatient@gmail.com",
+      "username": "Hivpatient"
+    }
+  }
+}
