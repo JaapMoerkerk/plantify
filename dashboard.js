@@ -1,3 +1,4 @@
+// Dashboard.js
 import React, { useEffect, useState } from 'react';
 import { View, Text, Button, StyleSheet } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -23,7 +24,7 @@ const Dashboard = ({ navigation }) => {
             }
           });
         } else {
-          navigation.replace('Login');
+          navigation.replace('Home');
         }
       } catch (error) {
         console.error(error);
@@ -43,6 +44,10 @@ const Dashboard = ({ navigation }) => {
     }
   };
 
+  const handleChat = () => {
+    navigation.navigate('ChatScreen');
+  };
+
   return (
     <View style={styles.container}>
       <Text>This is your Dashboard!</Text>
@@ -50,6 +55,7 @@ const Dashboard = ({ navigation }) => {
         <>
           <Text style={styles.text}>Username: {username}</Text>
           <Button title="Logout" onPress={handleLogout} />
+          <Button title="Chat" onPress={handleChat} />
         </>
       ) : (
         <Text style={styles.text}>You are not logged in</Text>

@@ -8,7 +8,8 @@ import Login from './Login';
 import firebase from './firebaseConfig';
 import FeedScreen from './feedscreen';
 import FeedDetail from './feeddetail';
-import Chat from './Chat';
+import ChatScreen from './Chatscreen'; // Importing the new ChatScreen
+import Chat from './Chat'; // Importing the new Chat/
 
 const Stack = createStackNavigator();
 
@@ -21,7 +22,7 @@ const HomeScreen = ({ navigation }) => {
         <View style={styles.space} />
         <Button className="account-btn" title="Login" onPress={() => navigation.navigate('Login')} />
         <View style={styles.space} />
-        <Button className="account-btn" title="Chat" onPress={() => navigation.navigate('Chat')} />
+      
       </View>
       <View style={styles.content}>
         <View style={styles.horizontalLine} />
@@ -34,6 +35,7 @@ const HomeScreen = ({ navigation }) => {
     </View>
   );
 };
+
 
 const App = () => {
   return (
@@ -52,6 +54,7 @@ const App = () => {
         <Stack.Screen name="FeedDetail" component={FeedDetail} />
         <Stack.Screen name="Register" component={Register} />
         <Stack.Screen name="Login" component={Login} />
+        <Stack.Screen name="ChatScreen" component={ChatScreen} /> 
         <Stack.Screen name="Chat" component={Chat} />
       </Stack.Navigator>
     </NavigationContainer>
