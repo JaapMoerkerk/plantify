@@ -11,17 +11,15 @@ import FeedDetail from './feeddetail';
 
 const Stack = createStackNavigator();
 
-
-
 const HomeScreen = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Welcome to Your App</Text>
       <View style={styles.buttonContainer}>
-      <Button className="account-btn" title="Register" onPress={() => navigation.navigate('Register')} />
-                <View style={styles.space} />
-                <Button className="account-btn" title="Login" onPress={() => navigation.navigate('Login')} />
-                </View>
+        <Button className="account-btn" title="Register" onPress={() => navigation.navigate('Register')} />
+        <View style={styles.space} />
+        <Button className="account-btn" title="Login" onPress={() => navigation.navigate('Login')} />
+      </View>
       <View style={styles.content}>
         <View style={styles.horizontalLine} />
         <View style={styles.buttonContainer}>
@@ -39,7 +37,14 @@ const App = () => {
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Home">
         <Stack.Screen name="Home" component={HomeScreen} />
-        <Stack.Screen name="Dashboard" component={Dashboard} />
+        <Stack.Screen
+          name="Dashboard"
+          component={Dashboard}
+          options={{
+            headerLeft: () => null,
+            title: 'Dashboard',
+          }}
+        />
         <Stack.Screen name="Feed" component={FeedScreen} />
         <Stack.Screen name="FeedDetail" component={FeedDetail} />
         <Stack.Screen name="Register" component={Register} />

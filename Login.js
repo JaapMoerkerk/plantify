@@ -1,4 +1,3 @@
-// Login.js
 import React, { useState } from 'react';
 import { View, Text, TextInput, Button, StyleSheet, Alert } from 'react-native';
 import firebase from './firebaseConfig';
@@ -14,7 +13,7 @@ const Login = ({ navigation }) => {
       const user = userCredential.user;
       await AsyncStorage.setItem('user', JSON.stringify(user));
       Alert.alert('Success', 'Logged in successfully');
-      navigation.navigate('Dashboard'); // Navigate to home screen after successful login
+      navigation.navigate('Dashboard');
     } catch (error) {
       console.error(error);
       Alert.alert('Error', error.message);
