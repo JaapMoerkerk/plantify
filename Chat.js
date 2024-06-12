@@ -1,131 +1,81 @@
-import React, { useState, useEffect } from 'react';
-import { View, TextInput, Button, FlatList, Text, StyleSheet, TouchableOpacity, Alert } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { View, Text, FlatList, TextInput, Button, StyleSheet } from 'react-native';
+import firebase from './firebaseConfig';
 
-const API_URL = 'https://plantify-50b4e-default-rtdb.europe-west1.firebasedatabase.app/messages.json';
-
-const Chat = () => {
+const Chat = ({ route }) => {
+  const { userId } = route.params;
   const [messages, setMessages] = useState([]);
-  const [input, setInput] = useState('');
-  const [editingMessage, setEditingMessage] = useState(null);
+  const [newMessage, setNewMessage] = useState('');
 
   useEffect(() => {
     const fetchMessages = async () => {
       try {
-        const response = await fetch(API_URL);
-        const data = await response.json();
-        if (data) {
-          const messagesArray = Object.entries(data).map(([id, message]) => ({
-            id,
-            ...message,
-          }));
-          setMessages(messagesArray.sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt)));
-        }
+        // Reference the Chats node and create a new chat ID
+        const chatRef = firebase.database().ref('Chats').push();
+        const chatId = chatRef.key;
+        
+        // Reference the messages node within the chat
+        const messagesRef = chatRef.child('messages');
+        
+        // Listen for changes in the messages node
+        messagesRef.on('value', snapshot => {
+          const messagesData = snapshot.val();
+          const messagesArray = messagesData ? Object.values(messagesData) : [];
+          setMessages(messagesArray);
+        });
       } catch (error) {
-        console.error('Error fetching messages:', error);
+        console.error(error);
       }
     };
 
     fetchMessages();
-  }, []);
+  }, [userId]);
 
-  const handleSend = async () => {
-    if (input.trim()) {
-      if (editingMessage) {
-        handleUpdate(editingMessage.id);
-      } else {
-        const newMessage = { text: input, createdAt: new Date().toISOString() };
-        try {
-          await fetch(API_URL, {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(newMessage),
-          });
-          setMessages([...messages, newMessage]);
-          setInput('');
-        } catch (error) {
-          console.error('Error sending message:', error);
-        }
-      }
-    }
-  };
-
-  const handleUpdate = async (id) => {
-    const updatedMessage = { text: input, createdAt: new Date().toISOString() };
+  const sendMessage = async () => {
     try {
-      await fetch(`https://plantify-50b4e-default-rtdb.europe-west1.firebasedatabase.app/messages/${id}.json`, {
-        method: 'PATCH',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(updatedMessage),
+      // Reference the Chats node and create a new chat ID
+      const chatRef = firebase.database().ref('Chats').push();
+      const chatId = chatRef.key;
+      
+      // Reference the messages node within the chat
+      const messagesRef = chatRef.child('messages');
+      
+      // Push a new message to the messages node
+      const newMessageRef = messagesRef.push();
+      await newMessageRef.set({
+        sender: firebase.auth().currentUser.uid,
+        receiver: route.params.userId, // Ensure route.params.userId is correct
+        timestamp: firebase.database.ServerValue.TIMESTAMP,
+        content: newMessage,
       });
-      const updatedMessages = messages.map((msg) =>
-        msg.id === id ? { ...msg, text: input } : msg
-      );
-      setMessages(updatedMessages);
-      setEditingMessage(null);
-      setInput('');
+      
+      // Clear the input field after sending the message
+      setNewMessage('');
     } catch (error) {
-      console.error('Error updating message:', error);
+      console.error(error);
     }
   };
-
-  const handleDelete = async (id) => {
-    try {
-      await fetch(`https://plantify-50b4e-default-rtdb.europe-west1.firebasedatabase.app/messages/${id}.json`, {
-        method: 'DELETE',
-      });
-      setMessages(messages.filter((msg) => msg.id !== id));
-    } catch (error) {
-      console.error('Error deleting message:', error);
-    }
-  };
-
-  const confirmDelete = (id) => {
-    Alert.alert(
-      'Delete Message',
-      'Are you sure you want to delete this message?',
-      [
-        { text: 'Cancel', style: 'cancel' },
-        { text: 'OK', onPress: () => handleDelete(id) },
-      ],
-      { cancelable: true }
-    );
-  };
-
-  const handleEdit = (message) => {
-    setInput(message.text);
-    setEditingMessage(message);
-  };
-
-  const renderItem = ({ item }) => (
-    <View style={styles.messageContainer}>
-      <Text>{item.text}</Text>
-      <Text style={styles.timestamp}>{new Date(item.createdAt).toLocaleString()}</Text>
-      <View style={styles.actionsContainer}>
-        <Button title="Edit" onPress={() => handleEdit(item)} />
-        <Button title="Delete" onPress={() => confirmDelete(item.id)} />
-      </View>
-    </View>
-  );
+  
 
   return (
     <View style={styles.container}>
       <FlatList
         data={messages}
-        renderItem={renderItem}
-        keyExtractor={item => item.id}
+        renderItem={({ item }) => (
+          <View style={styles.message}>
+            <Text>{item.content}</Text>
+          </View>
+        )}
+        keyExtractor={(item, index) => index.toString()}
       />
       <View style={styles.inputContainer}>
         <TextInput
           style={styles.input}
-          value={input}
-          onChangeText={setInput}
-          placeholder="Type a message..."
+          value={newMessage}
+          onChangeText={text => setNewMessage(text)}
+          placeholder="Type your message..."
         />
-        <Button title={editingMessage ? "Update" : "Send"} onPress={handleSend} />
+        <Button title="Send" onPress={sendMessage} />
       </View>
     </View>
   );
@@ -134,33 +84,27 @@ const Chat = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+  message: {
     padding: 10,
-  },
-  messageContainer: {
-    padding: 10,
-    borderBottomWidth: 1,
-    borderBottomColor: '#ccc',
-  },
-  timestamp: {
-    fontSize: 10,
-    color: '#999',
-  },
-  actionsContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginTop: 5,
+    marginVertical: 5,
+    backgroundColor: '#eee',
   },
   inputContainer: {
     flexDirection: 'row',
     alignItems: 'center',
+    paddingHorizontal: 10,
+    borderTopWidth: 1,
+    borderTopColor: '#ccc',
   },
   input: {
     flex: 1,
-    borderColor: '#ccc',
-    borderWidth: 1,
-    padding: 10,
     marginRight: 10,
-    borderRadius: 4,
+    paddingVertical: 5,
+    paddingHorizontal: 10,
+    borderWidth: 1,
+    borderColor: '#ccc',
+    borderRadius: 20,
   },
 });
 
