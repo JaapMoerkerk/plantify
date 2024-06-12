@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "757675160517",
+    "firebase_url": "https://plantify-50b4e-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "plantify-50b4e",
+    "storage_bucket": "plantify-50b4e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:757675160517:android:0ffc0ab946c00e865811ac",
+        "android_client_info": {
+          "package_name": "com.example.plantify"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "757675160517-v0ad4aotmmlbnk850o1njj70g7teu7sm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA98nr6vTov2WqePz4Ueq5-ED9Bh6pBikM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "757675160517-v0ad4aotmmlbnk850o1njj70g7teu7sm.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
