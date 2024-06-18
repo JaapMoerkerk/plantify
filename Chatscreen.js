@@ -1,4 +1,3 @@
-// ChatScreen.js
 import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, Button, FlatList, StyleSheet } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -9,6 +8,7 @@ const ChatScreen = ({ route }) => {
   const [message, setMessage] = useState('');
   const [messages, setMessages] = useState([]);
   const [user, setUser] = useState(null);
+  const [usersMap, setUsersMap] = useState({});
 
   useEffect(() => {
     const getUser = async () => {
@@ -35,6 +35,24 @@ const ChatScreen = ({ route }) => {
     }
   }, [chatId]);
 
+  useEffect(() => {
+    const usersRef = firebase.database().ref('/users');
+    usersRef.on('value', (snapshot) => {
+      const data = snapshot.val() || {};
+      const usersList = Object.keys(data).map(key => ({
+        uid: key,
+        ...data[key]
+      }));
+      const usersMap = {};
+      usersList.forEach(user => {
+        usersMap[user.uid] = user.username;
+      });
+      setUsersMap(usersMap);
+    });
+
+    return () => usersRef.off();
+  }, []);
+
   const handleSend = () => {
     if (message.length > 0 && user) {
       const messagesRef = firebase.database().ref(`/Chats/${chatId}/messages`);
@@ -48,6 +66,10 @@ const ChatScreen = ({ route }) => {
     }
   };
 
+  const getUsername = (uid) => {
+    return usersMap[uid] || 'Unknown';
+  };
+
   return (
     <View style={styles.container}>
       <FlatList
@@ -55,7 +77,7 @@ const ChatScreen = ({ route }) => {
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => (
           <View style={styles.messageContainer}>
-            <Text style={styles.messageSender}>{item.sender}</Text>
+            <Text style={styles.messageSender}>{getUsername(item.sender)}</Text>
             <Text style={styles.messageContent}>{item.content}</Text>
             <Text style={styles.messageTimestamp}>{new Date(item.timestamp).toLocaleTimeString()}</Text>
           </View>

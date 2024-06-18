@@ -1,4 +1,3 @@
-// Chat.js
 import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -21,40 +20,39 @@ const Chat = ({ navigation, route }) => {
   }, []);
 
   useEffect(() => {
-    if (otherUser && currentUser) {
-      const createOrFetchChat = async () => {
+    const createOrFetchChat = async () => {
+      if (otherUser && currentUser) {
         const chatRef = firebase.database().ref('/Chats');
-        chatRef.once('value', (snapshot) => {
-          const chats = snapshot.val() || {};
-          let existingChatId = null;
+        const chatsSnapshot = await chatRef.once('value');
+        const chats = chatsSnapshot.val() || {};
+        let existingChatId = null;
 
-          for (const key in chats) {
-            const chat = chats[key];
-            if (chat.participants[currentUser.uid] && chat.participants[otherUser.uid]) {
-              existingChatId = key;
-              break;
-            }
+        for (const key in chats) {
+          const chat = chats[key];
+          if (chat.participants[currentUser.uid] && chat.participants[otherUser.uid]) {
+            existingChatId = key;
+            break;
           }
+        }
 
-          if (existingChatId) {
-            setChatId(existingChatId);
-          } else {
-            const newChatRef = chatRef.push();
-            const newChatId = newChatRef.key;
-            newChatRef.set({
-              participants: {
-                [currentUser.uid]: true,
-                [otherUser.uid]: true,
-              },
-              messages: {},
-            });
-            setChatId(newChatId);
-          }
-        });
-      };
+        if (existingChatId) {
+          setChatId(existingChatId);
+        } else {
+          const newChatRef = chatRef.push();
+          const newChatId = newChatRef.key;
+          newChatRef.set({
+            participants: {
+              [currentUser.uid]: true,
+              [otherUser.uid]: true,
+            },
+            messages: {},
+          });
+          setChatId(newChatId);
+        }
+      }
+    };
 
-      createOrFetchChat();
-    }
+    createOrFetchChat();
   }, [otherUser, currentUser]);
 
   useEffect(() => {

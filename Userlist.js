@@ -1,4 +1,3 @@
-// UserList.js
 import React, { useState, useEffect } from 'react';
 import { View, Text, FlatList, StyleSheet, TouchableOpacity } from 'react-native';
 import firebase from './firebaseConfig';
@@ -15,11 +14,11 @@ const UserList = ({ navigation }) => {
       const usersRef = firebase.database().ref('/users');
       usersRef.on('value', (snapshot) => {
         const data = snapshot.val() || {};
-        const userList = Object.keys(data).map(key => ({
+        const usersList = Object.keys(data).map(key => ({
           uid: key,
           ...data[key]
         }));
-        setUsers(userList);
+        setUsers(usersList);
       });
 
       return () => usersRef.off();
@@ -28,9 +27,35 @@ const UserList = ({ navigation }) => {
     fetchUsers();
   }, []);
 
-  const handleSelectUser = async (user) => {
-    // Navigate to Chat screen with the selected user's UID
-    navigation.navigate('Chat', { otherUser: user });
+  const handleSelectUser = async (selectedUser) => {
+    if (currentUser) {
+      const chatRef = firebase.database().ref('/Chats');
+      const chatsSnapshot = await chatRef.once('value');
+      const chats = chatsSnapshot.val() || {};
+      let chatId = null;
+
+      for (const key in chats) {
+        const chat = chats[key];
+        if (chat.participants[currentUser.uid] && chat.participants[selectedUser.uid]) {
+          chatId = key;
+          break;
+        }
+      }
+
+      if (!chatId) {
+        const newChatRef = chatRef.push();
+        chatId = newChatRef.key;
+        newChatRef.set({
+          participants: {
+            [currentUser.uid]: true,
+            [selectedUser.uid]: true,
+          },
+          messages: {},
+        });
+      }
+
+      navigation.navigate('ChatScreen', { chatId });
+    }
   };
 
   return (
