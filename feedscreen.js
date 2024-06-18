@@ -17,6 +17,7 @@ const FeedScreen = ({ navigation, route }) => {
 
   // Fetch data from Firebase Realtime Database
   useEffect(() => {
+    const unsubscribe = navigation.addListener('focus', () => {
     const fetchData = async () => {
       if (route.params) {
         const { userId } = route.params;
@@ -75,7 +76,9 @@ const FeedScreen = ({ navigation, route }) => {
       };
 
     fetchData();
-  }, []);
+    })
+    return unsubscribe;
+  }, [navigation]);
 
   const filterPostsByTag = async (tagId) => {
     if (selectedTag === tagId) {
@@ -133,7 +136,7 @@ const FeedScreen = ({ navigation, route }) => {
           {route.params ? 
           <Button 
           title="Edit"
-          onPress={() => navigation.navigate("AddPlant", { post })}
+          onPress={() => navigation.navigate("AddPlant", { plantToEdit: post })}
           />:<></>}
           <Button
             title="Read More"

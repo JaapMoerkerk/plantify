@@ -1,11 +1,19 @@
 import React, { useState, useEffect } from "react";
 import { Alert, View, Text, Button, StyleSheet } from "react-native";
-import {TextInput} from "react-native-paper";
-import { getDatabase, getInstance, ref, set, get, push, child } from "firebase/database";
-import { initializeApp } from "firebase/app";
+import { TextInput } from "react-native-paper";
+import {
+  getDatabase,
+  getInstance,
+  ref,
+  set,
+  get,
+  push,
+  child,
+  update
+} from "firebase/database";
 import { getAuth } from "firebase/auth";
-import FeedScreen from './feedscreen';
-import firebaseApp from './firebaseConfig';
+import FeedScreen from "./feedscreen";
+import firebaseApp from "./firebaseConfig";
 
 //const app = initializeApp(firebaseConfig);
 const db = getDatabase(firebaseApp);
@@ -15,69 +23,76 @@ const db = getDatabase(firebaseApp);
 const userId = 1;
 
 const NewPlant = ({ navigation, route }) => {
-  const [plantName, setPlantName] = useState("");
-  const [image, setImage] = useState("");
-  const [location, setLocation] = useState("");
+  const [name, setName] = useState("");
+  const [img, setImg] = useState("");
+  // const [location, setLocation] = useState("");
   const [description, setDescription] = useState("");
-};
+  const { plantToEdit } = route.params;
 
-saveData = async () => {
-  const newPostKey = push(child(ref(db), "Stekjes")).key;
+  const newPlant = {
+    name,
+    userId,
+    img,
+    // location,
+    description
+  }
 
-  // if (route.params) {
-  //   console.log("here")
-  // //   const { id } = plantToEdit;
-  // //   updates["Stekjes/" + id + "/" + newPostKey] = postData;
-  // //   update(ref(db), updates);
-  // } else {
-    console.log("no here")
-    set(ref(db, "Stekjes/" + newPostKey), {
-      id: newPostKey,
-      userId: userId,
-      name: plantName,
-      img: image,
-      location: location,
-      description: description,
-    });
-    navigation.navigate("Feed");
-  // }
+  saveData = async () => {
+    const newPostKey = push(child(ref(db), "Stekjes")).key;
 
-  // useEffect(() => {
-  //   if (route.params) {
-  //     const { plantToEdit } = route.params;
-  //     const {
-  //       plantName: editedPlantName,
-  //       image: editedImage,
-  //       location: editedLocation,
-  //       description: editedDescription,
-  //     } = plantToEdit;
-  //     setName(editedPlantName);
-  //     setImage(editedImage);
-  //     setLocation(editedLocation);
-  //     setDescription(editedDescription);
-  //   }
-  // }, [plantToEdit]);
+    if (plantToEdit !== null) {
+      const updates = {};
+      updates["Stekjes/" + plantToEdit.userId ] = newPlant;
+      update(ref(db), updates);
+      navigation.navigate("Feed", { userId });
+    } else {
+      set(ref(db, "Stekjes/" + newPostKey), {
+        id: newPostKey,
+        userId: userId,
+        name: name,
+        img: img,
+        // location: location,
+        description: description,
+      });
+      navigation.navigate("Feed");
+    }
+  };
+
+  useEffect(() => {
+    if (plantToEdit !== null) {
+      const {
+        name: editedName,
+        img: editedImg,
+        // location: editedLocation,
+        description: editedDescription,
+      } = plantToEdit;
+      setName(editedName);
+      setImg(editedImg);
+      // setLocation(editedLocation);
+      setDescription(editedDescription);
+    }
+  }, [plantToEdit]);
 
   return (
     <View>
       <TextInput
         label="Naam"
-        value={plantName}
-        onChangeText={setPlantName}
+        value={name}
+        onChangeText={setName}
         placeholder="Naam"
       />
       <TextInput
         label="Afbeelding"
-        value={image}
-        onChangeText={setImage}
+        value={img}
+        onChangeText={setImg}
         placeholder="+"
       />
-      <TextInput
+      {/* <TextInput
         label="Locatie"
         value={location}
         onChangeText={setLocation}
         placeholder="Locatie"
-      />
+      /> */}
       <TextInput
         label="Omschrijving"
         value={description}

@@ -1,8 +1,7 @@
 // Register.js
 import React, { useState } from 'react';
-import { View, Text, TextInput, Button, Pressable, StyleSheet, Alert } from 'react-native';
+import { View, Text, TextInput, Pressable, StyleSheet, Alert } from 'react-native';
 import firebaseApp from './firebaseConfig';
-import { View, Text, TextInput, StyleSheet, Alert, Pressable } from 'react-native';
 import{getAuth, createUserWithEmailAndPassword} from 'firebase/auth';
 import {getDatabase, ref, set} from "firebase/database";
 

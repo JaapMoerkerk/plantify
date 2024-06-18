@@ -5,7 +5,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import Dashboard from './dashboard';
 import Register from './Register';
 import Login from './Login';
-import firebase from './firebaseConfig';
+import firebaseApp from './firebaseConfig';
 import FeedScreen from './feedscreen';
 import FeedDetail from './feeddetail';
 import AddPlant from './addPlant';
@@ -41,7 +41,7 @@ const HomeScreen = ({ navigation }) => {
                      </View>
                      <View style={styles.horizontalLine} />
                      <View style={styles.buttonContainer}>
-                    <Button title="Add Plant" onPress={() => navigation.navigate('AddPlant')} />
+                    <Button title="Add Plant" onPress={() => navigation.navigate('AddPlant', {plantToEdit: null})} />
                     <View style={styles.space} />
                    <Button title="Ruilplanten" onPress={() => navigation.navigate('Feed', { userId })} />
                    <View style={styles.space} />

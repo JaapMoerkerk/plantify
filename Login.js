@@ -1,7 +1,4 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, Button, Pressable, StyleSheet, Alert } from 'react-native';
-import firebaseApp from './firebaseConfig';
-import auth from '@react-native-firebase/auth'
 import { View, Text, TextInput, Pressable, StyleSheet, Alert } from 'react-native';
 import firebaseApp from './firebaseConfig';
 import{getAuth, signInWithEmailAndPassword} from 'firebase/auth';
