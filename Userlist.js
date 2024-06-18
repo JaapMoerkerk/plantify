@@ -1,6 +1,6 @@
 // UserList.js
 import React, { useState, useEffect } from 'react';
-import { View, Text, Button, FlatList, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, FlatList, StyleSheet, TouchableOpacity } from 'react-native';
 import firebase from './firebaseConfig';
 
 const UserList = ({ navigation }) => {

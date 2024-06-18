@@ -1,11 +1,11 @@
 // Chat.js
 import React, { useState, useEffect } from 'react';
-import { View, Text, Button, FlatList, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import firebase from './firebaseConfig';
 
 const Chat = ({ navigation, route }) => {
-  const { otherUser } = route.params;
+  const { otherUser } = route.params || {};
   const [currentUser, setCurrentUser] = useState(null);
   const [chatId, setChatId] = useState(null);
 
@@ -18,7 +18,9 @@ const Chat = ({ navigation, route }) => {
     };
 
     getCurrentUser();
+  }, []);
 
+  useEffect(() => {
     if (otherUser && currentUser) {
       const createOrFetchChat = async () => {
         const chatRef = firebase.database().ref('/Chats');
@@ -57,7 +59,7 @@ const Chat = ({ navigation, route }) => {
 
   useEffect(() => {
     if (chatId) {
-      navigation.navigate('ChatScreen', { chatId });
+      navigation.replace('ChatScreen', { chatId });
     }
   }, [chatId]);
 
