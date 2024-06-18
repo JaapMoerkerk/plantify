@@ -1,0 +1,121 @@
+{
+    "option1": {
+      "id": 1,
+      "category": "environment",
+      "sub_category": "sun",
+      "value": "",
+      "image_path": "img/option1.jpg"
+    },
+    "option2": {
+      "id": 2,
+      "category": "environment",
+      "sub_category": "outside",
+      "value": "",
+      "image_path": "img/option2.jpg"
+    },
+    "option3": {
+      "id": 3,
+      "category": "environment",
+      "sub_category": "space",
+      "value": "",
+      "image_path": "img/option3.jpg"
+    },
+    "option4": {
+      "id": 4,
+      "category": "environment",
+      "sub_category": "poisones_to_pets",
+      "value": "",
+      "image_path": "img/option4.jpg"
+    },
+    "option5": {
+      "id": 5,
+      "category": "environment",
+      "sub_category": "pets",
+      "value": "",
+      "image_path": "img/option5.jpg"
+    },
+    "option6": {
+      "id": 6,
+      "category": "preferences",
+      "sub_category": "flowers",
+      "value": "",
+      "image_path": "img/option6.jpg"
+    },
+    "option7": {
+      "id": 7,
+      "category": "preferences",
+      "sub_category": "size",
+      "value": "",
+      "image_path": "img/option7.jpg"
+    },
+    "option8": {
+      "id": 8,
+      "category": "preferences",
+      "sub_category": "sizeleaf",
+      "value": "",
+      "image_path": "img/option8.jpg"
+    },
+    "option9": {
+      "id": 9,
+      "category": "preferences",
+      "sub_category": "thicknessleaf",
+      "value": "",
+      "image_path": "img/option9.jpg"
+    },
+    "option10": {
+      "id": 10,
+      "category": "preferences",
+      "sub_category": "colorleaf",
+      "value": "",
+      "image_path": "img/option10.jpg"
+    },
+    "option11": {
+      "id": 11,
+      "category": "preferences",
+      "sub_category": "edible",
+      "value": "",
+      "image_path": "img/option11.jpg"
+    },
+    "option12": {
+      "id": 12,
+      "category": "care",
+      "sub_category": "water",
+      "value": "",
+      "image_path": "img/option12.jpg"
+    },
+    "option13": {
+      "id": 13,
+      "category": "care",
+      "sub_category": "effort",
+      "value": "",
+      "image_path": "img/option13.jpg"
+    },
+    "option14": {
+      "id": 14,
+      "category": "care",
+      "sub_category": "illness",
+      "value": "",
+      "image_path": "img/option14.jpg"
+    },
+    "option15": {
+      "id": 15,
+      "category": "care",
+      "sub_category": "growth",
+      "value": "",
+      "image_path": "img/option15.jpg"
+    },
+    "option16": {
+      "id": 16,
+      "category": "environment",
+      "sub_category": "space",
+      "value": "",
+      "image_path": "img/option16.jpg"
+    },
+    "option17": {
+      "id": 17,
+      "category": "preferences",
+      "sub_category": "edible",
+      "value": "",
+      "image_path": "img/option17.jpg"
+    }
+  }
