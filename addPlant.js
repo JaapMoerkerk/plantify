@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { Alert, View, Text, Button, StyleSheet } from "react-native";
-import { TextInput } from "react-native-paper";
+import {TextInput} from "react-native-paper";
 import { getDatabase, getInstance, ref, set, get, push, child } from "firebase/database";
+import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
-import FeedScreen from "./feedscreen";
-import firebaseApp from "./firebaseConfig";
+import FeedScreen from './feedscreen';
+import firebaseApp from './firebaseConfig';
 
+//const app = initializeApp(firebaseConfig);
 const db = getDatabase(firebaseApp);
 // const auth = getAuth();
 
@@ -86,4 +88,5 @@ saveData = async () => {
     </View>
   );
 };
+
 export default NewPlant;

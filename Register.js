@@ -2,6 +2,9 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, Button, Pressable, StyleSheet, Alert } from 'react-native';
 import firebaseApp from './firebaseConfig';
+import { View, Text, TextInput, StyleSheet, Alert, Pressable } from 'react-native';
+import{getAuth, createUserWithEmailAndPassword} from 'firebase/auth';
+import {getDatabase, ref, set} from "firebase/database";
 
 const Register = ({ navigation }) => {
   const [email, setEmail] = useState('');
@@ -11,11 +14,13 @@ const Register = ({ navigation }) => {
   const handleRegister = async () => {
     try {
       // Create user with email and password
-      const userCredential = await firebase.auth().createUserWithEmailAndPassword(email, password);
+      const auth = getAuth();
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
 
       // Save user data to Realtime Database
-      await firebase.database().ref(`/users/${user.uid}`).set({
+      const db = getDatabase(firebaseApp)
+      await set(ref(db, `/users/${user.uid}`), {
         email: user.email,
         username: username,
       });
