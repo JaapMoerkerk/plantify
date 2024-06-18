@@ -1,90 +1,61 @@
 import React, { useState, useEffect } from "react";
 import { Alert, View, Text, Button, StyleSheet } from "react-native";
-import {TextInput} from "react-native-paper";
-import { getInstance, ref, set, get, push, child } from "firebase/database";
-import { initializeApp } from "firebase/app";
-import { getDatabase } from "firebase/database";
+import { TextInput } from "react-native-paper";
+import { getDatabase, getInstance, ref, set, get, push, child } from "firebase/database";
 import { getAuth } from "firebase/auth";
-import FeedScreen from './feedscreen';
+import FeedScreen from "./feedscreen";
+import firebaseApp from "./firebaseConfig";
 
-const firebaseConfig = {
-  apiKey: "AIzaSyAILOfAvkTwyP1WRP_9WKPZN0MjmRRdw_8",
-  authDomain: "plantify-50b4e.firebaseapp.com",
-  databaseURL:
-    "https://plantify-50b4e-default-rtdb.europe-west1.firebasedatabase.app",
-  projectId: "plantify-50b4e",
-  storageBucket: "plantify-50b4e.appspot.com",
-  messagingSenderId: "757675160517",
-  appId: "1:757675160517:web:7086074b1a17ab545811ac",
-  databaseURL:
-  "https://plantify-50b4e-default-rtdb.europe-west1.firebasedatabase.app/",
-};
-
-const app = initializeApp(firebaseConfig);
-const db = getDatabase(app);
+const db = getDatabase(firebaseApp);
 // const auth = getAuth();
 
 // const userId = auth.currentUser.uid;
 const userId = 1;
 
-
-const NewPlant = ({ navigation }) => {
+const NewPlant = ({ navigation, route }) => {
   const [plantName, setPlantName] = useState("");
   const [image, setImage] = useState("");
   const [location, setLocation] = useState("");
   const [description, setDescription] = useState("");
+};
 
-  // const newPlant = {
-  //   plantName,
-  //   image,
-  //   location,
-  //   description,
-  // };
-  
-  
-  saveData = async () => {
-  // const dbRef = ref(db);
-  // get(child(dbRef, '/Stekjes/1')).then((snapshot) => {
-    //   if (snapshot.exists()) {
-      //     console.log(snapshot.val());
-      //   } else {
-        //     console.log("No data available");
+saveData = async () => {
+  const newPostKey = push(child(ref(db), "Stekjes")).key;
+
+  // if (route.params) {
+  //   console.log("here")
+  // //   const { id } = plantToEdit;
+  // //   updates["Stekjes/" + id + "/" + newPostKey] = postData;
+  // //   update(ref(db), updates);
+  // } else {
+    console.log("no here")
+    set(ref(db, "Stekjes/" + newPostKey), {
+      id: newPostKey,
+      userId: userId,
+      name: plantName,
+      img: image,
+      location: location,
+      description: description,
+    });
+    navigation.navigate("Feed");
+  // }
+
+  // useEffect(() => {
+  //   if (route.params) {
+  //     const { plantToEdit } = route.params;
+  //     const {
+  //       plantName: editedPlantName,
+  //       image: editedImage,
+  //       location: editedLocation,
+  //       description: editedDescription,
+  //     } = plantToEdit;
+  //     setName(editedPlantName);
+  //     setImage(editedImage);
+  //     setLocation(editedLocation);
+  //     setDescription(editedDescription);
   //   }
-  // }).catch((error) => {
-    //   console.error(error);
-    // });
-        
-    const newPostKey = push(child(ref(db), 'Stekjes')).key;
+  // }, [plantToEdit]);
 
-    set(ref(db, 'Stekjes/' + newPostKey), {
-        id: newPostKey,
-        userId: userId,
-        name: plantName,
-        img: image,
-        location: location,
-        description: description
-      });
-      navigation.navigate('Feed');
-    };
-
-    
-
-    // useEffect(() => {
-    //   if (route.params) {
-    //     const { plantToEdit } = route.params;
-    //     const {
-    //       plantName: editedPlantName,
-    //       image: editedImage,
-    //       location: editedLocation,
-    //       description: editedDescription,
-    //     } = plantToEdit;
-    //     setName(editedPlantName);
-    //     setPhone(editedImage);
-    //     setEmail(editedLocation);
-    //     setCompany(editedDescription);
-    //   }
-    // }, [plantToEdit]);
-    
   return (
     <View>
       <TextInput
@@ -115,5 +86,4 @@ const NewPlant = ({ navigation }) => {
     </View>
   );
 };
-
 export default NewPlant;

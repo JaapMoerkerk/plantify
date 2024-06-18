@@ -1,7 +1,7 @@
 // Register.js
 import React, { useState } from 'react';
 import { View, Text, TextInput, Button, StyleSheet, Alert } from 'react-native';
-import firebase from './firebaseConfig';
+import firebaseApp from './firebaseConfig';
 
 const Register = ({ navigation }) => {
   const [email, setEmail] = useState('');

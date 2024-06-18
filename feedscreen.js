@@ -130,6 +130,11 @@ const FeedScreen = ({ navigation, route }) => {
           {post.img && (
             <Image source={{ uri: post.img }} style={styles.postImage} />
           )}
+          {route.params ? 
+          <Button 
+          title="Edit"
+          onPress={() => navigation.navigate("AddPlant", { post })}
+          />:<></>}
           <Button
             title="Read More"
             onPress={() => navigation.navigate("FeedDetail", { post })}

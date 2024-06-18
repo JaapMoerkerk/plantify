@@ -20,6 +20,7 @@ const Stack = createStackNavigator();
 const userId = 1;
 
 const HomeScreen = ({ navigation }) => {
+  
   return (
     <View style={styles.container}>
       <Button title="Go to Dashboard" onPress={() => navigation.navigate('Dashboard')} />
