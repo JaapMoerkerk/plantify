@@ -1,0 +1,113 @@
+// ChatScreen.js
+import React, { useState, useEffect } from 'react';
+import { View, Text, TextInput, Button, FlatList, StyleSheet } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import firebase from './firebaseConfig';
+
+const ChatScreen = ({ route }) => {
+  const { chatId } = route.params;
+  const [message, setMessage] = useState('');
+  const [messages, setMessages] = useState([]);
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    const getUser = async () => {
+      const userData = await AsyncStorage.getItem('user');
+      if (userData) {
+        setUser(JSON.parse(userData));
+      }
+    };
+
+    getUser();
+
+    if (chatId) {
+      const messagesRef = firebase.database().ref(`/Chats/${chatId}/messages`);
+      messagesRef.on('value', (snapshot) => {
+        const data = snapshot.val() || {};
+        const formattedMessages = Object.keys(data).map(key => ({
+          id: key,
+          ...data[key]
+        }));
+        setMessages(formattedMessages);
+      });
+
+      return () => messagesRef.off();
+    }
+  }, [chatId]);
+
+  const handleSend = () => {
+    if (message.length > 0 && user) {
+      const messagesRef = firebase.database().ref(`/Chats/${chatId}/messages`);
+      const newMessage = {
+        sender: user.uid,
+        content: message,
+        timestamp: Date.now()
+      };
+      messagesRef.push(newMessage);
+      setMessage('');
+    }
+  };
+
+  return (
+    <View style={styles.container}>
+      <FlatList
+        data={messages}
+        keyExtractor={(item) => item.id}
+        renderItem={({ item }) => (
+          <View style={styles.messageContainer}>
+            <Text style={styles.messageSender}>{item.sender}</Text>
+            <Text style={styles.messageContent}>{item.content}</Text>
+            <Text style={styles.messageTimestamp}>{new Date(item.timestamp).toLocaleTimeString()}</Text>
+          </View>
+        )}
+      />
+      <View style={styles.inputContainer}>
+        <TextInput
+          style={styles.input}
+          value={message}
+          onChangeText={setMessage}
+          placeholder="Type your message..."
+        />
+        <Button title="Send" onPress={handleSend} />
+      </View>
+    </View>
+  );
+};
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'space-between',
+  },
+  messageContainer: {
+    padding: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: '#ccc',
+  },
+  messageSender: {
+    fontWeight: 'bold',
+  },
+  messageContent: {
+    marginVertical: 5,
+  },
+  messageTimestamp: {
+    fontSize: 10,
+    color: 'gray',
+  },
+  inputContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    padding: 10,
+    borderTopWidth: 1,
+    borderTopColor: '#ccc',
+  },
+  input: {
+    flex: 1,
+    borderWidth: 1,
+    borderColor: '#ccc',
+    padding: 10,
+    marginRight: 10,
+  },
+});
+
+export default ChatScreen;

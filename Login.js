@@ -1,6 +1,5 @@
-// Login.js
 import React, { useState } from 'react';
-import { View, Text, TextInput, Button, StyleSheet, Alert } from 'react-native';
+import { View, Text, TextInput, Button, Pressable, StyleSheet, Alert } from 'react-native';
 import firebaseApp from './firebaseConfig';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -26,51 +25,67 @@ const Login = ({ navigation }) => {
       <Text style={styles.title}>Login</Text>
       <TextInput
         style={styles.input}
-        placeholder="Email"
+        placeholder="E-mailadres"
         value={email}
         onChangeText={setEmail}
         keyboardType="email-address"
       />
       <TextInput
         style={styles.input}
-        placeholder="Password"
+        placeholder="Wachtwoord"
         value={password}
         onChangeText={setPassword}
         secureTextEntry
       />
-      <Button title="Login" onPress={handleLogin} />
+      <Pressable style={styles.button} onPress={handleLogin}>
+              <Text style={styles.buttonText}>Login</Text>
+            </Pressable>
       <Text
         style={styles.registerText}
         onPress={() => navigation.navigate('Register')}
       >
-        Don't have an account? Register
+        Nog geen account? Klik hier.
       </Text>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    padding: 16,
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    textAlign: 'center',
-    marginBottom: 24,
-  },
-  input: {
-    borderWidth: 1,
-    borderColor: '#ccc',
-    padding: 8,
-    marginBottom: 16,
-    borderRadius: 4,
-  },
+    container: {
+      flex: 1,
+      justifyContent: 'center',
+      padding: 16,
+      backgroundColor: '#e07a5f'
+    },
+    title: {
+      fontSize: 24,
+      fontWeight: 'bold',
+      textAlign: 'center',
+      marginBottom: 24,
+      color: '#fff',
+    },
+    input: {
+      borderWidth: 1,
+      borderColor: '#fff',
+      padding: 8,
+      marginBottom: 16,
+      borderRadius: 15,
+      backgroundColor: '#fff',
+    },
+    button: {
+        backgroundColor: '#f0c6ba',
+        padding: 15,
+        borderRadius: 15,
+        alignItems: 'center',
+      },
+      buttonText: {
+        color: '#000',
+        fontSize: 16,
+        fontWeight: 'bold',
+      },
   registerText: {
     marginTop: 16,
-    color: 'blue',
+    color: '#fff',
     textAlign: 'center',
   },
 });

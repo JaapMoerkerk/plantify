@@ -1,6 +1,6 @@
 // Register.js
 import React, { useState } from 'react';
-import { View, Text, TextInput, Button, StyleSheet, Alert } from 'react-native';
+import { View, Text, TextInput, Button, Pressable, StyleSheet, Alert } from 'react-native';
 import firebaseApp from './firebaseConfig';
 
 const Register = ({ navigation }) => {
@@ -20,39 +20,41 @@ const Register = ({ navigation }) => {
         username: username,
       });
 
-      Alert.alert('Success', 'Account created successfully');
+      Alert.alert('Gelukt!', 'Je wordt nu omgeleid naar de login pagina.');
       navigation.navigate('Login'); // Navigate to login screen after successful registration
     } catch (error) {
       console.error(error);
-      Alert.alert('Error', error.message);
+      Alert.alert('Fout opgetreden', 'Er ging helaas iets mis bij het registeren. Error:' + error.message);
     }
   };
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Register</Text>
+      <Text style={styles.title}>Registreren als nieuwe gebruiker</Text>
       <TextInput
         style={styles.input}
-        placeholder="Username"
+        placeholder="Gebruikersnaam"
         value={username}
         onChangeText={setUsername}
       />
       <TextInput
         style={styles.input}
-        placeholder="Email"
+        placeholder="E-mailadres"
         value={email}
         onChangeText={setEmail}
         keyboardType="email-address"
       />
       <TextInput
         style={styles.input}
-        placeholder="Password"
+        placeholder="Wachtwoord"
         value={password}
         onChangeText={setPassword}
         secureTextEntry
       />
-      <Button title="Register" onPress={handleRegister} />
-    </View>
+      <Pressable style={styles.button} onPress={handleRegister}>
+        <Text style={styles.buttonText}>Registreren</Text>
+      </Pressable>
+      </View>
   );
 };
 
@@ -61,20 +63,34 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     padding: 16,
+    backgroundColor: '#e07a5f'
   },
   title: {
     fontSize: 24,
     fontWeight: 'bold',
     textAlign: 'center',
     marginBottom: 24,
+    color: '#fff',
   },
   input: {
     borderWidth: 1,
-    borderColor: '#ccc',
+    borderColor: '#fff',
     padding: 8,
     marginBottom: 16,
-    borderRadius: 4,
+    borderRadius: 15,
+    backgroundColor: '#fff',
   },
+  button: {
+      backgroundColor: '#f0c6ba',
+      padding: 15,
+      borderRadius: 15,
+      alignItems: 'center',
+    },
+    buttonText: {
+      color: '#000',
+      fontSize: 16,
+      fontWeight: 'bold',
+    },
 });
 
 export default Register;
