@@ -1,30 +1,30 @@
 // Dashboard.js
-import React, { useEffect, useState } from 'react';
-import { View, Text, Button, StyleSheet } from 'react-native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import firebase from './firebaseConfig';
+import React, { useEffect, useState } from "react";
+import { View, Text, Button, StyleSheet } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import firebase from "./firebaseConfig";
 
 const Dashboard = ({ navigation }) => {
   const [user, setUser] = useState(null);
-  const [username, setUsername] = useState('');
+  const [username, setUsername] = useState("");
 
   useEffect(() => {
     const getUser = async () => {
       try {
-        const userData = await AsyncStorage.getItem('user');
+        const userData = await AsyncStorage.getItem("user");
         if (userData) {
           const user = JSON.parse(userData);
           setUser(user);
           // Fetch user details from Firebase
           const userRef = firebase.database().ref(`/users/${user.uid}`);
-          userRef.on('value', (snapshot) => {
+          userRef.on("value", (snapshot) => {
             const data = snapshot.val();
             if (data) {
               setUsername(data.username);
             }
           });
         } else {
-          navigation.replace('Home');
+          navigation.replace("Home");
         }
       } catch (error) {
         console.error(error);
@@ -37,15 +37,15 @@ const Dashboard = ({ navigation }) => {
   const handleLogout = async () => {
     try {
       await firebase.auth().signOut();
-      await AsyncStorage.removeItem('user');
-      navigation.replace('Home'); // Replace current screen with Home screen
+      await AsyncStorage.removeItem("user");
+      navigation.replace("Home"); // Replace current screen with Home screen
     } catch (error) {
       console.error(error);
     }
   };
 
   const handleChat = () => {
-    navigation.navigate('UserList');
+    navigation.navigate("UserList");
   };
 
   return (
@@ -56,6 +56,17 @@ const Dashboard = ({ navigation }) => {
           <Text style={styles.text}>Username: {username}</Text>
           <Button title="Logout" onPress={handleLogout} />
           <Button title="Chat" onPress={handleChat} />
+          <Button
+            title="Add Plant"
+            onPress={() =>
+              navigation.navigate("AddPlant", { plantToEdit: null })
+            }
+          />
+          <View style={styles.space} />
+          <Button
+            title="Ruilplanten"
+            onPress={() => navigation.navigate("Feed", { userId: user.uid })}
+          />
         </>
       ) : (
         <Text style={styles.text}>You are not logged in</Text>
@@ -67,8 +78,8 @@ const Dashboard = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
   },
   text: {
     fontSize: 18,

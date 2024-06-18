@@ -15,12 +15,10 @@ import { getAuth } from "firebase/auth";
 import FeedScreen from "./feedscreen";
 import firebaseApp from "./firebaseConfig";
 
-//const app = initializeApp(firebaseConfig);
 const db = getDatabase(firebaseApp);
-// const auth = getAuth();
 
-// const userId = auth.currentUser.uid;
-const userId = 1;
+const auth = getAuth();
+const userId = auth.currentUser.uid;
 
 const NewPlant = ({ navigation, route }) => {
   const [name, setName] = useState("");
@@ -28,21 +26,23 @@ const NewPlant = ({ navigation, route }) => {
   const [description, setDescription] = useState("");
   const { plantToEdit } = route.params;
 
-  const newPlant = {
-    name,
-    userId,
-    img,
-    description
-  }
+  
 
   saveData = async () => {
     const newPostKey = push(child(ref(db), "Stekjes")).key;
 
     if (plantToEdit !== null) {
+      const newPlant = {
+        id: plantToEdit.id,
+        name,
+        userId,
+        img,
+        description
+      }
+
       const updates = {};
-      updates["Stekjes/" + plantToEdit.userId ] = newPlant;
+      updates["Stekjes/" + plantToEdit.id ] = newPlant;
       update(ref(db), updates);
-      navigation.navigate("Feed", { userId });
     } else {
       set(ref(db, "Stekjes/" + newPostKey), {
         id: newPostKey,
@@ -51,8 +51,8 @@ const NewPlant = ({ navigation, route }) => {
         img: img,
         description: description,
       });
-      navigation.navigate("Feed");
     }
+    navigation.navigate("Feed", { userId });
   };
 
   useEffect(() => {
