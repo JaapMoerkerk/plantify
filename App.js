@@ -10,6 +10,7 @@ import FeedScreen from './feedscreen';
 import FeedDetail from './feeddetail';
 import ChatScreen from './Chatscreen'; // Importing the new ChatScreen
 import Chat from './Chat'; // Importing the new Chat/
+import UserList from './Userlist';
 
 const Stack = createStackNavigator();
 
@@ -56,6 +57,7 @@ const App = () => {
         <Stack.Screen name="Login" component={Login} />
         <Stack.Screen name="ChatScreen" component={ChatScreen} /> 
         <Stack.Screen name="Chat" component={Chat} />
+        <Stack.Screen name="UserList" component={UserList} />
       </Stack.Navigator>
     </NavigationContainer>
   );

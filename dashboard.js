@@ -45,7 +45,7 @@ const Dashboard = ({ navigation }) => {
   };
 
   const handleChat = () => {
-    navigation.navigate('ChatScreen');
+    navigation.navigate('UserList');
   };
 
   return (

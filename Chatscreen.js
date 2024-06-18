@@ -1,108 +1,75 @@
-import React, { useEffect, useState } from 'react';
-import { View, Text, Button, StyleSheet } from 'react-native';
+// ChatScreen.js
+import React, { useState, useEffect } from 'react';
+import { View, Text, TextInput, Button, FlatList, StyleSheet } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import firebase from './firebaseConfig';
 
-
-/* werkt nog niet*/
-const ChatScreen = ({ navigation }) => {
-  const [users, setUsers] = useState([]);
-  const [existingChats, setExistingChats] = useState([]);
+const ChatScreen = ({ route }) => {
+  const { chatId } = route.params;
+  const [message, setMessage] = useState('');
+  const [messages, setMessages] = useState([]);
+  const [user, setUser] = useState(null);
 
   useEffect(() => {
-    const fetchUsers = async () => {
-      try {
-        const usersSnapshot = await firebase.database().ref('users').once('value');
-        const usersData = usersSnapshot.val();
-        const usersArray = usersData ? Object.values(usersData) : [];
-        setUsers(usersArray);
-      } catch (error) {
-        console.error(error);
+    const getUser = async () => {
+      const userData = await AsyncStorage.getItem('user');
+      if (userData) {
+        setUser(JSON.parse(userData));
       }
     };
 
-    fetchUsers();
-  }, []);
+    getUser();
 
-  useEffect(() => {
-    const fetchExistingChats = async () => {
-      try {
-        const currentUser = firebase.auth().currentUser;
-        if (!currentUser) return;
-
-        const currentUserUid = currentUser.uid;
-        const chatsRef = firebase.database().ref('Chats');
-        const chatsSnapshot = await chatsRef.once('value');
-        const chats = [];
-
-        chatsSnapshot.forEach((chat) => {
-          const participants = Object.keys(chat.val().participants);
-          if (participants.includes(currentUserUid)) {
-            const otherParticipant = participants.find(id => id !== currentUserUid);
-            chats.push({ userId: otherParticipant, chatId: chat.key });
-          }
-        });
-
-        setExistingChats(chats);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-
-    fetchExistingChats();
-  }, []);
-
-  const createOrOpenChat = async (userId) => {
-    try {
-      const currentUser = firebase.auth().currentUser;
-      if (!currentUser) {
-        console.log("User is not authenticated");
-        return;
-      }
-  
-      let chatId = null;
-      const chatsRef = firebase.database().ref('Chats');
-      const chatsSnapshot = await chatsRef.once('value');
-  
-      chatsSnapshot.forEach((chat) => {
-        const participants = chat.val().participants; // Get the participants object
-        if (participants[currentUser.uid] && participants[userId]) {
-          chatId = chat.key;
-          return;
-        }
+    if (chatId) {
+      const messagesRef = firebase.database().ref(`/Chats/${chatId}/messages`);
+      messagesRef.on('value', (snapshot) => {
+        const data = snapshot.val() || {};
+        const formattedMessages = Object.keys(data).map(key => ({
+          id: key,
+          ...data[key]
+        }));
+        setMessages(formattedMessages);
       });
-  
-      if (chatId) {
-        console.log("Existing chat found. Navigating to chatId:", chatId);
-        navigation.navigate('Chat', { chatId });
-      } else {
-        console.log("No existing chat found. Creating new chat");
-        const newChatRef = chatsRef.push();
-        chatId = newChatRef.key;
-        const participants = {
-          [currentUser.uid]: true,
-          [userId]: true,
-        };
-        await newChatRef.set({ participants });
-        console.log("New chat created. Navigating to chatId:", chatId);
-        navigation.navigate('Chat', { chatId });
-      }
-    } catch (error) {
-      console.error(error);
+
+      return () => messagesRef.off();
+    }
+  }, [chatId]);
+
+  const handleSend = () => {
+    if (message.length > 0 && user) {
+      const messagesRef = firebase.database().ref(`/Chats/${chatId}/messages`);
+      const newMessage = {
+        sender: user.uid,
+        content: message,
+        timestamp: Date.now()
+      };
+      messagesRef.push(newMessage);
+      setMessage('');
     }
   };
-  
 
   return (
     <View style={styles.container}>
-      <Text>Users Available for Chat</Text>
-      {users.map(user => (
-        <Button
-          key={user.userId}
-          title={existingChats.some(chat => chat.userId === user.userId) ? `Open Chat with ${user.username}` : `Start Chat with ${user.username}`}
-          onPress={() => createOrOpenChat(user.userId)}
-          color={existingChats.some(chat => chat.userId === user.userId) ? "green" : "blue"}
+      <FlatList
+        data={messages}
+        keyExtractor={(item) => item.id}
+        renderItem={({ item }) => (
+          <View style={styles.messageContainer}>
+            <Text style={styles.messageSender}>{item.sender}</Text>
+            <Text style={styles.messageContent}>{item.content}</Text>
+            <Text style={styles.messageTimestamp}>{new Date(item.timestamp).toLocaleTimeString()}</Text>
+          </View>
+        )}
+      />
+      <View style={styles.inputContainer}>
+        <TextInput
+          style={styles.input}
+          value={message}
+          onChangeText={setMessage}
+          placeholder="Type your message..."
         />
-      ))}
+        <Button title="Send" onPress={handleSend} />
+      </View>
     </View>
   );
 };
@@ -110,8 +77,36 @@ const ChatScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
+    justifyContent: 'space-between',
+  },
+  messageContainer: {
+    padding: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: '#ccc',
+  },
+  messageSender: {
+    fontWeight: 'bold',
+  },
+  messageContent: {
+    marginVertical: 5,
+  },
+  messageTimestamp: {
+    fontSize: 10,
+    color: 'gray',
+  },
+  inputContainer: {
+    flexDirection: 'row',
     alignItems: 'center',
+    padding: 10,
+    borderTopWidth: 1,
+    borderTopColor: '#ccc',
+  },
+  input: {
+    flex: 1,
+    borderWidth: 1,
+    borderColor: '#ccc',
+    padding: 10,
+    marginRight: 10,
   },
 });
 
