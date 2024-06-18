@@ -25,7 +25,6 @@ const userId = 1;
 const NewPlant = ({ navigation, route }) => {
   const [name, setName] = useState("");
   const [img, setImg] = useState("");
-  // const [location, setLocation] = useState("");
   const [description, setDescription] = useState("");
   const { plantToEdit } = route.params;
 
@@ -33,7 +32,6 @@ const NewPlant = ({ navigation, route }) => {
     name,
     userId,
     img,
-    // location,
     description
   }
 
@@ -51,7 +49,6 @@ const NewPlant = ({ navigation, route }) => {
         userId: userId,
         name: name,
         img: img,
-        // location: location,
         description: description,
       });
       navigation.navigate("Feed");
@@ -63,12 +60,10 @@ const NewPlant = ({ navigation, route }) => {
       const {
         name: editedName,
         img: editedImg,
-        // location: editedLocation,
         description: editedDescription,
       } = plantToEdit;
       setName(editedName);
       setImg(editedImg);
-      // setLocation(editedLocation);
       setDescription(editedDescription);
     }
   }, [plantToEdit]);
@@ -87,19 +82,17 @@ const NewPlant = ({ navigation, route }) => {
         onChangeText={setImg}
         placeholder="+"
       />
-      {/* <TextInput
-        label="Locatie"
-        value={location}
-        onChangeText={setLocation}
-        placeholder="Locatie"
-      /> */}
       <TextInput
         label="Omschrijving"
         value={description}
         onChangeText={setDescription}
         placeholder="Omschrijving"
       />
-      <Button title="Add Plant!" onPress={this.saveData} />
+      {plantToEdit !== null ? 
+      <Button title="Wijzig plant" onPress={this.saveData} />:
+      <Button title="Voeg plant toe!" onPress={this.saveData} />
+      }
+      
     </View>
   );
 };

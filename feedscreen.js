@@ -7,13 +7,22 @@ import {
   ScrollView,
   TouchableOpacity,
   Image,
+  Alert
 } from "react-native";
+import {
+  getDatabase,
+  ref,
+  remove,
+  child,
+} from "firebase/database";
+import firebaseApp from "./firebaseConfig";
 
 const FeedScreen = ({ navigation, route }) => {
   const [posts, setPosts] = useState([]);
   const [tags, setTags] = useState([]);
   const [selectedTag, setSelectedTag] = useState(null);
   const [allPosts, setAllPosts] = useState([]); // Add state to hold all posts
+  const [value, setValue] = useState(); //reload for delete
 
   // Fetch data from Firebase Realtime Database
   useEffect(() => {
@@ -78,7 +87,22 @@ const FeedScreen = ({ navigation, route }) => {
     fetchData();
     })
     return unsubscribe;
-  }, [navigation]);
+  }, [navigation, value]);
+
+  const deletePlant = (id) => {
+    // console.log(id)
+    const db = getDatabase(firebaseApp);
+    remove(child(ref(db), "Stekjes/" + id));
+    setValue(value + 1);
+  }
+
+  const showConfirmation = (id) => {
+    Alert.alert(
+      'Weet je zeker dat je deze plant wilt verwijderen?',
+      'Deze actie is permanent',
+      [{text: 'Back'}, {text: 'Ja, verwijder', onPress: () => deletePlant(id)}],
+    );
+  };
 
   const filterPostsByTag = async (tagId) => {
     if (selectedTag === tagId) {
@@ -135,11 +159,16 @@ const FeedScreen = ({ navigation, route }) => {
           )}
           {route.params ? 
           <Button 
-          title="Edit"
+          title="Bewerk"
           onPress={() => navigation.navigate("AddPlant", { plantToEdit: post })}
           />:<></>}
+          {route.params ? 
+          <Button 
+          title="Verwijder"
+          onPress={() => showConfirmation(post.id)}
+          />:<></>}
           <Button
-            title="Read More"
+            title="Lees meer"
             onPress={() => navigation.navigate("FeedDetail", { post })}
             style={styles.readMoreButton}
           />
