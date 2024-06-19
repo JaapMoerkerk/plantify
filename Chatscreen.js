@@ -10,7 +10,6 @@ import {
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import firebaseApp from "./firebaseConfig";
-import { getAuth } from "firebase/auth";
 import {
   getDatabase,
   ref,
@@ -21,7 +20,6 @@ import {
 } from "firebase/database";
 
 const db = getDatabase(firebaseApp);
-const auth = getAuth();
 
 const ChatScreen = ({ route }) => {
   const { chatId } = route.params;
@@ -39,7 +37,7 @@ const ChatScreen = ({ route }) => {
     };
 
     getUser();
-
+    
     if (chatId) {
       const messagesRef = ref(db, `/Chats/${chatId}/messages`)
       onValue(messagesRef, (snapshot) => {

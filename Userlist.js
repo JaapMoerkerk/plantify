@@ -52,11 +52,11 @@ const UserList = ({ navigation }) => {
 
   const handleSelectUser = async (selectedUser) => {
     if (currentUser) {
-      get(child(ref(db), "/Chats"))
+      let chatId = null;
+      await get(child(ref(db), "/Chats"))
         .then((snapshot) => {
           if (snapshot.exists()) {
-            const chats = chatsSnapshot.val() || {};
-            let chatId = null;
+            const chats = snapshot.val() || {};
 
             for (const key in chats) {
               const chat = chats[key];
@@ -85,8 +85,8 @@ const UserList = ({ navigation }) => {
           },
           messages: {},
         });
+        chatId = newChatId;
       }
-
       navigation.navigate("ChatScreen", { chatId });
     }
   };
