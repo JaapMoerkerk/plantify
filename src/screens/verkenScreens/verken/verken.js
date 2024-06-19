@@ -5,7 +5,8 @@ import ButtonBox from '../../../components/button-box/buttonBox.js';
 import Footer from '../../../components/footer/footer.js';
 import styles from './verkenStyle';
 import kNear from "./knear";
-import {Pressable, ScrollView, Text, TextInput, View} from "react-native";
+import {Alert, Pressable, ScrollView, Text, TextInput, View} from "react-native";
+import SwipeBox from "../../../components/swipeBox/SwipeBox";
 // bij verkenScreens kan je alle onderdelen vinden die te maken hebben de Plantverkennert, die voorheen plantswiper heette
 
 const Verken = ({ navigation }) => {
@@ -67,29 +68,45 @@ const Verken = ({ navigation }) => {
         }
     }
 
+    const handleSwipeLeft = () => {
+        Alert.alert('Swiped Left', 'You swiped the card to the left!');
+    };
+
+    // Function to handle right swipe
+    const handleSwipeRight = () => {
+        Alert.alert('Swiped Right', 'You swiped the card to the right!');
+    };
+
 
     return (
         <Container>
             <Navbar/>
             {/*<Text>This is the prediction: {plantData}</Text>*/}
-            <Text>This is the prediction: {prediction}</Text>
-            <Text>This is the prediction data: {predictionData}</Text>
-            <Text>This is the prediction data: {inputValues}</Text>
-            <Pressable onPress={makePrediction}>
-                <Text>classify prediction</Text>
-            </Pressable>
-            <ScrollView>
-                {inputValues.map((value, index) => (
-                    <View key={index} style={{ flexDirection: 'row', alignItems: 'center' }}>
-                        <TextInput
-                            value={String(value)}
-                            onChangeText={(text) => handleInputChange(index, text)}
-                            keyboardType="numeric"
-                            style={{ borderWidth: 1, margin: 5, padding: 5 }}
-                        />
-                    </View>
-                ))}
-            </ScrollView>
+            {/*<Text>This is the prediction: {prediction}</Text>*/}
+            {/*<Text>This is the prediction data: {predictionData}</Text>*/}
+            {/*<Text>This is the prediction data: {inputValues}</Text>*/}
+            {/*<Pressable onPress={makePrediction}>*/}
+            {/*    <Text>classify prediction</Text>*/}
+            {/*</Pressable>*/}
+            {/*<ScrollView>*/}
+            {/*    {inputValues.map((value, index) => (*/}
+            {/*        <View key={index} style={{ flexDirection: 'row', alignItems: 'center' }}>*/}
+            {/*            <TextInput*/}
+            {/*                value={String(value)}*/}
+            {/*                onChangeText={(text) => handleInputChange(index, text)}*/}
+            {/*                keyboardType="numeric"*/}
+            {/*                style={{ borderWidth: 1, margin: 5, padding: 5 }}*/}
+            {/*            />*/}
+            {/*        </View>*/}
+            {/*    ))}*/}
+            {/*</ScrollView>*/}
+            <SwipeBox
+                text="This is a sample text"
+                img="https://example.com/sample-image.jpg"
+                onSwipeLeft={handleSwipeLeft}
+                onSwipeRight={handleSwipeRight}
+            />
+
             <Footer/>
         </Container>
     )
