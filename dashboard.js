@@ -1,29 +1,36 @@
 import React from 'react';
 import { View, Text, Button, StyleSheet, Pressable } from 'react-native';
+import Navbar from '../../../components/navbar/navbar.js';
 
 const Dashboard = ({ navigation }) => {
 
   return (
-    <View style={styles.containerMain}>
 
-      <Pressable onPress={() => navigation.navigate('test')}>
-        <View style={styles.marketBox} >
-          <Text> Ruil kas </Text>
-        </View>
-      </Pressable>
+    <View>
 
-      <Pressable onPress={() => navigation.navigate('test1')}>
-        <View style={styles.plantfinderBox}>
-          <Text> Plant verkenner </Text>
-        </View>
-      </Pressable>
+      <Navbar />
 
-      <Pressable onPress={() => navigation.navigate('test2')}>
-        <View style={styles.galleryBox}>
-          <Text> Mijn kas </Text>
-        </View>
-      </Pressable>
+      <View style={styles.containerMain}>
 
+        <Pressable onPress={() => navigation.navigate('test')}>
+          <View style={styles.marketBox} >
+            <Text> Ruil kas </Text>
+          </View>
+        </Pressable>
+
+        <Pressable onPress={() => navigation.navigate('test1')}>
+          <View style={styles.plantfinderBox}>
+            <Text> Plant verkennert </Text>
+          </View>
+        </Pressable>
+
+        <Pressable onPress={() => navigation.navigate('test2')}>
+          <View style={styles.galleryBox}>
+            <Text> Mijn veranda </Text>
+          </View>
+        </Pressable>
+
+      </View>
     </View>
   );
 };
