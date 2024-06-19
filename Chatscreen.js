@@ -28,41 +28,17 @@ const db = getDatabase(firebaseApp);
 const auth = getAuth();
 
 const ChatScreen = ({ route }) => {
-  const { chatId, otherUser } = route.params;
-  const [message, setMessage] = useState("");
+  const { chatId } = route.params;
+  const [message, setMessage] = useState('');
   const [messages, setMessages] = useState([]);
   const [user, setUser] = useState(null);
-  const [thisUsername, setThisUsername] = useState("");
-  const [otherUsername, setOtherUsername] = useState("");
+  const [usersMap, setUsersMap] = useState({});
 
-  useEffect((route) => {
+  useEffect(() => {
     const getUser = async () => {
-      const userData = await AsyncStorage.getItem("user");
+      const userData = await AsyncStorage.getItem('user');
       if (userData) {
         setUser(JSON.parse(userData));
-        await get(child(ref(db), `users/${user.uid}`))
-          .then((snapshot) => {
-            if (snapshot.exists()) {
-              setThisUsername(snapshot.val().username);
-            } else {
-              console.log("No data available");
-            }
-          })
-          .catch((error) => {
-            console.error(error);
-          });
-
-          awaitget(child(ref(db), `users/${otherUser}`))
-          .then((snapshot) => {
-            if (snapshot.exists()) {
-              setOtherUsername(snapshot.val().username);
-            } else {
-              console.log("No data available");
-            }
-          })
-          .catch((error) => {
-            console.error(error);
-          });
       }
     };
 
@@ -84,6 +60,24 @@ const ChatScreen = ({ route }) => {
     }
   }, [chatId]);
 
+  useEffect(() => {
+    const usersRef = firebase.database().ref('/users');
+    usersRef.on('value', (snapshot) => {
+      const data = snapshot.val() || {};
+      const usersList = Object.keys(data).map(key => ({
+        uid: key,
+        ...data[key]
+      }));
+      const usersMap = {};
+      usersList.forEach(user => {
+        usersMap[user.uid] = user.username;
+      });
+      setUsersMap(usersMap);
+    });
+
+    return () => usersRef.off();
+  }, []);
+
   const handleSend = () => {
     if (message.length > 0 && user) {
       const newMessageKey = push(
@@ -98,6 +92,10 @@ const ChatScreen = ({ route }) => {
     }
   };
 
+  const getUsername = (uid) => {
+    return usersMap[uid] || 'Unknown';
+  };
+
   return (
     <View style={styles.container}>
       <FlatList
@@ -105,14 +103,9 @@ const ChatScreen = ({ route }) => {
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => (
           <View style={styles.messageContainer}>
-            {item.sender === user.uid ? 
-            <Text style={styles.messageSender}>{thisUsername}</Text>:
-            <Text style={styles.messageSender}>{otherUsername}</Text>
-            }
+            <Text style={styles.messageSender}>{getUsername(item.sender)}</Text>
             <Text style={styles.messageContent}>{item.content}</Text>
-            <Text style={styles.messageTimestamp}>
-              {new Date(item.timestamp).toLocaleTimeString()}
-            </Text>
+            <Text style={styles.messageTimestamp}>{new Date(item.timestamp).toLocaleTimeString()}</Text>
           </View>
         )}
       />
@@ -132,34 +125,34 @@ const ChatScreen = ({ route }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "space-between",
+    justifyContent: 'space-between',
   },
   messageContainer: {
     padding: 10,
     borderBottomWidth: 1,
-    borderBottomColor: "#ccc",
+    borderBottomColor: '#ccc',
   },
   messageSender: {
-    fontWeight: "bold",
+    fontWeight: 'bold',
   },
   messageContent: {
     marginVertical: 5,
   },
   messageTimestamp: {
     fontSize: 10,
-    color: "gray",
+    color: 'gray',
   },
   inputContainer: {
-    flexDirection: "row",
-    alignItems: "center",
+    flexDirection: 'row',
+    alignItems: 'center',
     padding: 10,
     borderTopWidth: 1,
-    borderTopColor: "#ccc",
+    borderTopColor: '#ccc',
   },
   input: {
     flex: 1,
     borderWidth: 1,
-    borderColor: "#ccc",
+    borderColor: '#ccc',
     padding: 10,
     marginRight: 10,
   },

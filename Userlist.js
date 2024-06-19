@@ -47,22 +47,48 @@ const UserList = ({ navigation }) => {
         .catch((error) => {
           console.error(error);
         });
-        
+
       return () => usersRef.off();
     };
 
     fetchUsers();
   }, []);
 
-  const handleSelectUser = async (user) => {
-    // Navigate to Chat screen with the selected user's UID
-    navigation.navigate("Chat", { otherUser: user });
+  const handleSelectUser = async (selectedUser) => {
+    if (currentUser) {
+      const chatRef = firebase.database().ref('/Chats');
+      const chatsSnapshot = await chatRef.once('value');
+      const chats = chatsSnapshot.val() || {};
+      let chatId = null;
+
+      for (const key in chats) {
+        const chat = chats[key];
+        if (chat.participants[currentUser.uid] && chat.participants[selectedUser.uid]) {
+          chatId = key;
+          break;
+        }
+      }
+
+      if (!chatId) {
+        const newChatRef = chatRef.push();
+        chatId = newChatRef.key;
+        newChatRef.set({
+          participants: {
+            [currentUser.uid]: true,
+            [selectedUser.uid]: true,
+          },
+          messages: {},
+        });
+      }
+
+      navigation.navigate('ChatScreen', { chatId });
+    }
   };
 
   return (
     <View style={styles.container}>
       <FlatList
-        data={users.filter((user) => user.uid !== currentUser?.uid)}
+        data={users.filter(user => user.uid !== currentUser?.uid)}
         keyExtractor={(item) => item.uid}
         renderItem={({ item }) => (
           <TouchableOpacity
@@ -85,10 +111,10 @@ const styles = StyleSheet.create({
   userContainer: {
     padding: 10,
     borderBottomWidth: 1,
-    borderBottomColor: "#ccc",
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
+    borderBottomColor: '#ccc',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
   },
   username: {
     fontSize: 18,

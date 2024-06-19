@@ -1,4 +1,3 @@
-// Chat.js
 import React, { useState, useEffect } from "react";
 import { View, Text, StyleSheet } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -24,7 +23,7 @@ const Chat = ({ navigation, route }) => {
 
   useEffect(() => {
     const getCurrentUser = async () => {
-      const userData = await AsyncStorage.getItem("user");
+      const userData = await AsyncStorage.getItem('user');
       if (userData) {
         setCurrentUser(JSON.parse(userData));
       }
@@ -78,7 +77,7 @@ const Chat = ({ navigation, route }) => {
 
   useEffect(() => {
     if (chatId) {
-      navigation.replace("ChatScreen", { chatId, otherUser: otherUser });
+      navigation.replace('ChatScreen', { chatId });
     }
   }, [chatId]);
 
