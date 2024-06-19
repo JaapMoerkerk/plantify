@@ -11,35 +11,42 @@ const SwipeBox = ({ text, img, onSwipeLeft, onSwipeRight }) => {
     const panResponder = PanResponder.create({
         onMoveShouldSetPanResponder: (evt, gestureState) => true,
         onPanResponderMove: (evt, gestureState) => {
-            pan.setValue({ x: gestureState.dx, y: gestureState.dy });
-            if (gestureState.dx > 0) {
-                bgColor.setValue(gestureState.dx / SCREEN_WIDTH);
+            const dx = gestureState.dx;
+            pan.setValue({ x: dx, y: 0 });  // Restrict to horizontal movement
+
+            if (dx > 0) {
+                bgColor.setValue(dx / SCREEN_WIDTH);
             } else {
-                bgColor.setValue(-gestureState.dx / SCREEN_WIDTH);
+                bgColor.setValue(dx / SCREEN_WIDTH);
             }
         },
         onPanResponderRelease: (evt, gestureState) => {
             if (gestureState.dx > SWIPE_THRESHOLD) {
                 Animated.timing(pan, {
-                    toValue: { x: SCREEN_WIDTH, y: gestureState.dy },
+                    toValue: { x: SCREEN_WIDTH, y: 0 },
                     duration: 300,
                     useNativeDriver: true,
-                }).start(() => onSwipeRight());
+                }).start(() => {
+                    onSwipeRight();
+                    pan.setValue({ x: 0, y: 0 });  // Reset position
+                });
             } else if (gestureState.dx < -SWIPE_THRESHOLD) {
                 Animated.timing(pan, {
-                    toValue: { x: -SCREEN_WIDTH, y: gestureState.dy },
+                    toValue: { x: -SCREEN_WIDTH, y: 0 },
                     duration: 300,
                     useNativeDriver: true,
-                }).start(() => onSwipeLeft());
+                }).start(() => {
+                    onSwipeLeft();
+                    pan.setValue({ x: 0, y: 0 });  // Reset position
+                });
             } else {
                 Animated.spring(pan, {
                     toValue: { x: 0, y: 0 },
                     useNativeDriver: true,
                 }).start();
-                Animated.timing(bgColor, {
+                Animated.spring(bgColor, {
                     toValue: 0,
-                    duration: 300,
-                    useNativeDriver: true, // interpolate does not support native driver
+                    useNativeDriver: true,
                 }).start();
             }
         },
