@@ -2,16 +2,13 @@ import React, { useState, useEffect } from "react";
 import { View, Text, StyleSheet } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import firebaseApp from "./firebaseConfig";
-import { getAuth, onAuthStateChanged } from "firebase/auth";
 import {
   getDatabase,
-  getInstance,
   ref,
   set,
   get,
   push,
   child,
-  update,
 } from "firebase/database";
 
 const db = getDatabase(firebaseApp);

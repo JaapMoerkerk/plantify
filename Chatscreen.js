@@ -10,18 +10,14 @@ import {
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import firebaseApp from "./firebaseConfig";
-import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { getAuth } from "firebase/auth";
 import {
   getDatabase,
-  getInstance,
   ref,
   set,
-  get,
   push,
   child,
-  update,
   onValue,
-  off
 } from "firebase/database";
 
 const db = getDatabase(firebaseApp);
@@ -54,15 +50,12 @@ const ChatScreen = ({ route }) => {
         }));
         setMessages(formattedMessages);
       });
-
-      // fetchMessages();
-      // return () => messagesRef.off();
     }
   }, [chatId]);
 
   useEffect(() => {
-    const usersRef = firebase.database().ref('/users');
-    usersRef.on('value', (snapshot) => {
+    const usersRef = ref(db, '/users')
+    onValue(usersRef, (snapshot) => {
       const data = snapshot.val() || {};
       const usersList = Object.keys(data).map(key => ({
         uid: key,
@@ -74,8 +67,6 @@ const ChatScreen = ({ route }) => {
       });
       setUsersMap(usersMap);
     });
-
-    return () => usersRef.off();
   }, []);
 
   const handleSend = () => {

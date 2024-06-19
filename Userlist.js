@@ -8,16 +8,14 @@ import {
   TouchableOpacity,
 } from "react-native";
 import firebaseApp from "./firebaseConfig";
-import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { getAuth } from "firebase/auth";
 import {
   getDatabase,
-  getInstance,
   ref,
   set,
   get,
   push,
   child,
-  update,
 } from "firebase/database";
 
 const db = getDatabase(firebaseApp);
@@ -47,8 +45,6 @@ const UserList = ({ navigation }) => {
         .catch((error) => {
           console.error(error);
         });
-
-      return () => usersRef.off();
     };
 
     fetchUsers();
@@ -56,23 +52,33 @@ const UserList = ({ navigation }) => {
 
   const handleSelectUser = async (selectedUser) => {
     if (currentUser) {
-      const chatRef = firebase.database().ref('/Chats');
-      const chatsSnapshot = await chatRef.once('value');
-      const chats = chatsSnapshot.val() || {};
-      let chatId = null;
+      get(child(ref(db), "/Chats"))
+        .then((snapshot) => {
+          if (snapshot.exists()) {
+            const chats = chatsSnapshot.val() || {};
+            let chatId = null;
 
-      for (const key in chats) {
-        const chat = chats[key];
-        if (chat.participants[currentUser.uid] && chat.participants[selectedUser.uid]) {
-          chatId = key;
-          break;
-        }
-      }
+            for (const key in chats) {
+              const chat = chats[key];
+              if (
+                chat.participants[currentUser.uid] &&
+                chat.participants[selectedUser.uid]
+              ) {
+                chatId = key;
+                break;
+              }
+            }
+          } else {
+            console.log("No data available");
+          }
+        })
+        .catch((error) => {
+          console.error(error);
+        });
 
       if (!chatId) {
-        const newChatRef = chatRef.push();
-        chatId = newChatRef.key;
-        newChatRef.set({
+        const newChatId = push(child(ref(db), "/Chats")).key;
+        set(ref(db, "/Chats/" + newChatId), {
           participants: {
             [currentUser.uid]: true,
             [selectedUser.uid]: true,
@@ -81,14 +87,14 @@ const UserList = ({ navigation }) => {
         });
       }
 
-      navigation.navigate('ChatScreen', { chatId });
+      navigation.navigate("ChatScreen", { chatId });
     }
   };
 
   return (
     <View style={styles.container}>
       <FlatList
-        data={users.filter(user => user.uid !== currentUser?.uid)}
+        data={users.filter((user) => user.uid !== currentUser?.uid)}
         keyExtractor={(item) => item.uid}
         renderItem={({ item }) => (
           <TouchableOpacity
@@ -111,10 +117,10 @@ const styles = StyleSheet.create({
   userContainer: {
     padding: 10,
     borderBottomWidth: 1,
-    borderBottomColor: '#ccc',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
+    borderBottomColor: "#ccc",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
   },
   username: {
     fontSize: 18,
