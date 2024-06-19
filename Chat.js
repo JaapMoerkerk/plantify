@@ -1,8 +1,21 @@
 // Chat.js
-import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import firebase from './firebaseConfig';
+import React, { useState, useEffect } from "react";
+import { View, Text, StyleSheet } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import firebaseApp from "./firebaseConfig";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
+import {
+  getDatabase,
+  getInstance,
+  ref,
+  set,
+  get,
+  push,
+  child,
+  update,
+} from "firebase/database";
+
+const db = getDatabase(firebaseApp);
 
 const Chat = ({ navigation, route }) => {
   const { otherUser } = route.params || {};
@@ -11,7 +24,7 @@ const Chat = ({ navigation, route }) => {
 
   useEffect(() => {
     const getCurrentUser = async () => {
-      const userData = await AsyncStorage.getItem('user');
+      const userData = await AsyncStorage.getItem("user");
       if (userData) {
         setCurrentUser(JSON.parse(userData));
       }
@@ -23,34 +36,40 @@ const Chat = ({ navigation, route }) => {
   useEffect(() => {
     if (otherUser && currentUser) {
       const createOrFetchChat = async () => {
-        const chatRef = firebase.database().ref('/Chats');
-        chatRef.once('value', (snapshot) => {
-          const chats = snapshot.val() || {};
-          let existingChatId = null;
+        get(child(ref(db), "/Chats"))
+          .then((snapshot) => {
+            const chats = snapshot.val() || {};
+            let existingChatId = null;
 
-          for (const key in chats) {
-            const chat = chats[key];
-            if (chat.participants[currentUser.uid] && chat.participants[otherUser.uid]) {
-              existingChatId = key;
-              break;
+            for (const key in chats) {
+              const chat = chats[key];
+              if (
+                chat.participants[currentUser.uid] &&
+                chat.participants[otherUser.uid]
+              ) {
+                existingChatId = key;
+                break;
+              }
             }
-          }
 
-          if (existingChatId) {
-            setChatId(existingChatId);
-          } else {
-            const newChatRef = chatRef.push();
-            const newChatId = newChatRef.key;
-            newChatRef.set({
-              participants: {
-                [currentUser.uid]: true,
-                [otherUser.uid]: true,
-              },
-              messages: {},
-            });
-            setChatId(newChatId);
-          }
-        });
+            if (existingChatId) {
+              setChatId(existingChatId);
+            } else {
+              const newChatId = push(child(ref(db), "/Chats")).key;
+              set(ref(db, "/Chats/" + newChatId), {
+                participants: {
+                  [currentUser.uid]: true,
+                  [otherUser.uid]: true,
+                },
+                messages: {},
+              });
+
+              setChatId(newChatId);
+            }
+          })
+          .catch((error) => {
+            console.error(error);
+          });
       };
 
       createOrFetchChat();
@@ -59,7 +78,7 @@ const Chat = ({ navigation, route }) => {
 
   useEffect(() => {
     if (chatId) {
-      navigation.replace('ChatScreen', { chatId });
+      navigation.replace("ChatScreen", { chatId, otherUser: otherUser });
     }
   }, [chatId]);
 
@@ -73,8 +92,8 @@ const Chat = ({ navigation, route }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
   },
 });
 

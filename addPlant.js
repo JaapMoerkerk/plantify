@@ -11,20 +11,28 @@ import {
   child,
   update
 } from "firebase/database";
-import { getAuth } from "firebase/auth";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 import FeedScreen from "./feedscreen";
 import firebaseApp from "./firebaseConfig";
 
 const db = getDatabase(firebaseApp);
 
 const auth = getAuth();
-const userId = auth.currentUser.uid;
 
 const NewPlant = ({ navigation, route }) => {
   const [name, setName] = useState("");
   const [img, setImg] = useState("");
   const [description, setDescription] = useState("");
   const { plantToEdit } = route.params;
+  const [userId, setUserId] = useState("");
+
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      setUserId(user.currentUser.uid);
+    } else {
+      navigation.replace("Home");
+    }
+  });
 
   
 

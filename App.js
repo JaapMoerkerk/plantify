@@ -35,12 +35,8 @@ const HomeScreen = ({ navigation }) => {
         />
       </View>
       <View style={styles.content}>
-        <View style={styles.horizontalLine} />
         <View style={styles.buttonContainer}>
-          <Button
-            title="Go to Dashboard"
-            onPress={() => navigation.navigate("Dashboard")}
-          />
+    
           <View style={styles.space} />
           <Button
             title="Go to Feed"
