@@ -1,10 +1,32 @@
-// Dashboard.js
 import React, { useEffect, useState } from 'react';
-import { View, Text, Button, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import Icon from 'react-native-vector-icons/Ionicons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import firebase from './firebaseConfig';
 
-const Dashboard = ({ navigation }) => {
+const Tab = createBottomTabNavigator();
+
+// Dummy components for the tabs
+const FeedScreen = () => (
+  <View style={styles.screenContainer}>
+    <Text>Feed Screen</Text>
+  </View>
+);
+
+const AddPlantScreen = () => (
+  <View style={styles.screenContainer}>
+    <Text>Add Plant Screen</Text>
+  </View>
+);
+
+const ChatScreen = () => (
+  <View style={styles.screenContainer}>
+    <Text>Chat Screen</Text>
+  </View>
+);
+
+const DashboardContent = ({ navigation, route }) => {
   const [user, setUser] = useState(null);
   const [username, setUsername] = useState('');
 
@@ -44,10 +66,6 @@ const Dashboard = ({ navigation }) => {
     }
   };
 
-  const handleChat = () => {
-    navigation.navigate('ChatScreen');
-  };
-
   return (
     <View style={styles.container}>
       <Text>This is your Dashboard!</Text>
@@ -55,11 +73,44 @@ const Dashboard = ({ navigation }) => {
         <>
           <Text style={styles.text}>Username: {username}</Text>
           <Button title="Logout" onPress={handleLogout} />
-          <Button title="Chat" onPress={handleChat} />
         </>
       ) : (
         <Text style={styles.text}>You are not logged in</Text>
       )}
+    </View>
+  );
+};
+
+const Dashboard = ({ route }) => {
+  return (
+    <View style={{ flex: 1 }}>
+      <View style={styles.welcomeContainer}>
+        <Text style={styles.welcomeText}>Welcome to your Dashboard!</Text>
+      </View>
+      <Tab.Navigator
+        screenOptions={({ route }) => ({
+          tabBarIcon: ({ focused, color, size }) => {
+            let iconName;
+
+            if (route.name === 'Feed') {
+              iconName = focused ? 'list' : 'list-outline';
+            } else if (route.name === 'Add Plant') {
+              iconName = focused ? 'leaf' : 'leaf-outline';
+            } else if (route.name === 'Chat') {
+              iconName = focused ? 'chatbox' : 'chatbox-outline';
+            }
+
+            return <Icon name={iconName} size={size} color={color} />;
+          },
+          tabBarActiveTintColor: 'tomato',
+          tabBarInactiveTintColor: 'gray',
+          tabBarStyle: { paddingBottom: 5, paddingTop: 5, height: 60 },
+        })}
+      >
+        <Tab.Screen name="Feed" component={FeedScreen} />
+        <Tab.Screen name="Add Plant" component={AddPlantScreen} />
+        <Tab.Screen name="Chat" component={ChatScreen} />
+      </Tab.Navigator>
     </View>
   );
 };
@@ -69,6 +120,24 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    padding: 20,
+  },
+  screenContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  welcomeContainer: {
+    backgroundColor: '#fff',
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderBottomWidth: 1,
+    borderBottomColor: '#ccc',
+  },
+  welcomeText: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: '#333',
   },
   text: {
     fontSize: 18,

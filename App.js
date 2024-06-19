@@ -1,8 +1,10 @@
-
 import React from 'react';
 import { StyleSheet, View, Text, Button } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import Icon from 'react-native-vector-icons/Ionicons'; // Importing icon library
+
 import Dashboard from './dashboard';
 import Register from './Register';
 import Login from './Login';
@@ -13,12 +15,12 @@ import AddPlant from './addPlant';
 import RuilContact from './src/screens/ruilScreens/ruilContact/ruilContact.js';
 import KnnVerken from './src/screens/verkenScreens/verken/verken.js';
 import ChatScreen from './Chatscreen'; // Importing the new ChatScreen
-import Chat from './Chat'; // Importing the new Chat/
+import Chat from './Chat'; // Importing the new Chat
 
 const Stack = createStackNavigator();
+const Tab = createBottomTabNavigator();
 
 // const auth = getAuth();
-
 // const userId = auth.currentUser.uid;
 const userId = 1;
 
@@ -30,89 +32,118 @@ const HomeScreen = ({ navigation }) => {
         <Button className="account-btn" title="Registreren" onPress={() => navigation.navigate('Register')} />
         <View style={styles.space} />
         <Button className="account-btn" title="Login" onPress={() => navigation.navigate('Login')} />
-        </View>
+      </View>
       <View style={styles.content}>
-             <View style={styles.horizontalLine} />
-             <View style={styles.buttonContainer}>
-                    <Button title="Go to Dashboard" onPress={() => navigation.navigate('Dashboard')} />
-                     <View style={styles.space} />
-                     <Button title="Go to Feed" onPress={() => navigation.navigate('Feed')} />
-                     </View>
-                     <View style={styles.horizontalLine} />
-                     <View style={styles.buttonContainer}>
-                    <Button title="Add Plant" onPress={() => navigation.navigate('AddPlant')} />
-                    <View style={styles.space} />
-                   <Button title="Ruilplanten" onPress={() => navigation.navigate('Feed', { userId })} />
-                   <View style={styles.space} />
-                    <Button title="Go to KnnVerken" onPress={() => navigation.navigate('KnnVerken')} />
-                      </View>
-              </View>
-              </View>
+        <View style={styles.horizontalLine} />
+        <View style={styles.buttonContainer}>
+          <Button title="Go to Dashboard" onPress={() => navigation.navigate('Dashboard')} />
+          <View style={styles.space} />
+          <Button title="Go to Feed" onPress={() => navigation.navigate('Feed')} />
+        </View>
+        <View style={styles.horizontalLine} />
+        <View style={styles.buttonContainer}>
+          <Button title="Add Plant" onPress={() => navigation.navigate('AddPlant')} />
+          <View style={styles.space} />
+          <Button title="Ruilplanten" onPress={() => navigation.navigate('Feed', { userId })} />
+          <View style={styles.space} />
+          <Button title="Go to KnnVerken" onPress={() => navigation.navigate('KnnVerken')} />
+        </View>
+      </View>
+    </View>
   );
-
 };
 
+const TabNavigator = () => {
+  return (
+    <Tab.Navigator
+      screenOptions={({ route }) => ({
+        tabBarIcon: ({ color, size }) => {
+          let iconName;
+
+          if (route.name === 'Dashboard') {
+            iconName = 'home';
+          } else if (route.name === 'Feed') {
+            iconName = 'list';
+          } else if (route.name === 'Chat') {
+            iconName = 'chatbox';
+          }
+
+          return <Icon name={iconName} size={size} color={color} />;
+        },
+      })}
+      tabBarOptions={{
+        activeTintColor: 'tomato',
+        inactiveTintColor: 'gray',
+      }}
+    >
+      <Tab.Screen name="Dashboard" component={Dashboard} />
+      <Tab.Screen name="Feed" component={FeedScreen} />
+      <Tab.Screen name="Chat" component={ChatScreen} />
+    </Tab.Navigator>
+  );
+};
 
 const App = () => {
-    return (
-        <NavigationContainer>
-            <Stack.Navigator screenOptions={{animationEnabled:false}} initialRouteName="Home">
-                        <Stack.Screen name="Home" component={HomeScreen} />
-                        <Stack.Screen
-                          name="Dashboard"
-                          component={Dashboard}
-                          options={{
-                            headerLeft: () => null,
-                            title: 'Dashboard',
-                          }}
-                        />
-                <Stack.Screen name="Feed" component={FeedScreen} />
-                <Stack.Screen name="FeedDetail" component={FeedDetail} />
-                <Stack.Screen name="AddPlant" component={AddPlant} />
-                <Stack.Screen name="Ruilplanten" component={FeedScreen} />
-                <Stack.Screen name="ruilContact" component={RuilContact} />
-                <Stack.Screen name="KnnVerken" component={KnnVerken} />
-                <Stack.Screen name="Register" component={Register} />
+  return (
+    <NavigationContainer>
+      <Stack.Navigator screenOptions={{ animationEnabled: false }} initialRouteName="Home">
+        <Stack.Screen name="Home" component={HomeScreen} />
+        <Stack.Screen name="TabNavigator" component={TabNavigator} options={{ headerShown: false }} />
+        <Stack.Screen
+          name="Dashboard"
+          component={Dashboard}
+          options={{
+            headerLeft: () => null,
+            title: 'Dashboard',
+          }}
+        />
+        <Stack.Screen name="Feed" component={FeedScreen} />
+        <Stack.Screen name="FeedDetail" component={FeedDetail} />
+        <Stack.Screen name="AddPlant" component={AddPlant} />
+        <Stack.Screen name="Ruilplanten" component={FeedScreen} />
+        <Stack.Screen name="ruilContact" component={RuilContact} />
+        <Stack.Screen name="KnnVerken" component={KnnVerken} />
+        <Stack.Screen name="Register" component={Register} />
         <Stack.Screen name="Login" component={Login} />
         <Stack.Screen name="ChatScreen" component={ChatScreen} />
         <Stack.Screen name="Chat" component={Chat} />
-            </Stack.Navigator>
-        </NavigationContainer>
-    );
+      </Stack.Navigator>
+    </NavigationContainer>
+  );
 };
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: '#f0f0f0',
-        padding: 20,
-    },
-    title: {
-        fontSize: 24,
-        fontWeight: 'bold',
-        marginBottom: 20,
-        textAlign: 'center',
-    },
-    content: {
-        flex: 1,
-        justifyContent: 'flex-end',
-    },
-    horizontalLine: {
-        height: 2,
-        backgroundColor: '#ccc',
-        alignSelf: 'stretch',
-        marginBottom: 10,
-    },
-    buttonContainer: {
-        flexDirection: 'row',
-        justifyContent: 'center',
-        marginBottom: 20,
-    },
-    space: {
-        width: 10,
-    },
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#f0f0f0',
+    padding: 20,
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    marginBottom: 20,
+    textAlign: 'center',
+  },
+  content: {
+    flex: 1,
+    justifyContent: 'flex-end',
+  },
+  horizontalLine: {
+    height: 2,
+    backgroundColor: '#ccc',
+    alignSelf: 'stretch',
+    marginBottom: 10,
+  },
+  buttonContainer: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    marginBottom: 20,
+  },
+  space: {
+    width: 10,
+  },
 });
 
 export default App;
