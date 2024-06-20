@@ -29,6 +29,7 @@ const SwipeBox = ({ text, img, onSwipeLeft, onSwipeRight }) => {
                 }).start(() => {
                     onSwipeRight();
                     pan.setValue({ x: 0, y: 0 });  // Reset position
+                    bgColor.setValue(0);
                 });
             } else if (gestureState.dx < -SWIPE_THRESHOLD) {
                 Animated.timing(pan, {
@@ -38,16 +39,19 @@ const SwipeBox = ({ text, img, onSwipeLeft, onSwipeRight }) => {
                 }).start(() => {
                     onSwipeLeft();
                     pan.setValue({ x: 0, y: 0 });  // Reset position
+                    bgColor.setValue(0);
                 });
             } else {
                 Animated.spring(pan, {
                     toValue: { x: 0, y: 0 },
                     useNativeDriver: true,
                 }).start();
-                Animated.spring(bgColor, {
-                    toValue: 0,
-                    useNativeDriver: true,
-                }).start();
+
+                bgColor.setValue(0);
+                // Animated.spring(bgColor, {       // Old color rest
+                //     toValue: 0,
+                //     useNativeDriver: true
+                // }).start();
             }
         },
     });
@@ -86,10 +90,12 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.2,
         shadowRadius: 5,
         elevation: 2,
+        height: '80%'
     },
     image: {
         width: '100%',
-        height: 200,
+        height: '100%',
+        objectFit: 'contain'
     },
     text: {
         padding: 20,

@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import { View, Text, Alert, Button, TextInput, ScrollView, Pressable} from "react-native";
+import {View, Text, Alert, Button, TextInput, ScrollView, Pressable, Image} from "react-native";
 import Container from '../../../components/containerRed/containerRed.js';
 import Navbar from '../../../components/navbar/navbar.js';
 import ButtonBox from '../../../components/button-box/buttonBox.js';
@@ -8,18 +8,26 @@ import styles from './verkenStyle';
 import kNear from "./knear";
 import SwipeBox from "../../../components/swipeBox/SwipeBox";
 import swipeOptions from './swipeoptions.json';
+import title from "react-native-paper/src/components/Typography/v2/Title";
 
 /**
  * Bij verkenScreens kan je alle onderdelen vinden die te maken hebben de Plantverkennert,
  * die voorheen plantswiper heette.
-  */
+ */
 
-const Verken = ({ navigation }) => {
+const Verken = ({navigation}) => {
     const [currentIndex, setCurrentIndex] = useState(0);
     const [results, setResults] = useState([]);
 
+    const imgUrl = `https://stud.hosted.hr.nl/1064361/stekkie/`;
+
     useEffect(() => {
-        // Load the swipe options if necessary
+        Alert.alert(
+            "Welkom bij de Plantverkennert.",
+            "We laten je een aantal plaatjes zien. Herken jij deze meme/het probleem? " +
+            "Swipe naar rechts. Zo niet, swipe naar links. Wij vinden jouw ideale plant!",
+            [{text: 'Begrepen!'}]
+        )
     }, []);
 
     const handleSwipe = (direction) => {
@@ -68,7 +76,7 @@ const Verken = ({ navigation }) => {
             const formattedData = Object.keys(ApiData).reduce((acc, key) => {
                 if (key.startsWith("plant")) {
                     const plant = ApiData[key];
-                    const { environment, preferences, care } = plant;
+                    const {environment, preferences, care} = plant;
                     //converting values true to 10 and false to 0, so it is easier to compare with user data
                     const convertValue = (value) => (value === true ? 10 : value === false ? 0 : value);
                     //converting data to array
@@ -85,7 +93,8 @@ const Verken = ({ navigation }) => {
 
             // Automatically call knn.learn for each plant
             Object.keys(formattedData).forEach(plantKey => {
-                knn.learn(formattedData[plantKey], plantKey);})
+                knn.learn(formattedData[plantKey], plantKey);
+            })
 
             // Classify plant using the knn
             let classifiedPlant = knn.classify(inputValues)
@@ -101,16 +110,22 @@ const Verken = ({ navigation }) => {
 
     return (
         <Container>
-            <Navbar />
+            <Navbar/>
             {currentIndex < Object.keys(swipeOptions).length ? (
-                <SwipeBox
-                    text={`${swipeOptions[`option${currentIndex + 1}`].id}`}
-                    img={`./${swipeOptions[`option${currentIndex + 1}`].image_path}`}
-                    onSwipeLeft={handleSwipeLeft}
-                    onSwipeRight={handleSwipeRight}
-                />
+                <View style={{alignItems: 'center', flex: 2}}>
+                    <SwipeBox
+                        text={`${swipeOptions[`option${currentIndex + 1}`].id}`}
+                        img={`${imgUrl}${swipeOptions[`option${currentIndex + 1}`].image_path}`}
+                        onSwipeLeft={handleSwipeLeft}
+                        onSwipeRight={handleSwipeRight}
+                    />
+                    <View style={{flex: 2, flexDirection: 'row', justifyContent: 'space-between', width: '90%', height: '20%'}}>
+                        <Image source={require('../../../../assets/red-cross.png')} style={{width: 40, height: 40}}/>
+                        <Image source={require('../../../../assets/green-check.png')} style={{width: 40, height: 40}}/>
+                    </View>
+                </View>
             ) : (
-                <View style={{ padding: 20 }}>
+                <View style={{padding: 20}}>
                     <Text>All cards have been swiped!</Text>
                     <Button
                         title="Klik hier voor jouw perfecte plant!"
@@ -118,7 +133,7 @@ const Verken = ({ navigation }) => {
                     />
                 </View>
             )}
-            <Footer />
+            <Footer/>
         </Container>
     );
 
