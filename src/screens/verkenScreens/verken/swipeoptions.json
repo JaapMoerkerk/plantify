@@ -5,7 +5,7 @@
       "sub_category": "sun",
       "rel_value": "2",
       "not_rel_value": "8",
-      "image_path": "img/option1.jpg"
+      "image_path": "./img/option1.jpg"
     },
     "option2": {
       "id": 2,
@@ -13,7 +13,7 @@
       "sub_category": "outside",
       "rel_value": "10",
       "not_rel_value": "0",
-      "image_path": "img/option2.jpg"
+      "image_path": "./img/option2.jpg"
     },
     "option3": {
       "id": 3,
@@ -21,7 +21,7 @@
       "sub_category": "space",
       "rel_value": "2",
       "not_rel_value": "8",
-      "image_path": "img/option3.jpg"
+      "image_path": "./img/option3.jpg"
     },
     "option4": {
       "id": 4,
@@ -29,7 +29,7 @@
       "sub_category": "poisones_to_pets",
       "rel_value": "9",
       "not_rel_value": "1",
-      "image_path": "img/option4.jpg"
+      "image_path": "./img/option4.jpg"
     },
     "option5": {
       "id": 5,
@@ -37,7 +37,7 @@
       "sub_category": "pets",
       "rel_value": "9",
       "not_rel_value": "1",
-      "image_path": "img/option5.jpg"
+      "image_path": "./img/option5.jpg"
     },
     "option6": {
       "id": 6,
@@ -45,7 +45,7 @@
       "sub_category": "flowers",
       "rel_value": "6",
       "not_rel_value": "4",
-      "image_path": "img/option6.jpg"
+      "image_path": "./img/option6.jpg"
     },
     "option7": {
       "id": 7,
@@ -53,7 +53,7 @@
       "sub_category": "size",
       "rel_value": "9",
       "not_rel_value": "1",
-      "image_path": "img/option7.jpg"
+      "image_path": "./img/option7.jpg"
     },
     "option8": {
       "id": 8,
@@ -61,7 +61,7 @@
       "sub_category": "sizeleaf",
       "rel_value": "10",
       "not_rel_value": "0",
-      "image_path": "img/option8.jpg"
+      "image_path": "./img/option8.jpg"
     },
     "option9": {
       "id": 9,
@@ -69,7 +69,7 @@
       "sub_category": "thicknessleaf",
       "rel_value": "7",
       "not_rel_value": "3",
-      "image_path": "img/option9.jpg"
+      "image_path": "./img/option9.jpg"
     },
     "option10": {
       "id": 10,
@@ -77,7 +77,7 @@
       "sub_category": "colorleaf",
       "rel_value": "6",
       "not_rel_value": "4",
-      "image_path": "img/option10.jpg"
+      "image_path": "./img/option10.jpg"
     },
     "option11": {
       "id": 11,
@@ -85,7 +85,7 @@
       "sub_category": "edible",
       "rel_value": "9",
       "not_rel_value": "1",
-      "image_path": "img/option11.jpg"
+      "image_path": "./img/option11.jpg"
     },
     "option12": {
       "id": 12,
@@ -93,7 +93,7 @@
       "sub_category": "water",
       "rel_value": "8",
       "not_rel_value": "2",
-      "image_path": "img/option12.jpg"
+      "image_path": "./img/option12.jpg"
     },
     "option13": {
       "id": 13,
@@ -101,7 +101,7 @@
       "sub_category": "effort",
       "rel_value": "10",
       "not_rel_value": "0",
-      "image_path": "img/option13.jpg"
+      "image_path": "./img/option13.jpg"
     },
     "option14": {
       "id": 14,
@@ -109,7 +109,7 @@
       "sub_category": "illness",
       "rel_value": "10",
       "not_rel_value": "0",
-      "image_path": "img/option14.jpg"
+      "image_path": "./img/option14.jpg"
     },
     "option15": {
       "id": 15,
@@ -117,7 +117,7 @@
       "sub_category": "growth",
       "rel_value": "10",
       "not_rel_value": "0",
-      "image_path": "img/option15.jpg"
+      "image_path": "./img/option15.jpg"
     },
     "option16": {
       "id": 16,
@@ -125,7 +125,7 @@
       "sub_category": "space",
       "rel_value": "6",
       "not_rel_value": "4",
-      "image_path": "img/option16.jpg"
+      "image_path": "./img/option16.jpg"
     },
     "option17": {
       "id": 17,
@@ -133,6 +133,6 @@
       "sub_category": "edible",
       "rel_value": "10",
       "not_rel_value": "0",
-      "image_path": "img/option17.jpg"
+      "image_path": "./img/option17.jpg"
     }
   }

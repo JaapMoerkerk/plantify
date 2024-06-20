@@ -24,12 +24,14 @@ const Verken = ({ navigation }) => {
 
     const handleSwipe = (direction) => {
         const currentOption = swipeOptions[`option${currentIndex + 1}`];
-        setResults([...results, currentOption.value]);
+        if (direction === 'left') {
+            setResults([...results, currentOption.not_rel_value]);
+        } else {
+            setResults([...results, currentOption.rel_value]);
+        }
+
         if (currentIndex < Object.keys(swipeOptions).length - 1) {
             setCurrentIndex(currentIndex + 1);
-        } else {
-            // All cards have been swiped
-            Alert.alert('All cards swiped!', `Results: ${results.join(', ')}`);
         }
     };
 
@@ -99,48 +101,26 @@ const Verken = ({ navigation }) => {
 
     return (
         <Container>
-            <Navbar/>
-
-            {/*<Text>This is the prediction: {plantData}</Text>*/}
-            {/*<Text>This is the prediction: {prediction}</Text>*/}
-            {/*<Text>This is the prediction data: {predictionData}</Text>*/}
-            {/*<Text>This is the prediction data: {inputValues}</Text>*/}
-            {/*<Pressable onPress={makePrediction}>*/}
-            {/*    <Text>classify prediction</Text>*/}
-            {/*</Pressable>*/}
-            {/*<ScrollView>*/}
-            {/*    {inputValues.map((value, index) => (*/}
-            {/*        <View key={index} style={{ flexDirection: 'row', alignItems: 'center' }}>*/}
-            {/*            <TextInput*/}
-            {/*                value={String(value)}*/}
-            {/*                onChangeText={(text) => handleInputChange(index, text)}*/}
-            {/*                keyboardType="numeric"*/}
-            {/*                style={{ borderWidth: 1, margin: 5, padding: 5 }}*/}
-            {/*            />*/}
-            {/*        </View>*/}
-            {/*    ))}*/}
-            {/*</ScrollView>*/}
-
+            <Navbar />
             {currentIndex < Object.keys(swipeOptions).length ? (
                 <SwipeBox
-                    text="This is a sample text"
-                    img={swipeOptions[`option${currentIndex + 1}`].image_path}
+                    text={`${swipeOptions[`option${currentIndex + 1}`].id}`}
+                    img={`./${swipeOptions[`option${currentIndex + 1}`].image_path}`}
                     onSwipeLeft={handleSwipeLeft}
                     onSwipeRight={handleSwipeRight}
                 />
             ) : (
                 <View style={{ padding: 20 }}>
                     <Text>All cards have been swiped!</Text>
-                    <Text>Results: {results.join(', ')}</Text>
                     <Button
-                        title="Bekijk welke plant bij mij past!"
+                        title="Klik hier voor jouw perfecte plant!"
                         onPress={() => Alert.alert('Results', `Results: ${results.join(', ')}`)}
                     />
                 </View>
             )}
-
-            <Footer/>
+            <Footer />
         </Container>
-    )
+    );
+
 };
 export default Verken;
