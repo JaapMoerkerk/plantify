@@ -1,16 +1,47 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
+import { View, Text, Alert, Button, TextInput, ScrollView, Pressable} from "react-native";
 import Container from '../../../components/containerRed/containerRed.js';
 import Navbar from '../../../components/navbar/navbar.js';
 import ButtonBox from '../../../components/button-box/buttonBox.js';
 import Footer from '../../../components/footer/footer.js';
 import styles from './verkenStyle';
 import kNear from "./knear";
-import {Alert, Pressable, ScrollView, Text, TextInput, View} from "react-native";
 import SwipeBox from "../../../components/swipeBox/SwipeBox";
-// bij verkenScreens kan je alle onderdelen vinden die te maken hebben de Plantverkennert, die voorheen plantswiper heette
+import swipeOptions from './swipeoptions.json';
+
+/**
+ * Bij verkenScreens kan je alle onderdelen vinden die te maken hebben de Plantverkennert,
+ * die voorheen plantswiper heette.
+  */
 
 const Verken = ({ navigation }) => {
-    // komt vanuit navbar of home
+    const [currentIndex, setCurrentIndex] = useState(0);
+    const [results, setResults] = useState([]);
+
+    useEffect(() => {
+        // Load the swipe options if necessary
+    }, []);
+
+    const handleSwipe = (direction) => {
+        const currentOption = swipeOptions[`option${currentIndex + 1}`];
+        if (direction === 'left') {
+            setResults([...results, currentOption.not_rel_value]);
+        } else {
+            setResults([...results, currentOption.rel_value]);
+        }
+
+        if (currentIndex < Object.keys(swipeOptions).length - 1) {
+            setCurrentIndex(currentIndex + 1);
+        }
+    };
+
+    const handleSwipeLeft = () => {
+        handleSwipe('left');
+    };
+
+    const handleSwipeRight = () => {
+        handleSwipe('right');
+    };
 
 //code for handling ai
     const k = 3
@@ -68,47 +99,28 @@ const Verken = ({ navigation }) => {
         }
     }
 
-    const handleSwipeLeft = () => {
-        Alert.alert('Swiped Left', 'You swiped the card to the left!');
-    };
-
-    // Function to handle right swipe
-    const handleSwipeRight = () => {
-        Alert.alert('Swiped Right', 'You swiped the card to the right!');
-    };
-
-
     return (
         <Container>
-            <Navbar/>
-            {/*<Text>This is the prediction: {plantData}</Text>*/}
-            {/*<Text>This is the prediction: {prediction}</Text>*/}
-            {/*<Text>This is the prediction data: {predictionData}</Text>*/}
-            {/*<Text>This is the prediction data: {inputValues}</Text>*/}
-            {/*<Pressable onPress={makePrediction}>*/}
-            {/*    <Text>classify prediction</Text>*/}
-            {/*</Pressable>*/}
-            {/*<ScrollView>*/}
-            {/*    {inputValues.map((value, index) => (*/}
-            {/*        <View key={index} style={{ flexDirection: 'row', alignItems: 'center' }}>*/}
-            {/*            <TextInput*/}
-            {/*                value={String(value)}*/}
-            {/*                onChangeText={(text) => handleInputChange(index, text)}*/}
-            {/*                keyboardType="numeric"*/}
-            {/*                style={{ borderWidth: 1, margin: 5, padding: 5 }}*/}
-            {/*            />*/}
-            {/*        </View>*/}
-            {/*    ))}*/}
-            {/*</ScrollView>*/}
-            <SwipeBox
-                text="This is a sample text"
-                img="https://example.com/sample-image.jpg"
-                onSwipeLeft={handleSwipeLeft}
-                onSwipeRight={handleSwipeRight}
-            />
-
-            <Footer/>
+            <Navbar />
+            {currentIndex < Object.keys(swipeOptions).length ? (
+                <SwipeBox
+                    text={`${swipeOptions[`option${currentIndex + 1}`].id}`}
+                    img={`./${swipeOptions[`option${currentIndex + 1}`].image_path}`}
+                    onSwipeLeft={handleSwipeLeft}
+                    onSwipeRight={handleSwipeRight}
+                />
+            ) : (
+                <View style={{ padding: 20 }}>
+                    <Text>All cards have been swiped!</Text>
+                    <Button
+                        title="Klik hier voor jouw perfecte plant!"
+                        onPress={() => Alert.alert('Results', `Results: ${results.join(', ')}`)}
+                    />
+                </View>
+            )}
+            <Footer />
         </Container>
-    )
+    );
+
 };
 export default Verken;
