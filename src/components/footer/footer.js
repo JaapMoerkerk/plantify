@@ -5,47 +5,31 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 // Import your screen components here
-import RuilScreen from '../../screens/ruilScreens/ruil/ruil';
+import FeedScreen from '../../../feedscreen';
+import {BottomNavigation} from "react-native-paper";
 
-const Tab = createBottomTabNavigator();
-
-const Footer = () => {
+// const Tab = createBottomTabNavigator();
+const Footer = ({navigation}) => {
     return (
-        <View style={styles.footerItems}>
-            <NavigationContainer>
-                <Pressable style={[styles.footerItem, styles.home]}>
-                    <Image source={require('../../../assets/img/footer/home.png')} style={styles.footerImg} />
-                </Pressable>
+        // <Tab.Navigator>
+            <View style={styles.footerItems}>
+
+
 
                 <View style={[styles.footerItem, styles.trade]}>
-                    <Tab.Screen
-                        name="Ruil"
-                        component={RuilScreen}
-                        options={{
-                            tabBarIcon: ({ focused }) => (
-                                <Image
-                                    source={
-                                        focused
-                                            ? require('../../../assets/img/footer/greenhouse.png')//img can be replaced for a "focussed version"
-                                            : require('../../../assets/img/footer/greenhouse.png')
-                                    }
-                                    style={styles.footerImg}
-                                />
-                            ),
-                        }}
-                    />
+                    <Image source={require('../../../assets/img/footer/greenhouse.png')} style={styles.footerImg} />
                 </View>
 
-                <Pressable style={[styles.footerItem, styles.find]}>
+                <View style={[styles.footerItem, styles.find]}>
                     <Image source={require('../../../assets/img/footer/creativity.png')} style={styles.footerImg} />
-                </Pressable>
+                </View>
 
-                <Pressable style={[styles.footerItem, styles.collection]}>
+                <Pressable style={[styles.footerItem, styles.find]} onPress={() => navigation.navigate('FeedScreen')}>
                     <Image source={require('../../../assets/img/footer/greenhouse.png')} style={styles.footerImg} />
                 </Pressable>
-            </NavigationContainer>
+            </View>
+        // </Tab.Navigator>
 
-        </View>
     );
 };
 export default Footer;

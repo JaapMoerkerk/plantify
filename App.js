@@ -3,11 +3,9 @@ import React from 'react';
 import { StyleSheet, View, Text, Button } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-
-
 //components
 import Footer from './src/components/footer/footer.js';
-
+import ContainerRed from './src/components/containerRed/containerRed.js';
 
 import Dashboard from './dashboard';
 import Register from './Register';
@@ -20,6 +18,8 @@ import RuilContact from './src/screens/ruilScreens/ruilContact/ruilContact.js';
 import KnnVerken from './src/screens/verkenScreens/verken/verken.js';
 import ChatScreen from './Chatscreen'; // Importing the new ChatScreen
 import Chat from './Chat'; // Importing the new Chat/
+import FooterTest from './footerTest'; // Importing the new Chat/
+
 
 const Stack = createStackNavigator();
 
@@ -36,14 +36,18 @@ const HomeScreen = ({ navigation }) => {
         <Button className="account-btn" title="Registreren" onPress={() => navigation.navigate('Register')} />
         <View style={styles.space} />
         <Button className="account-btn" title="Login" onPress={() => navigation.navigate('Login')} />
-        </View>
+          <View style={styles.space} />
+          <Button title="Go to Footer Test" onPress={() => navigation.navigate('FooterTest')} />
+
+      </View>
       <View style={styles.content}>
              <View style={styles.horizontalLine} />
              <View style={styles.buttonContainer}>
                     <Button title="Go to Dashboard" onPress={() => navigation.navigate('Dashboard')} />
                      <View style={styles.space} />
                      <Button title="Go to Feed" onPress={() => navigation.navigate('Feed')} />
-                     </View>
+
+             </View>
                      <View style={styles.horizontalLine} />
                      <View style={styles.buttonContainer}>
                     <Button title="Add Plant" onPress={() => navigation.navigate('AddPlant')} />
@@ -53,17 +57,17 @@ const HomeScreen = ({ navigation }) => {
                     <Button title="Go to KnnVerken" onPress={() => navigation.navigate('KnnVerken')} />
                       </View>
               </View>
-        <Footer/>
 
+    <Footer navigation={navigation}/>
     </View>
-  );
+);
 
 };
 
 
 const App = () => {
     return (
-        <NavigationContainer>
+    <NavigationContainer>
             <Stack.Navigator screenOptions={{animationEnabled:false}} initialRouteName="Home">
                         <Stack.Screen name="Home" component={HomeScreen} />
                         <Stack.Screen
@@ -77,11 +81,13 @@ const App = () => {
                 <Stack.Screen name="Feed" component={FeedScreen} />
                 <Stack.Screen name="FeedDetail" component={FeedDetail} />
                 <Stack.Screen name="AddPlant" component={AddPlant} />
-                <Stack.Screen name="Ruilplanten" component={FeedScreen} />
+                <Stack.Screen name="FeedScreen" component={FeedScreen} />
                 <Stack.Screen name="ruilContact" component={RuilContact} />
                 <Stack.Screen name="KnnVerken" component={KnnVerken} />
                 <Stack.Screen name="Register" component={Register} />
-        <Stack.Screen name="Login" component={Login} />
+                <Stack.Screen name="FooterTest" component={FooterTest} />
+
+                <Stack.Screen name="Login" component={Login} />
         <Stack.Screen name="ChatScreen" component={ChatScreen} />
         <Stack.Screen name="Chat" component={Chat} />
             </Stack.Navigator>
