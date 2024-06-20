@@ -1,16 +1,45 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
+import { View, Text, Alert, Button, TextInput, ScrollView, Pressable} from "react-native";
 import Container from '../../../components/containerRed/containerRed.js';
 import Navbar from '../../../components/navbar/navbar.js';
 import ButtonBox from '../../../components/button-box/buttonBox.js';
 import Footer from '../../../components/footer/footer.js';
 import styles from './verkenStyle';
 import kNear from "./knear";
-import {Alert, Pressable, ScrollView, Text, TextInput, View} from "react-native";
 import SwipeBox from "../../../components/swipeBox/SwipeBox";
-// bij verkenScreens kan je alle onderdelen vinden die te maken hebben de Plantverkennert, die voorheen plantswiper heette
+import swipeOptions from './swipeoptions.json';
+
+/**
+ * Bij verkenScreens kan je alle onderdelen vinden die te maken hebben de Plantverkennert,
+ * die voorheen plantswiper heette.
+  */
 
 const Verken = ({ navigation }) => {
-    // komt vanuit navbar of home
+    const [currentIndex, setCurrentIndex] = useState(0);
+    const [results, setResults] = useState([]);
+
+    useEffect(() => {
+        // Load the swipe options if necessary
+    }, []);
+
+    const handleSwipe = (direction) => {
+        const currentOption = swipeOptions[`option${currentIndex + 1}`];
+        setResults([...results, currentOption.value]);
+        if (currentIndex < Object.keys(swipeOptions).length - 1) {
+            setCurrentIndex(currentIndex + 1);
+        } else {
+            // All cards have been swiped
+            Alert.alert('All cards swiped!', `Results: ${results.join(', ')}`);
+        }
+    };
+
+    const handleSwipeLeft = () => {
+        handleSwipe('left');
+    };
+
+    const handleSwipeRight = () => {
+        handleSwipe('right');
+    };
 
 //code for handling ai
     const k = 3
@@ -68,19 +97,10 @@ const Verken = ({ navigation }) => {
         }
     }
 
-    const handleSwipeLeft = () => {
-        Alert.alert('Swiped Left', 'You swiped the card to the left!');
-    };
-
-    // Function to handle right swipe
-    const handleSwipeRight = () => {
-        Alert.alert('Swiped Right', 'You swiped the card to the right!');
-    };
-
-
     return (
         <Container>
             <Navbar/>
+
             {/*<Text>This is the prediction: {plantData}</Text>*/}
             {/*<Text>This is the prediction: {prediction}</Text>*/}
             {/*<Text>This is the prediction data: {predictionData}</Text>*/}
@@ -100,12 +120,24 @@ const Verken = ({ navigation }) => {
             {/*        </View>*/}
             {/*    ))}*/}
             {/*</ScrollView>*/}
-            <SwipeBox
-                text="This is a sample text"
-                img="https://example.com/sample-image.jpg"
-                onSwipeLeft={handleSwipeLeft}
-                onSwipeRight={handleSwipeRight}
-            />
+
+            {currentIndex < Object.keys(swipeOptions).length ? (
+                <SwipeBox
+                    text="This is a sample text"
+                    img={swipeOptions[`option${currentIndex + 1}`].image_path}
+                    onSwipeLeft={handleSwipeLeft}
+                    onSwipeRight={handleSwipeRight}
+                />
+            ) : (
+                <View style={{ padding: 20 }}>
+                    <Text>All cards have been swiped!</Text>
+                    <Text>Results: {results.join(', ')}</Text>
+                    <Button
+                        title="Bekijk welke plant bij mij past!"
+                        onPress={() => Alert.alert('Results', `Results: ${results.join(', ')}`)}
+                    />
+                </View>
+            )}
 
             <Footer/>
         </Container>
