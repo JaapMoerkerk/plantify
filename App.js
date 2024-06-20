@@ -3,6 +3,12 @@ import React from 'react';
 import { StyleSheet, View, Text, Button } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
+
+
+//components
+import Footer from './src/components/footer/footer.js';
+
+
 import Dashboard from './dashboard';
 import Register from './Register';
 import Login from './Login';
@@ -47,7 +53,9 @@ const HomeScreen = ({ navigation }) => {
                     <Button title="Go to KnnVerken" onPress={() => navigation.navigate('KnnVerken')} />
                       </View>
               </View>
-              </View>
+        <Footer/>
+
+    </View>
   );
 
 };
