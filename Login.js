@@ -3,7 +3,7 @@ import { View, Text, TextInput, Pressable, StyleSheet, Alert } from 'react-nativ
 import firebaseApp from './firebaseConfig';
 import{getAuth, signInWithEmailAndPassword} from 'firebase/auth';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import Footer from './src/components/footer/footer.js';
+// import Footer from './src/components/footer/footer.js';
 import ContentContainer from './src/components/contentContainer/contentContainer.js';
 import Container from './src/components/containerPink/containerPink.js';
 
@@ -57,7 +57,7 @@ const Login = ({ navigation }) => {
           </View>
     </View>
           </ContentContainer>
-          <Footer navigation={navigation}/>
+          {/*<Footer navigation={navigation}/>*/}
       </Container>
   );
 };
@@ -67,7 +67,7 @@ const styles = StyleSheet.create({
       flex: 1,
       justifyContent: 'center',
       padding: 16,
-        backgroundColor: '#faf9f7'
+        // backgroundColor: '#faf9f7'
     },
     box: {
         width: '90%',
