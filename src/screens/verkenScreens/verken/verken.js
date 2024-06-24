@@ -1,8 +1,7 @@
 import React, {useState, useEffect} from 'react';
-import {View, Text, Alert, Button, TextInput, ScrollView, Pressable, Image} from "react-native";
+import {View, Text, Alert, Button, TextInput, ScrollView, Pressable, Image, ActivityIndicator} from "react-native";
 import Container from '../../../components/containerRed/containerRed.js';
 import Navbar from '../../../components/navbar/navbar.js';
-import ButtonBox from '../../../components/button-box/buttonBox.js';
 import Footer from '../../../components/footer/footer.js';
 import styles from './verkenStyle';
 import kNear from "./knear";
@@ -18,6 +17,9 @@ import title from "react-native-paper/src/components/Typography/v2/Title";
 const Verken = ({navigation}) => {
     const [currentIndex, setCurrentIndex] = useState(0);
     const [results, setResults] = useState([]);
+    const [loading, setLoading] = useState(false);
+    const [showSwipeBox, setShowSwipeBox] = useState(true);
+    const [predictedPlant, setPredictedPlant] = useState(null);
 
     const imgUrl = `https://stud.hosted.hr.nl/1064361/stekkie/`;
 
@@ -40,6 +42,8 @@ const Verken = ({navigation}) => {
 
         if (currentIndex < Object.keys(swipeOptions).length - 1) {
             setCurrentIndex(currentIndex + 1);
+        } else {
+            setShowSwipeBox(false);
         }
     };
 
@@ -52,34 +56,26 @@ const Verken = ({navigation}) => {
     };
 
 //code for handling ai
-    const k = 3
+    const k = 3;
     const knn = new kNear(k);
-    const [plantData, setPlantData] = useState("plant data is missing")
-    const [prediction, setPrediction] = useState("there has no prediction been done yet")
+    const [plantData, setPlantData] = useState("Plant data is missing");
+    const [prediction, setPrediction] = useState("No prediction has been made yet");
     const [predictionData, setPredictionData] = useState("Prediction data is missing");
-    const [inputValues, setInputValues] = useState(Array(15).fill(0)); // 15 input fields
 
-    const handleInputChange = (index, value) => {
-        const newValues = [...inputValues];
-        newValues[index] = Number(value); // Convert value to number
-        setInputValues(newValues);
-    };
-
-    async function makePrediction() {
+    const makePrediction = async () => {
+        setLoading(true);
         try {
-            // Load api
             const response = await fetch("https://stud.hosted.hr.nl/1064361/stekkie/data.json");
-            console.log(response)
-            let ApiData = await response.json()
+            const ApiData = await response.json();
 
-            // Format data to data we can use to call kkn.learn on
+            // Format data to data we can use to call knn.learn on
             const formattedData = Object.keys(ApiData).reduce((acc, key) => {
                 if (key.startsWith("plant")) {
                     const plant = ApiData[key];
-                    const {environment, preferences, care} = plant;
-                    //converting values true to 10 and false to 0, so it is easier to compare with user data
+                    const { environment, preferences, care } = plant;
+                    // Converting values true to 10 and false to 0, so it is easier to compare with user data
                     const convertValue = (value) => (value === true ? 10 : value === false ? 0 : value);
-                    //converting data to array
+                    // Converting data to array
                     acc[key] = [
                         ...Object.values(environment).map(convertValue),
                         ...Object.values(preferences).map(convertValue),
@@ -94,48 +90,60 @@ const Verken = ({navigation}) => {
             // Automatically call knn.learn for each plant
             Object.keys(formattedData).forEach(plantKey => {
                 knn.learn(formattedData[plantKey], plantKey);
-            })
+            });
 
-            // Classify plant using the knn
-            let classifiedPlant = knn.classify(inputValues)
+            // Classify plant using the knn with results array
+            const classifiedPlant = knn.classify(results);
             setPrediction(classifiedPlant);
 
-            // Fetch prediction data based on the classified plant
-            setPredictionData(JSON.stringify(ApiData[classifiedPlant]));
+            // Set predicted plant data
+            const predictedPlantData = ApiData[classifiedPlant];
+            setPredictionData(predictedPlantData.name_dutch);
+
 
         } catch (error) {
             console.log("There is a problem loading the data", error);
+        } finally {
+            setLoading(false);
         }
     }
 
+    const navigateToDashboard = () => {
+        // Implement your navigation logic here
+        navigation.navigate('Dashboard'); // Replace 'Dashboard' with your actual screen name
+    };
     return (
         <Container>
-            <Navbar/>
-            {currentIndex < Object.keys(swipeOptions).length ? (
-                <View style={{alignItems: 'center', flex: 2}}>
+            <Navbar />
+            {showSwipeBox ? (
+                <View style={{ alignItems: 'center', flex: 2 }}>
                     <SwipeBox
                         text={`${swipeOptions[`option${currentIndex + 1}`].id}`}
                         img={`${imgUrl}${swipeOptions[`option${currentIndex + 1}`].image_path}`}
                         onSwipeLeft={handleSwipeLeft}
                         onSwipeRight={handleSwipeRight}
                     />
-                    <View style={{flex: 2, flexDirection: 'row', justifyContent: 'space-between', width: '90%', height: '20%'}}>
-                        <Image source={require('../../../../assets/red-cross.png')} style={{width: 40, height: 40}}/>
-                        <Image source={require('../../../../assets/green-check.png')} style={{width: 40, height: 40}}/>
+                    <View style={{ flex: 2, flexDirection: 'row', justifyContent: 'space-between', width: '90%', height: '20%' }}>
+                        <Image source={require('../../../../assets/red-cross.png')} style={{ width: 40, height: 40 }} />
+                        <Image source={require('../../../../assets/green-check.png')} style={{ width: 40, height: 40 }} />
                     </View>
                 </View>
             ) : (
-                <View style={{padding: 20}}>
-                    <Text>All cards have been swiped!</Text>
+                <View style={{ alignItems: 'center', flex: 2, padding: 20 }}>
+                    <Text>Dat waren alle kaartjes.</Text>
                     <Button
                         title="Klik hier voor jouw perfecte plant!"
-                        onPress={() => Alert.alert('Results', `Results: ${results.join(', ')}`)}
+                        onPress={makePrediction}
                     />
+                    {loading && <ActivityIndicator style={{ marginTop: 20 }} size="large" color="#0000ff" />}
+                    {!loading && prediction !== "No prediction has been made yet" && (
+                        <Text style={{ marginTop: 20 }}>Voorspelde plant: {predictionData}</Text>
+                    )}
                 </View>
             )}
-            <Footer/>
+            <Footer />
         </Container>
     );
-
 };
+
 export default Verken;
