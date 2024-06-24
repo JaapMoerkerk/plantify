@@ -27,7 +27,7 @@ const Footer = ({navigation}) => {
             </Pressable>
 
             <Pressable style={[styles.footerItem, styles.collection]} onPress={() => navigation.navigate('Veranda')}>
-                <Image source={require('../../../assets/img/footer/growingplants.png')} style={styles.footerImg} />
+                <Image source={require('../../../assets/img/footer/chat.png')} style={styles.footerImg} />
             </Pressable>
 
 
