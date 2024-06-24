@@ -7,15 +7,14 @@ import {
   ScrollView,
   TouchableOpacity,
   Image,
-  Alert
+  Alert,
 } from "react-native";
-import {
-  getDatabase,
-  ref,
-  remove,
-  child,
-} from "firebase/database";
+import { getDatabase, ref, remove, child } from "firebase/database";
 import firebaseApp from "./firebaseConfig";
+import Footer from "./src/components/footer/footer.js";
+import Navbar from "./src/components/navbar/navbar.js";
+import ContentContainer from "./src/components/contentContainer/contentContainer.js";
+import Container from "./src/components/containerRed/containerRed.js";
 
 const FeedScreen = ({ navigation, route }) => {
   const [posts, setPosts] = useState([]);
@@ -26,48 +25,48 @@ const FeedScreen = ({ navigation, route }) => {
 
   // Fetch data from Firebase Realtime Database
   useEffect(() => {
-    const unsubscribe = navigation.addListener('focus', () => {
-    const fetchData = async () => {
-      if (route.params) {
-        const { userId } = route.params;
+    const unsubscribe = navigation.addListener("focus", () => {
+      const fetchData = async () => {
+        if (route.params) {
+          const { userId } = route.params;
+
+          try {
+            const response = await fetch(
+              "https://plantify-50b4e-default-rtdb.europe-west1.firebasedatabase.app/Stekjes.json"
+            );
+            const data = await response.json();
+            if (data) {
+              const plantArray = Object.entries(data)
+                .filter(
+                  ([id, plantUser]) => plantUser && plantUser.userId === userId
+                )
+                .map(([id, plantUser]) => plantUser);
+              setPosts(plantArray);
+              setAllPosts(plantArray);
+            }
+          } catch (error) {
+            console.error("Error filtering posts:", error);
+          }
+        } else {
+          try {
+            const responsePosts = await fetch(
+              "https://plantify-50b4e-default-rtdb.europe-west1.firebasedatabase.app/Stekjes.json"
+            );
+            const dataPosts = await responsePosts.json();
+            if (dataPosts) {
+              const postArray = Object.entries(dataPosts).map(([id, post]) => ({
+                id,
+                ...post,
+              }));
+              setPosts(postArray);
+              setAllPosts(postArray); // Save all posts initially
+            }
+          } catch (error) {
+            console.error("Error fetching data:", error);
+          }
+        }
 
         try {
-          const response = await fetch(
-            "https://plantify-50b4e-default-rtdb.europe-west1.firebasedatabase.app/Stekjes.json"
-          );
-          const data = await response.json();
-          if (data) {
-            const plantArray = Object.entries(data)
-              .filter(
-                ([id, plantUser]) => plantUser && plantUser.userId === userId
-              )
-              .map(([id, plantUser]) => plantUser);
-            setPosts(plantArray);
-            setAllPosts(plantArray);
-          }
-        } catch (error) {
-          console.error("Error filtering posts:", error);
-        }
-      } else {
-        try {
-          const responsePosts = await fetch(
-            "https://plantify-50b4e-default-rtdb.europe-west1.firebasedatabase.app/Stekjes.json"
-          );
-          const dataPosts = await responsePosts.json();
-          if (dataPosts) {
-            const postArray = Object.entries(dataPosts).map(([id, post]) => ({
-              id,
-              ...post,
-            }));
-            setPosts(postArray);
-            setAllPosts(postArray); // Save all posts initially
-          }
-        } catch (error) {
-          console.error("Error fetching data:", error);
-        }
-      }
-
-      try {
           const responseTags = await fetch(
             "https://plantify-50b4e-default-rtdb.europe-west1.firebasedatabase.app/Tags.json"
           );
@@ -84,8 +83,8 @@ const FeedScreen = ({ navigation, route }) => {
         }
       };
 
-    fetchData();
-    })
+      fetchData();
+    });
     return unsubscribe;
   }, [navigation, value]);
 
@@ -94,13 +93,16 @@ const FeedScreen = ({ navigation, route }) => {
     const db = getDatabase(firebaseApp);
     remove(child(ref(db), "Stekjes/" + id));
     setValue(value + 1);
-  }
+  };
 
   const showConfirmation = (id) => {
     Alert.alert(
-      'Weet je zeker dat je deze plant wilt verwijderen?',
-      'Deze actie is permanent',
-      [{text: 'Back'}, {text: 'Ja, verwijder', onPress: () => deletePlant(id)}],
+      "Weet je zeker dat je deze plant wilt verwijderen?",
+      "Deze actie is permanent",
+      [
+        { text: "Back" },
+        { text: "Ja, verwijder", onPress: () => deletePlant(id) },
+      ]
     );
   };
 
@@ -132,55 +134,86 @@ const FeedScreen = ({ navigation, route }) => {
   };
 
   return (
-    <ScrollView style={styles.container}>
-      <Text style={styles.header}>Your Personalized Feed</Text>
+    <Container>
+      <ContentContainer>
+        <ScrollView style={styles.container}>
+          <Text style={styles.header}>Your Personalized Feed</Text>
 
-      <ScrollView horizontal style={styles.tagsContainer}>
-        {tags.map((tag) => (
-          <TouchableOpacity
-            key={tag.id}
-            style={[
-              styles.tagButton,
-              selectedTag === tag.id && styles.selectedTagButton,
-            ]}
-            onPress={() => filterPostsByTag(tag.id)}
-          >
-            <Text style={styles.tagButtonText}>{tag.name}</Text>
-          </TouchableOpacity>
-        ))}
-      </ScrollView>
-
-      {posts.map((post) => (
-        <View key={post.id} style={styles.post}>
-          <Text style={styles.postTitle}>{post.name}</Text>
-          <Text style={styles.postContent}>{post.description}</Text>
-          {post.img && (
-            <Image source={{ uri: post.img }} style={styles.postImage} />
+          <ScrollView horizontal style={styles.tagsContainer}>
+            {tags.map((tag) => (
+              <TouchableOpacity
+                key={tag.id}
+                style={[
+                  styles.tagButton,
+                  selectedTag === tag.id && styles.selectedTagButton,
+                ]}
+                onPress={() => filterPostsByTag(tag.id)}
+              >
+                <Text style={styles.tagButtonText}>{tag.name}</Text>
+              </TouchableOpacity>
+            ))}
+          </ScrollView>
+          {!route.params ? (
+            <TouchableOpacity
+              style={[styles.addButton]}
+              onPress={() => navigation.navigate("Feed", { userId: null })}
+            >
+              <Text style={styles.tagButtonText}>Jouw toegevoegde planten</Text>
+            </TouchableOpacity>
+          ) : (
+            <></>
           )}
-          {route.params ? 
-          <Button 
-          title="Bewerk"
-          onPress={() => navigation.navigate("AddPlant", { plantToEdit: post })}
-          />:<></>}
-          {route.params ? 
-          <Button 
-          title="Verwijder"
-          onPress={() => showConfirmation(post.id)}
-          />:<></>}
-          <Button
-            title="Lees meer"
-            onPress={() => navigation.navigate("FeedDetail", { post })}
-            style={styles.readMoreButton}
-          />
-        </View>
-      ))}
+          <TouchableOpacity
+            style={[styles.addButton]}
+            onPress={() =>
+              navigation.navigate("AddPlant", { plantToEdit: null })
+            }
+          >
+            <Text style={styles.tagButtonText}>Voeg een plant toe!</Text>
+          </TouchableOpacity>
 
-      <Button
-        title="Load More"
-        onPress={() => {}}
-        style={styles.loadMoreButton}
-      />
-    </ScrollView>
+          {posts.map((post) => (
+            <View key={post.id} style={styles.post}>
+              <Text style={styles.postTitle}>{post.name}</Text>
+              <Text style={styles.postContent}>{post.description}</Text>
+              {post.img && (
+                <Image source={{ uri: post.img }} style={styles.postImage} />
+              )}
+              {route.params ? (
+                <Button
+                  title="Bewerk"
+                  onPress={() =>
+                    navigation.navigate("AddPlant", { plantToEdit: post })
+                  }
+                />
+              ) : (
+                <></>
+              )}
+              {route.params ? (
+                <Button
+                  title="Verwijder"
+                  onPress={() => showConfirmation(post.id)}
+                />
+              ) : (
+                <></>
+              )}
+              <Button
+                title="Lees meer"
+                onPress={() => navigation.navigate("FeedDetail", { post })}
+                style={styles.readMoreButton}
+              />
+            </View>
+          ))}
+
+          <Button
+            title="Load More"
+            onPress={() => {}}
+            style={styles.loadMoreButton}
+          />
+        </ScrollView>
+      </ContentContainer>
+      <Footer navigation={navigation} />
+    </Container>
   );
 };
 
@@ -205,6 +238,14 @@ const styles = StyleSheet.create({
     backgroundColor: "#e0e0e0",
     borderRadius: 20,
     marginRight: 10,
+  },
+  addButton: {
+    padding: 10,
+    backgroundColor: "#e07a5f",
+    borderRadius: 20,
+    marginRight: 10,
+    marginBottom: 15,
+    width: 200,
   },
   selectedTagButton: {
     backgroundColor: "#6200ee",

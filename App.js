@@ -14,6 +14,10 @@ import KnnVerken from "./src/screens/verkenScreens/verken/verken.js";
 import ChatScreen from "./Chatscreen"; // Importing the new ChatScreen
 import Chat from "./Chat"; // Importing the new Chat/
 import UserList from "./Userlist";
+// import Footer from "./src/components/footer/footer.js";
+// import Navbar from "./src/components/navbar/navbar.js";
+// import ContentContainer from "./src/components/contentContainer/contentContainer.js";
+// import Container from "./src/components/containerWhite/containerWhite.js";
 
 const Stack = createStackNavigator();
 
@@ -34,9 +38,8 @@ const HomeScreen = ({ navigation }) => {
           onPress={() => navigation.navigate("Login")}
         />
       </View>
-      <View style={styles.content}>
+      {/* <View style={styles.content}>
         <View style={styles.buttonContainer}>
-    
           <View style={styles.space} />
           <Button
             title="Go to Feed"
@@ -51,12 +54,12 @@ const HomeScreen = ({ navigation }) => {
             onPress={() => navigation.navigate("KnnVerken")}
           />
         </View>
-      </View>
+      </View> */}
     </View>
   );
 };
 
-const App = () => {
+const App = (navigation) => {
   return (
     <NavigationContainer>
       <Stack.Navigator

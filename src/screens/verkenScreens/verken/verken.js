@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import Container from '../../../components/containerRed/containerRed.js';
+import ContainerGreen from '../../../components/containerGreen/containerGreen.js';
 import Navbar from '../../../components/navbar/navbar.js';
 import ButtonBox from '../../../components/button-box/buttonBox.js';
 import Footer from '../../../components/footer/footer.js';
@@ -69,8 +69,7 @@ const Verken = ({ navigation }) => {
 
 
     return (
-        <Container>
-            <Navbar/>
+        <ContainerGreen>
             {/*<Text>This is the prediction: {plantData}</Text>*/}
             <Text>This is the prediction: {prediction}</Text>
             <Text>This is the prediction data: {predictionData}</Text>
@@ -90,8 +89,8 @@ const Verken = ({ navigation }) => {
                     </View>
                 ))}
             </ScrollView>
-            <Footer/>
-        </Container>
+            <Footer navigation={navigation} />
+        </ContainerGreen>
     )
 };
 export default Verken;

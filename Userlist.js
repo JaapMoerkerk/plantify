@@ -9,14 +9,10 @@ import {
 } from "react-native";
 import firebaseApp from "./firebaseConfig";
 import { getAuth } from "firebase/auth";
-import {
-  getDatabase,
-  ref,
-  set,
-  get,
-  push,
-  child,
-} from "firebase/database";
+import { getDatabase, ref, set, get, push, child } from "firebase/database";
+import ContainerBlue from "./src/components/containerBlue/containerBlue.js";
+import ContentContainer from "./src/components/contentContainer/contentContainer.js";
+import Footer from "./src/components/footer/footer.js";
 
 const db = getDatabase(firebaseApp);
 
@@ -92,20 +88,25 @@ const UserList = ({ navigation }) => {
   };
 
   return (
-    <View style={styles.container}>
-      <FlatList
-        data={users.filter((user) => user.uid !== currentUser?.uid)}
-        keyExtractor={(item) => item.uid}
-        renderItem={({ item }) => (
-          <TouchableOpacity
-            style={styles.userContainer}
-            onPress={() => handleSelectUser(item)}
-          >
-            <Text style={styles.username}>{item.username}</Text>
-          </TouchableOpacity>
-        )}
-      />
-    </View>
+    <ContainerBlue>
+      <ContentContainer>
+        <View style={styles.container}>
+          <FlatList
+            data={users.filter((user) => user.uid !== currentUser?.uid)}
+            keyExtractor={(item) => item.uid}
+            renderItem={({ item }) => (
+              <TouchableOpacity
+                style={styles.userContainer}
+                onPress={() => handleSelectUser(item)}
+              >
+                <Text style={styles.username}>{item.username}</Text>
+              </TouchableOpacity>
+            )}
+          />
+        </View>
+      </ContentContainer>
+      <Footer navigation={navigation} />
+    </ContainerBlue>
   );
 };
 

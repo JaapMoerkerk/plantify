@@ -1,12 +1,12 @@
-// Dashboard.js
 import React, { useEffect, useState } from "react";
 import { View, Text, Button, StyleSheet } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import firebaseApp from "./firebaseConfig";
-// import firebase from 'firebase/compat/app';
-// import 'firebase/compat/auth';
-// import 'firebase/compat/database';
 import { getAuth, onAuthStateChanged } from "firebase/auth";
+import Footer from "./src/components/footer/footer.js";
+import Navbar from "./src/components/navbar/navbar.js";
+import ContentContainer from "./src/components/contentContainer/contentContainer.js";
+import Container from './src/components/containerWhite/containerWhite.js';
 
 import {
   getDatabase,
@@ -90,31 +90,41 @@ const Dashboard = ({ navigation }) => {
   };
 
   return (
-    <View style={styles.container}>
-      <Text>This is your Dashboard!</Text>
-      {user ? (
-        <>
-          <Text style={styles.text}>Username: {username}</Text>
-          <Button title="Logout" onPress={handleLogout} />
-          <Button title="Chat" onPress={handleChat} />
-          <Button
-            title="Add Plant"
-            onPress={() =>
-              navigation.navigate("AddPlant", { plantToEdit: null })
-            }
-          />
-          <View style={styles.space} />
-          <Button
-            title="Ruilplanten"
-            onPress={() =>
-              navigation.navigate("Feed", { userId: auth.currentUser.uid })
-            }
-          />
-        </>
-      ) : (
-        <Text style={styles.text}>You are not logged in</Text>
-      )}
-    </View>
+    <Container>
+      <ContentContainer>
+        <View style={styles.container}>
+          <Text>This is your Dashboard!</Text>
+          {user ? (
+            <>
+              <Text style={styles.text}>Username: {username}</Text>
+              <Button title="Logout" onPress={handleLogout} />
+              <Button title="Chat" onPress={handleChat} />
+              <Button
+                title="Voeg een plant toe"
+                onPress={() =>
+                  navigation.navigate("AddPlant", { plantToEdit: null })
+                }
+              />
+              <View style={styles.space} />
+              <Button
+                title="Ruilkas"
+                onPress={() =>
+                  navigation.navigate("Feed", { userId: auth.currentUser.uid })
+                }
+              />
+              <View style={styles.space} />
+              <Button
+                title="Mijn ruilkas"
+                onPress={() => navigation.navigate("Feed")}
+              />
+            </>
+          ) : (
+            <Text style={styles.text}>You are not logged in</Text>
+          )}
+        </View>
+      </ContentContainer>
+      <Footer navigation={navigation} />
+    </Container>
   );
 };
 

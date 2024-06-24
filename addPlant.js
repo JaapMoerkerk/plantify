@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Alert, View, Text, Button, StyleSheet } from "react-native";
+import { Alert, View, Text, Button, StyleSheet, Pressable } from "react-native";
 import { TextInput } from "react-native-paper";
 import {
   getDatabase,
@@ -34,7 +34,6 @@ const NewPlant = ({ navigation, route }) => {
     }
   });
 
-  
 
   saveData = async () => {
     const newPostKey = push(child(ref(db), "Stekjes")).key;
@@ -77,32 +76,103 @@ const NewPlant = ({ navigation, route }) => {
   }, [plantToEdit]);
 
   return (
-    <View>
+
+    <View style={styles.main}>
+
+      <Text style={styles.text}> jouw plant </Text>
+      <Text style={styles.smallerText}> voeg hier de details toe van de plant die je in de ruil kas wilt zetten</Text>
+
       <TextInput
         label="Naam"
         value={name}
         onChangeText={setName}
         placeholder="Naam"
+        style={styles.field}
+        mode="outlined"
+        outlineColor="#faf9f7"
+        activeOutlineColor="#1a1a1a"
       />
+
       <TextInput
         label="Afbeelding"
         value={img}
         onChangeText={setImg}
         placeholder="+"
+        style={styles.field}
+        mode="outlined"
+        outlineColor="#faf9f7"
+        activeOutlineColor="#1a1a1a"
       />
       <TextInput
         label="Omschrijving"
         value={description}
         onChangeText={setDescription}
         placeholder="Omschrijving"
+        style={styles.field}
+        mode="outlined"
+        outlineColor="#faf9f7"
+        activeOutlineColor="#1a1a1a"
       />
-      {plantToEdit !== null ? 
-      <Button title="Wijzig plant" onPress={this.saveData} />:
-      <Button title="Voeg plant toe!" onPress={this.saveData} />
+      {plantToEdit !== null ?
+      <Pressable onPress={this.saveData}>
+              <View  style={styles.button}>
+                <Text style={styles.buttonText}> Wijzig plant </Text>
+              </View>
+            </Pressable>:
+      <Pressable onPress={this.saveData}>
+              <View  style={styles.button}>
+                <Text style={styles.buttonText}> Voeg plant toe! </Text>
+              </View>
+            </Pressable>
       }
-      
+
+
+
+
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  main: {
+    backgroundColor: '#e07a5f',
+    height: '100%',
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+
+  field: {
+    backgroundColor: '#faf9f7',
+    width: 225,
+    marginBottom: 10,
+  },
+
+  button: {
+    backgroundColor: '#f0c6ba',
+    height: 50,
+    width: 150,
+    borderRadius: 20,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 15
+  },
+
+  text: {
+    fontSize: 25,
+    fontWeight: 'bold',
+  },
+
+  smallerText: {
+    textAlign: 'center',
+    width: '70%',
+    fontSize: 15,
+    marginBottom: 15
+  },
+
+  buttonText: {
+    fontWeight: 'bold',
+    fontSize: 17
+  }
+})
 
 export default NewPlant;

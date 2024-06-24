@@ -10,41 +10,37 @@ import {
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import firebaseApp from "./firebaseConfig";
-import {
-  getDatabase,
-  ref,
-  set,
-  push,
-  child,
-  onValue,
-} from "firebase/database";
+import { getDatabase, ref, set, push, child, onValue } from "firebase/database";
+import ContainerBlue from "./src/components/containerBlue/containerBlue.js";
+import ContentContainer from "./src/components/contentContainer/contentContainer.js";
+import Footer from "./src/components/footer/footer.js";
 
 const db = getDatabase(firebaseApp);
 
-const ChatScreen = ({ route }) => {
+const ChatScreen = ({ route, navigation }) => {
   const { chatId } = route.params;
-  const [message, setMessage] = useState('');
+  const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
   const [user, setUser] = useState(null);
   const [usersMap, setUsersMap] = useState({});
 
   useEffect(() => {
     const getUser = async () => {
-      const userData = await AsyncStorage.getItem('user');
+      const userData = await AsyncStorage.getItem("user");
       if (userData) {
         setUser(JSON.parse(userData));
       }
     };
 
     getUser();
-    
+
     if (chatId) {
-      const messagesRef = ref(db, `/Chats/${chatId}/messages`)
+      const messagesRef = ref(db, `/Chats/${chatId}/messages`);
       onValue(messagesRef, (snapshot) => {
         const data = snapshot.val() || {};
-        const formattedMessages = Object.keys(data).map(key => ({
+        const formattedMessages = Object.keys(data).map((key) => ({
           id: key,
-          ...data[key]
+          ...data[key],
         }));
         setMessages(formattedMessages);
       });
@@ -52,15 +48,15 @@ const ChatScreen = ({ route }) => {
   }, [chatId]);
 
   useEffect(() => {
-    const usersRef = ref(db, '/users')
+    const usersRef = ref(db, "/users");
     onValue(usersRef, (snapshot) => {
       const data = snapshot.val() || {};
-      const usersList = Object.keys(data).map(key => ({
+      const usersList = Object.keys(data).map((key) => ({
         uid: key,
-        ...data[key]
+        ...data[key],
       }));
       const usersMap = {};
-      usersList.forEach(user => {
+      usersList.forEach((user) => {
         usersMap[user.uid] = user.username;
       });
       setUsersMap(usersMap);
@@ -82,66 +78,75 @@ const ChatScreen = ({ route }) => {
   };
 
   const getUsername = (uid) => {
-    return usersMap[uid] || 'Unknown';
+    return usersMap[uid] || "Unknown";
   };
 
   return (
-    <View style={styles.container}>
-      <FlatList
-        data={messages}
-        keyExtractor={(item) => item.id}
-        renderItem={({ item }) => (
-          <View style={styles.messageContainer}>
-            <Text style={styles.messageSender}>{getUsername(item.sender)}</Text>
-            <Text style={styles.messageContent}>{item.content}</Text>
-            <Text style={styles.messageTimestamp}>{new Date(item.timestamp).toLocaleTimeString()}</Text>
+    <ContainerBlue>
+      <ContentContainer>
+        <View style={styles.container}>
+          <FlatList
+            data={messages}
+            keyExtractor={(item) => item.id}
+            renderItem={({ item }) => (
+              <View style={styles.messageContainer}>
+                <Text style={styles.messageSender}>
+                  {getUsername(item.sender)}
+                </Text>
+                <Text style={styles.messageContent}>{item.content}</Text>
+                <Text style={styles.messageTimestamp}>
+                  {new Date(item.timestamp).toLocaleTimeString()}
+                </Text>
+              </View>
+            )}
+          />
+          <View style={styles.inputContainer}>
+            <TextInput
+              style={styles.input}
+              value={message}
+              onChangeText={setMessage}
+              placeholder="Type your message..."
+            />
+            <Button title="Send" onPress={handleSend} />
           </View>
-        )}
-      />
-      <View style={styles.inputContainer}>
-        <TextInput
-          style={styles.input}
-          value={message}
-          onChangeText={setMessage}
-          placeholder="Type your message..."
-        />
-        <Button title="Send" onPress={handleSend} />
-      </View>
-    </View>
+        </View>
+      </ContentContainer>
+      <Footer navigation={navigation} />
+    </ContainerBlue>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'space-between',
+    justifyContent: "space-between",
   },
   messageContainer: {
     padding: 10,
     borderBottomWidth: 1,
-    borderBottomColor: '#ccc',
+    borderBottomColor: "#ccc",
   },
   messageSender: {
-    fontWeight: 'bold',
+    fontWeight: "bold",
   },
   messageContent: {
     marginVertical: 5,
   },
   messageTimestamp: {
     fontSize: 10,
-    color: 'gray',
+    color: "gray",
   },
   inputContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     padding: 10,
     borderTopWidth: 1,
-    borderTopColor: '#ccc',
+    borderTopColor: "#ccc",
   },
   input: {
     flex: 1,
     borderWidth: 1,
-    borderColor: '#ccc',
+    borderColor: "#ccc",
     padding: 10,
     marginRight: 10,
   },

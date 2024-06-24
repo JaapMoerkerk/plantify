@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
-import styles from './containerGreenStyles'
+import styles from './containerGreenStyle'
 
 
 const ContainerGreen = ({ children }) => {
