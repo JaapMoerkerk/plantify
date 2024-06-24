@@ -1,4 +1,3 @@
-// ChatScreen.js
 import React, { useState, useEffect } from "react";
 import {
   View,
@@ -39,7 +38,7 @@ const ChatScreen = ({ route }) => {
     getUser();
     
     if (chatId) {
-      const messagesRef = ref(db, `/Chats/${chatId}/messages`)
+      const messagesRef = ref(db, `/Chats/${chatId}/messages`);
       onValue(messagesRef, (snapshot) => {
         const data = snapshot.val() || {};
         const formattedMessages = Object.keys(data).map(key => ({
@@ -52,7 +51,7 @@ const ChatScreen = ({ route }) => {
   }, [chatId]);
 
   useEffect(() => {
-    const usersRef = ref(db, '/users')
+    const usersRef = ref(db, '/users');
     onValue(usersRef, (snapshot) => {
       const data = snapshot.val() || {};
       const usersList = Object.keys(data).map(key => ({
@@ -85,18 +84,30 @@ const ChatScreen = ({ route }) => {
     return usersMap[uid] || 'Unknown';
   };
 
+  const renderMessage = ({ item }) => {
+    const isCurrentUser = user && item.sender === user.uid;
+    return (
+      <View
+        style={[
+          styles.messageContainer,
+          isCurrentUser ? styles.currentUserMessage : styles.otherUserMessage,
+        ]}
+      >
+        <Text style={styles.messageSender}>{getUsername(item.sender)}</Text>
+        <Text style={styles.messageContent}>{item.content}</Text>
+        <Text style={styles.messageTimestamp}>
+          {new Date(item.timestamp).toLocaleTimeString()}
+        </Text>
+      </View>
+    );
+  };
+
   return (
     <View style={styles.container}>
       <FlatList
         data={messages}
         keyExtractor={(item) => item.id}
-        renderItem={({ item }) => (
-          <View style={styles.messageContainer}>
-            <Text style={styles.messageSender}>{getUsername(item.sender)}</Text>
-            <Text style={styles.messageContent}>{item.content}</Text>
-            <Text style={styles.messageTimestamp}>{new Date(item.timestamp).toLocaleTimeString()}</Text>
-          </View>
-        )}
+        renderItem={renderMessage}
       />
       <View style={styles.inputContainer}>
         <TextInput
@@ -118,8 +129,17 @@ const styles = StyleSheet.create({
   },
   messageContainer: {
     padding: 10,
-    borderBottomWidth: 1,
-    borderBottomColor: '#ccc',
+    marginVertical: 5,
+    borderRadius: 10,
+    maxWidth: '80%',
+  },
+  currentUserMessage: {
+    alignSelf: 'flex-end',
+    backgroundColor: '#dcf8c6',
+  },
+  otherUserMessage: {
+    alignSelf: 'flex-start',
+    backgroundColor: '#fff',
   },
   messageSender: {
     fontWeight: 'bold',
