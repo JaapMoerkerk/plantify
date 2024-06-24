@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { StyleSheet, View, Text, Button } from 'react-native';
+import { StyleSheet, View, Text, Button, Pressable } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import Dashboard from './dashboard';
@@ -24,30 +24,59 @@ const userId = 1;
 
 const HomeScreen = ({ navigation }) => {
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Welcome to Your App</Text>
-      <View style={styles.buttonContainer}>
-        <Button className="account-btn" title="Registreren" onPress={() => navigation.navigate('Register')} />
-        <View style={styles.space} />
-        <Button className="account-btn" title="Login" onPress={() => navigation.navigate('Login')} />
-        </View>
-      <View style={styles.content}>
-             <View style={styles.horizontalLine} />
-             <View style={styles.buttonContainer}>
-                    <Button title="Go to Dashboard" onPress={() => navigation.navigate('Dashboard')} />
-                     <View style={styles.space} />
-                     <Button title="Go to Feed" onPress={() => navigation.navigate('Feed')} />
-                     </View>
-                     <View style={styles.horizontalLine} />
-                     <View style={styles.buttonContainer}>
-                    <Button title="Add Plant" onPress={() => navigation.navigate('AddPlant')} />
-                    <View style={styles.space} />
-                   <Button title="Ruilplanten" onPress={() => navigation.navigate('Feed', { userId })} />
-                   <View style={styles.space} />
-                    <Button title="Go to KnnVerken" onPress={() => navigation.navigate('KnnVerken')} />
-                      </View>
+
+
+      <View style={styles.containerMain}>
+
+          <Pressable onPress={() => navigation.navigate('FeedScreen')}>
+              <View style={styles.marketBox} >
+                  <Text style={styles.boxText}> Ruil Kas </Text>
               </View>
+          </Pressable>
+
+          <Pressable onPress={() => navigation.navigate('KnnVerken')}>
+              <View style={styles.plantfinderBox}>
+                  <Text style={styles.boxText}> Plantverkennert </Text>
               </View>
+          </Pressable>
+
+          <Pressable onPress={() => navigation.navigate('ChatScreen')}>
+              <View style={styles.galleryBox}>
+                  <Text style={styles.boxText}> Chats </Text>
+              </View>
+          </Pressable>
+          <View style={styles.buttonContainer}>
+              <Button className="account-btn" title="Login" color="#ffbdbd" onPress={() => navigation.navigate('Login')} />
+              <View style={styles.space} />
+
+              <Button className="account-btn" title="Registreren" color="#ffbdbd" onPress={() => navigation.navigate('Register')} />
+
+          </View>
+      </View>
+  //   <View style={styles.container}>
+  //     <Text style={styles.title}>Welcome to Your App</Text>
+  //     <View style={styles.buttonContainer}>
+  //       <Button className="account-btn" title="Registreren" onPress={() => navigation.navigate('Register')} />
+  //       <View style={styles.space} />
+  //       <Button className="account-btn" title="Login" onPress={() => navigation.navigate('Login')} />
+  //       </View>
+  //     <View style={styles.content}>
+  //            <View style={styles.horizontalLine} />
+  //            <View style={styles.buttonContainer}>
+  //                   <Button title="Go to Dashboard" onPress={() => navigation.navigate('Dashboard')} />
+  //                    <View style={styles.space} />
+  //                    <Button title="Go to Feed" onPress={() => navigation.navigate('Feed')} />
+  //                    </View>
+  //                    <View style={styles.horizontalLine} />
+  //                    <View style={styles.buttonContainer}>
+  //                   <Button title="Add Plant" onPress={() => navigation.navigate('AddPlant')} />
+  //                   <View style={styles.space} />
+  //                  <Button title="Ruilplanten" onPress={() => navigation.navigate('Feed', { userId })} />
+  //                  <View style={styles.space} />
+  //                   <Button title="Go to KnnVerken" onPress={() => navigation.navigate('KnnVerken')} />
+  //                     </View>
+  //             </View>
+  //             </View>
   );
 
 };
@@ -59,7 +88,7 @@ const App = () => {
             <Stack.Navigator screenOptions={{animationEnabled:false}} initialRouteName="Home">
                 <Stack.Screen name="Home" component={HomeScreen} options={{title: 'Start pagina', headerStyle: {backgroundColor: '#ffbdbd', borderBottomColor: '#faf9f7', borderBottomWidth: 1,},}}/>
                 <Stack.Screen name="Dashboard" component={Dashboard} options={{title: 'Dashboard', headerStyle: {backgroundColor: '#ffbdbd', borderBottomColor: '#faf9f7', borderBottomWidth: 1,},}}/>
-                <Stack.Screen name="Feed" component={FeedScreen} options={{title: 'Ruil Kas', headerStyle: {backgroundColor: '#e07a5f', borderBottomColor: '#faf9f7', borderBottomWidth: 1,},}}/>
+                <Stack.Screen name="FeedScreen" component={FeedScreen} options={{title: 'Ruil Kas', headerStyle: {backgroundColor: '#e07a5f', borderBottomColor: '#faf9f7', borderBottomWidth: 1,},}}/>
                 <Stack.Screen name="FeedDetail" component={FeedDetail} options={{title: 'Ruil Kas post', headerStyle: {backgroundColor: '#e07a5f', borderBottomColor: '#faf9f7', borderBottomWidth: 1,},}}/>
                 <Stack.Screen name="AddPlant" component={AddPlant} options={{title: 'Post een plant', headerStyle: {backgroundColor: '#e07a5f', borderBottomColor: '#faf9f7', borderBottomWidth: 1,},}}/>
                 <Stack.Screen name="ruilContact" component={RuilContact} options={{title: 'Contact', headerStyle: {backgroundColor: '#e07a5f', borderBottomColor: '#faf9f7', borderBottomWidth: 1,},}}/>
@@ -74,34 +103,80 @@ const App = () => {
 };
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: '#f0f0f0',
-        padding: 20,
+     containerMain: {
+            flex: 1,
+            justifyContent: 'center',
+            alignItems: 'center',
+        },
+
+    boxText: {
+        color: '#faf9f7',
+        fontSize: 30,
     },
-    title: {
-        fontSize: 24,
-        fontWeight: 'bold',
-        marginBottom: 20,
-        textAlign: 'center',
-    },
-    content: {
-        flex: 1,
-        justifyContent: 'flex-end',
-    },
-    horizontalLine: {
-        height: 2,
-        backgroundColor: '#ccc',
-        alignSelf: 'stretch',
-        marginBottom: 10,
-    },
+
+        marketBox: {
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            width: 300,
+            height: 100,
+            borderRadius: 20,
+            backgroundColor: '#e07a5f',
+            marginBottom: 10,
+        },
+
+        plantfinderBox: {
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            backgroundColor: '#9ed267',
+            width: 300,
+            height: 100,
+            borderRadius: 20,
+            marginBottom: 10,
+        },
+
+        galleryBox: {
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            width: 300,
+            height: 100,
+            borderRadius: 20,
+            backgroundColor: '#7cd3c3',
+        },
+
+
+    // container: {
+    //     flex: 1,
+    //     justifyContent: 'center',
+    //     alignItems: 'center',
+    //     backgroundColor: '#f0f0f0',
+    //     padding: 20,
+    // },
+    // title: {
+    //     fontSize: 24,
+    //     fontWeight: 'bold',
+    //     marginBottom: 20,
+    //     textAlign: 'center',
+    // },
+    // content: {
+    //     flex: 1,
+    //     justifyContent: 'flex-end',
+    // },
+    // horizontalLine: {
+    //     height: 2,
+    //     backgroundColor: '#ccc',
+    //     alignSelf: 'stretch',
+    //     marginBottom: 10,
+    // },
     buttonContainer: {
         flexDirection: 'row',
         justifyContent: 'center',
         marginBottom: 20,
+        margin: 10,
     },
+
     space: {
         width: 10,
     },

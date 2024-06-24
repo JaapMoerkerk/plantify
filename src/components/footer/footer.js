@@ -23,7 +23,7 @@ const Footer = ({navigation}) => {
                 <Image source={require('../../../assets/img/footer/home.png')} style={styles.footerImg} />
             </Pressable>
 
-            <Pressable style={[styles.footerItem, styles.trade]} onPress={() => navigation.navigate('FeedScreen')}>
+            <Pressable style={[styles.footerItem, styles.trade]} onPress={() => navigation.navigate('Feed')}>
                 <Image source={require('../../../assets/img/footer/greenhouse.png')} style={styles.footerImg} />
             </Pressable>
 
