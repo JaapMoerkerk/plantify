@@ -9,6 +9,11 @@ import {
   Image,
 } from "react-native";
 
+import Footer from './src/components/footer/footer.js';
+import ContentContainer from './src/components/contentContainer/contentContainer.js';
+import Container from './src/components/containerRed/containerRed.js';
+
+
 const FeedScreen = ({ navigation, route }) => {
   const [posts, setPosts] = useState([]);
   const [tags, setTags] = useState([]);
@@ -105,7 +110,10 @@ const FeedScreen = ({ navigation, route }) => {
   };
 
   return (
-    <ScrollView style={styles.container}>
+      <Container>
+        <ContentContainer>
+
+        <ScrollView style={styles.container}>
       <Text style={styles.header}>Your Personalized Feed</Text>
 
       <ScrollView horizontal style={styles.tagsContainer}>
@@ -134,6 +142,7 @@ const FeedScreen = ({ navigation, route }) => {
             title="Read More"
             onPress={() => navigation.navigate("FeedDetail", { post })}
             style={styles.readMoreButton}
+            color="#7cd3c3"
           />
         </View>
       ))}
@@ -142,8 +151,13 @@ const FeedScreen = ({ navigation, route }) => {
         title="Load More"
         onPress={() => {}}
         style={styles.loadMoreButton}
+        color="#7cd3c3"
       />
     </ScrollView>
+        </ContentContainer>
+        <Footer navigation={navigation}/>
+      </Container>
+
   );
 };
 
@@ -151,13 +165,13 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
-    backgroundColor: "#fff",
   },
   header: {
     fontSize: 24,
     fontWeight: "bold",
     marginBottom: 20,
     textAlign: "center",
+    color: '#faf9f7'
   },
   tagsContainer: {
     flexDirection: "row",
@@ -165,22 +179,22 @@ const styles = StyleSheet.create({
   },
   tagButton: {
     padding: 10,
-    backgroundColor: "#e0e0e0",
+    backgroundColor: "#f0c6ba",
     borderRadius: 20,
     marginRight: 10,
   },
   selectedTagButton: {
-    backgroundColor: "#6200ee",
+    backgroundColor: "#e07a5f",
   },
   tagButtonText: {
-    color: "#fff",
+    color: '#faf9f7',
     fontWeight: "bold",
   },
   post: {
     marginBottom: 20,
     padding: 10,
     borderRadius: 5,
-    backgroundColor: "#f9f9f9",
+    backgroundColor: "#faf9f7",
   },
   postTitle: {
     fontSize: 18,

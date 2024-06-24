@@ -57,25 +57,17 @@ const App = () => {
     return (
         <NavigationContainer>
             <Stack.Navigator screenOptions={{animationEnabled:false}} initialRouteName="Home">
-                        <Stack.Screen name="Home" component={HomeScreen} />
-                        <Stack.Screen
-                          name="Dashboard"
-                          component={Dashboard}
-                          options={{
-                            headerLeft: () => null,
-                            title: 'Dashboard',
-                          }}
-                        />
-                <Stack.Screen name="Feed" component={FeedScreen} />
-                <Stack.Screen name="FeedDetail" component={FeedDetail} />
-                <Stack.Screen name="AddPlant" component={AddPlant} />
-                <Stack.Screen name="Ruilplanten" component={FeedScreen} />
-                <Stack.Screen name="ruilContact" component={RuilContact} />
-                <Stack.Screen name="KnnVerken" component={KnnVerken} />
-                <Stack.Screen name="Register" component={Register} />
-        <Stack.Screen name="Login" component={Login} />
-        <Stack.Screen name="ChatScreen" component={ChatScreen} />
-        <Stack.Screen name="Chat" component={Chat} />
+                <Stack.Screen name="Home" component={HomeScreen} options={{title: 'Start pagina', headerStyle: {backgroundColor: '#ffbdbd', borderBottomColor: '#faf9f7', borderBottomWidth: 1,},}}/>
+                <Stack.Screen name="Dashboard" component={Dashboard} options={{title: 'Dashboard', headerStyle: {backgroundColor: '#ffbdbd', borderBottomColor: '#faf9f7', borderBottomWidth: 1,},}}/>
+                <Stack.Screen name="Feed" component={FeedScreen} options={{title: 'Ruil Kas', headerStyle: {backgroundColor: '#e07a5f', borderBottomColor: '#faf9f7', borderBottomWidth: 1,},}}/>
+                <Stack.Screen name="FeedDetail" component={FeedDetail} options={{title: 'Ruil Kas post', headerStyle: {backgroundColor: '#e07a5f', borderBottomColor: '#faf9f7', borderBottomWidth: 1,},}}/>
+                <Stack.Screen name="AddPlant" component={AddPlant} options={{title: 'Post een plant', headerStyle: {backgroundColor: '#e07a5f', borderBottomColor: '#faf9f7', borderBottomWidth: 1,},}}/>
+                <Stack.Screen name="ruilContact" component={RuilContact} options={{title: 'Contact', headerStyle: {backgroundColor: '#e07a5f', borderBottomColor: '#faf9f7', borderBottomWidth: 1,},}}/>
+                <Stack.Screen name="KnnVerken" component={KnnVerken} options={{title: 'Plantverkennert', headerStyle: {backgroundColor: '#9ed267', borderBottomColor: '#faf9f7', borderBottomWidth: 1,},}}/>
+                <Stack.Screen name="Register" component={Register} options={{title: 'Registreer', headerStyle: {backgroundColor: '#ffbdbd', borderBottomColor: '#faf9f7', borderBottomWidth: 1,},}}/>
+                <Stack.Screen name="Login" component={Login} options={{title: 'Login', headerStyle: {backgroundColor: '#ffbdbd', borderBottomColor: '#faf9f7', borderBottomWidth: 1,},}}/>
+                <Stack.Screen name="ChatScreen" component={ChatScreen} options={{title: 'Chat met buurtgenoot', headerStyle: {backgroundColor: '#7cd3c3', borderBottomColor: '#faf9f7', borderBottomWidth: 1,},}}/>
+                <Stack.Screen name="Chat" component={Chat} options={{title: 'Chats', headerStyle: {backgroundColor: '#7cd3c3', borderBottomColor: '#faf9f7', borderBottomWidth: 1,},}}/>
             </Stack.Navigator>
         </NavigationContainer>
     );
