@@ -1,13 +1,9 @@
 import React, { useState, useEffect } from "react";
-import {
-  View,
-  Text,
-  Button,
-  StyleSheet,
-  ScrollView,
-  TouchableOpacity,
-  Image,
-} from "react-native";
+import { View,Text, Button, StyleSheet, ScrollView, TouchableOpacity, Image} from "react-native";
+import Footer from './src/components/footer/footer.js';
+import Navbar from './src/components/navbar/navbar.js';
+import ButtonBox from "./src/components/button-box/buttonBox.js";
+import Container from './src/components/containerRed/containerRed.js';
 
 const FeedScreen = ({ navigation, route }) => {
   const [posts, setPosts] = useState([]);
@@ -105,6 +101,8 @@ const FeedScreen = ({ navigation, route }) => {
   };
 
   return (
+    <Container>
+          <Navbar/>
     <ScrollView style={styles.container}>
       <Text style={styles.header}>Your Personalized Feed</Text>
 
@@ -143,15 +141,19 @@ const FeedScreen = ({ navigation, route }) => {
         onPress={() => {}}
         style={styles.loadMoreButton}
       />
-    </ScrollView>
+   
+          </ScrollView>
+        {<Footer navigation={navigation}/>}
+
+      </Container>
   );
 };
 
+
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    flex: 2,
     padding: 20,
-    backgroundColor: "#fff",
   },
   header: {
     fontSize: 24,
@@ -165,12 +167,12 @@ const styles = StyleSheet.create({
   },
   tagButton: {
     padding: 10,
-    backgroundColor: "#e0e0e0",
+    backgroundColor: "#f0c6ba",
     borderRadius: 20,
     marginRight: 10,
   },
   selectedTagButton: {
-    backgroundColor: "#6200ee",
+    backgroundColor: "#d5e9bd",
   },
   tagButtonText: {
     color: "#fff",
