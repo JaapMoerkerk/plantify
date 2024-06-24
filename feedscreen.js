@@ -9,17 +9,14 @@ import {
   Image,
   Alert,
 } from "react-native";
+import { getAuth } from "firebase/auth";
 import { getDatabase, ref, remove, child } from "firebase/database";
 import firebaseApp from "./firebaseConfig";
 import Footer from "./src/components/footer/footer.js";
-import Navbar from "./src/components/navbar/navbar.js";
 import ContentContainer from "./src/components/contentContainer/contentContainer.js";
 import Container from "./src/components/containerRed/containerRed.js";
 
-import Footer from './src/components/footer/footer.js';
-import ContentContainer from './src/components/contentContainer/contentContainer.js';
-import Container from './src/components/containerRed/containerRed.js';
-
+const auth = getAuth();
 
 const FeedScreen = ({ navigation, route }) => {
   const [posts, setPosts] = useState([]);
@@ -34,6 +31,7 @@ const FeedScreen = ({ navigation, route }) => {
       const fetchData = async () => {
         if (route.params) {
           const { userId } = route.params;
+          
 
         try {
           const response = await fetch(
@@ -161,7 +159,7 @@ const FeedScreen = ({ navigation, route }) => {
           {!route.params ? (
             <TouchableOpacity
               style={[styles.addButton]}
-              onPress={() => navigation.navigate("Feed", { userId: null })}
+              onPress={() => navigation.navigate("Feed", { userId: auth.currentUser.uid })}
             >
               <Text style={styles.tagButtonText}>Jouw toegevoegde planten</Text>
             </TouchableOpacity>
@@ -176,22 +174,6 @@ const FeedScreen = ({ navigation, route }) => {
           >
             <Text style={styles.tagButtonText}>Voeg een plant toe!</Text>
           </TouchableOpacity>
-
-      {posts.map((post) => (
-        <View key={post.id} style={styles.post}>
-          <Text style={styles.postTitle}>{post.name}</Text>
-          <Text style={styles.postContent}>{post.description}</Text>
-          {post.img && (
-            <Image source={{ uri: post.img }} style={styles.postImage} />
-          )}
-          <Button
-            title="Read More"
-            onPress={() => navigation.navigate("FeedDetail", { post })}
-            style={styles.readMoreButton}
-            color="#7cd3c3"
-          />
-        </View>
-      ))}
           {posts.map((post) => (
             <View key={post.id} style={styles.post}>
               <Text style={styles.postTitle}>{post.name}</Text>
