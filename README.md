@@ -26,4 +26,3 @@ Voor dit project is onderstaande Git flow aangehouden. Raadpleeg dit stappenplan
 * Een nieuwe feature wordt uitgecheckt als nieuwe branch met de volgende notatie: **feature/story-[ID]**, met **[ID]** als het story/feature nummer uit de backlog (zie ook _Projects_ in deze repo.
 * Bij afronding wordt _testing_ aangegeven in de backlog, waarna een teamgenoot de feature grondig test. Bij goedkeuring wordt de branch in de **develop** branch gemerged.
 * Periodiek wordt de **develop** branch door het team in groepsverband getest op basis van de acceptatiecriteria, en bij goedkeuring gemerged in **main**.
-
