@@ -10,6 +10,6 @@ const containerRedStyles = StyleSheet.create({
      },
    });
 
-
+//call to action: #f0c6ba
 
 export default containerRedStyles;
