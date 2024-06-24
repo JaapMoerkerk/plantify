@@ -2,6 +2,10 @@ import React, { useEffect, useState } from 'react';
 import { View, Text, FlatList, TextInput, Button, StyleSheet } from 'react-native';
 import firebase from './firebaseConfig';
 
+import Footer from './src/components/footer/footer.js';
+import ContainerPink from './src/components/containerPink/containerPink.js';
+import Navbar from './src/components/navbar/navbar.js';
+
 const Chat = ({ route }) => {
   const { userId } = route.params;
   const [messages, setMessages] = useState([]);
@@ -58,6 +62,8 @@ const Chat = ({ route }) => {
   
 
   return (
+      <ContainerPink>
+        <Navbar/>
     <View style={styles.container}>
       <FlatList
         data={messages}
@@ -78,6 +84,8 @@ const Chat = ({ route }) => {
         <Button title="Send" onPress={sendMessage} />
       </View>
     </View>
+        <Footer/>
+      </ContainerPink>
   );
 };
 

@@ -14,19 +14,23 @@ const Footer = ({navigation}) => {
         // <Tab.Navigator>
             <View style={styles.footerItems}>
 
+                <Pressable style={[styles.footerItem, styles.home]} onPress={() => navigation.navigate('Home')}>
+                    <Image source={require('../../../assets/img/footer/home.png')} style={styles.footerImg} />
+                </Pressable>
 
-
-                <View style={[styles.footerItem, styles.trade]}>
-                    <Image source={require('../../../assets/img/footer/greenhouse.png')} style={styles.footerImg} />
-                </View>
-
-                <View style={[styles.footerItem, styles.find]}>
-                    <Image source={require('../../../assets/img/footer/creativity.png')} style={styles.footerImg} />
-                </View>
-
-                <Pressable style={[styles.footerItem, styles.find]} onPress={() => navigation.navigate('FeedScreen')}>
+                <Pressable style={[styles.footerItem, styles.trade]} onPress={() => navigation.navigate('FeedScreen')}>
                     <Image source={require('../../../assets/img/footer/greenhouse.png')} style={styles.footerImg} />
                 </Pressable>
+
+                <Pressable style={[styles.footerItem, styles.find]} onPress={() => navigation.navigate('Plantverkennert')}>
+                    <Image source={require('../../../assets/img/footer/creativity.png')} style={styles.footerImg} />
+                </Pressable>
+
+                <Pressable style={[styles.footerItem, styles.collection]} onPress={() => navigation.navigate('Veranda')}>
+                    <Image source={require('../../../assets/img/footer/growingplants.png')} style={styles.footerImg} />
+                </Pressable>
+
+
             </View>
         // </Tab.Navigator>
 

@@ -3,19 +3,6 @@ import { StyleSheet } from 'react-native';
 
 const footerStyles = StyleSheet.create({
 
-     buttonsContainer: {
-         flex: 4,
-         width: '100%',
-       padding: '3%',
-     },
-     footerButton: {
-       borderRadius: 10,
-       height: '8%',
-       borderColor: 'white',
-     },
-     footerButtonText: {
-       color: '#143635',
-     },
      footerItems: {
        width: '100%',
        justifyContent: 'center',

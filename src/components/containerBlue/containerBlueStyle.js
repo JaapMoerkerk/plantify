@@ -10,6 +10,6 @@ const containerBlueStyles = StyleSheet.create({
     },
 });
 
-
+//call to action: #c8e9e2
 
 export default containerBlueStyles;

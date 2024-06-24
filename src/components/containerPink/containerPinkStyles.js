@@ -1,15 +1,15 @@
 import { StyleSheet } from 'react-native';
 
-const containerRedStyles = StyleSheet.create({
+const containerPinkStyles = StyleSheet.create({
      container: {
        flex: 1,
-       backgroundColor: '#e07a5f',
+       backgroundColor: '#ffbdbd',
        margin: 0,
        padding: 0,
          color: '#faf9f7',
      },
    });
 
-//call to action: #f0c6ba
+//call to action: #ffe5e5
 
-export default containerRedStyles;
+export default containerPinkStyles;

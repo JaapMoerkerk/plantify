@@ -11,7 +11,6 @@ const fav = ({ navigation }) => {
         <Container>
             <Navbar/>
             {/*favorites content*/}
-            <ButtonBox/>
             {/*1 button :terug naar vorige pagina*/}
             <Footer/>
         </Container>
