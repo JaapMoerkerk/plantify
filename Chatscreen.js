@@ -116,7 +116,7 @@ const ChatScreen = ({ route }) => {
           onChangeText={setMessage}
           placeholder="Type your message..."
         />
-        <Button title="Send" onPress={handleSend} />
+        <Button title="Send" onPress={handleSend} color="#7cd3c3"  />
       </View>
     </View>
   );
