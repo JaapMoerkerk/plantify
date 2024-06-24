@@ -6,7 +6,7 @@ const footerStyles = StyleSheet.create({
     footerItems: {
         width: '100%',
         justifyContent: 'center',
-        borderTopColor: 'white',
+        borderTopColor: '#faf9f7',
         borderTopWidth: 1,
         height: 80,
         flexDirection: 'row',

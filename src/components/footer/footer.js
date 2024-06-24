@@ -7,6 +7,11 @@ import { getAuth } from "firebase/auth";
 
 // Import your screen components here
 import FeedScreen from '../../../feedscreen';
+import ChatScreen from '../../../Chatscreen';
+import Home from '../../../App';
+import Verken from '../../screens/verkenScreens/verken/verken';
+
+
 import {BottomNavigation} from "react-native-paper";
 
 const auth = getAuth();
