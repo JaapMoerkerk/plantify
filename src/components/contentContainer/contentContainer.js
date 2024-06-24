@@ -1,13 +1,13 @@
 import React from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, ScrollView } from 'react-native';
 import styles from './contentContainerStyles'
 
 
 const ContentContainer = ({ children }) => {
     return (
-        <View style={styles.container}>
+        <ScrollView style={styles.container}>
             {children}
-        </View>
+        </ScrollView>
     );
 };
 export default ContentContainer;

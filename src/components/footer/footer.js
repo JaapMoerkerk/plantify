@@ -6,6 +6,11 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 // Import your screen components here
 import FeedScreen from '../../../feedscreen';
+import ChatScreen from '../../../Chatscreen';
+import Home from '../../../App';
+import Verken from '../../screens/verkenScreens/verken/verken';
+
+
 import {BottomNavigation} from "react-native-paper";
 
 // const Tab = createBottomTabNavigator();
@@ -22,11 +27,11 @@ const Footer = ({navigation}) => {
                 <Image source={require('../../../assets/img/footer/greenhouse.png')} style={styles.footerImg} />
             </Pressable>
 
-            <Pressable style={[styles.footerItem, styles.find]} onPress={() => navigation.navigate('Plantverkennert')}>
+            <Pressable style={[styles.footerItem, styles.find]} onPress={() => navigation.navigate('Verken')}>
                 <Image source={require('../../../assets/img/footer/creativity.png')} style={styles.footerImg} />
             </Pressable>
 
-            <Pressable style={[styles.footerItem, styles.collection]} onPress={() => navigation.navigate('Veranda')}>
+            <Pressable style={[styles.footerItem, styles.collection]} onPress={() => navigation.navigate('ChatScreen')}>
                 <Image source={require('../../../assets/img/footer/chat.png')} style={styles.footerImg} />
             </Pressable>
 
