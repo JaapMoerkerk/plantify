@@ -6,6 +6,8 @@ import {
   Button,
   FlatList,
   StyleSheet,
+  KeyboardAvoidingView,
+  Platform,
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import firebaseApp from "./firebaseConfig";
@@ -18,9 +20,13 @@ import {
   onValue,
 } from "firebase/database";
 
+import Footer from './src/components/footer/footer.js';
+import ContentContainer from './src/components/contentContainer/contentContainer.js';
+import ContainerBlue from './src/components/containerBlue/containerBlue.js';
+
 const db = getDatabase(firebaseApp);
 
-const ChatScreen = ({ route }) => {
+const ChatScreen = ({ navigation, route }) => {
   const { chatId } = route.params;
   const [message, setMessage] = useState('');
   const [messages, setMessages] = useState([]);
@@ -103,29 +109,38 @@ const ChatScreen = ({ route }) => {
   };
 
   return (
-    <View style={styles.container}>
-      <FlatList
-        data={messages}
-        keyExtractor={(item) => item.id}
-        renderItem={renderMessage}
-      />
-      <View style={styles.inputContainer}>
+    <ContainerBlue>
+      <ContentContainer>
+        <FlatList
+          data={messages}
+          keyExtractor={(item) => item.id}
+          renderItem={renderMessage}
+          contentContainerStyle={styles.messagesContainer}
+        />
+      </ContentContainer>
+      <KeyboardAvoidingView
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+        style={styles.inputContainer}
+      >
         <TextInput
           style={styles.input}
           value={message}
           onChangeText={setMessage}
           placeholder="Type your message..."
         />
-        <Button title="Send" onPress={handleSend} color="#7cd3c3"  />
-      </View>
-    </View>
+        <Button title="Send" onPress={handleSend} color="#7cd3c3" />
+      </KeyboardAvoidingView>
+      <Footer navigation={navigation} />
+    </ContainerBlue>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'space-between',
+  },
+  messagesContainer: {
+    paddingBottom: 60, // Adjusted to accommodate the input area and footer
   },
   messageContainer: {
     padding: 10,
@@ -154,9 +169,11 @@ const styles = StyleSheet.create({
   inputContainer: {
     flexDirection: 'row',
     alignItems: 'center',
+    justifyContent: 'space-between',
     padding: 10,
     borderTopWidth: 1,
     borderTopColor: '#ccc',
+    backgroundColor: '#fff', // Adjust if necessary
   },
   input: {
     flex: 1,
@@ -164,6 +181,7 @@ const styles = StyleSheet.create({
     borderColor: '#ccc',
     padding: 10,
     marginRight: 10,
+    borderRadius: 20,
   },
 });
 
