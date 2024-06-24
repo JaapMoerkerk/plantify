@@ -156,17 +156,19 @@ const UserList = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.header}>Not Messaged Users</Text>
-      <FlatList
-        data={notMessagedUsers}
-        keyExtractor={(item) => item.uid}
-        renderItem={({ item }) => renderUser(item)}
-      />
       <Text style={styles.header}>Messaged Users</Text>
       <FlatList
         data={messagedUsers}
         keyExtractor={(item) => item.uid}
         renderItem={({ item }) => renderUser(item)}
+        ListEmptyComponent={<Text>No messaged users found.</Text>}
+      />
+      <Text style={styles.header}>Not Messaged Users</Text>
+      <FlatList
+        data={notMessagedUsers}
+        keyExtractor={(item) => item.uid}
+        renderItem={({ item }) => renderUser(item)}
+        ListEmptyComponent={<Text>No users found.</Text>}
       />
     </View>
   );
