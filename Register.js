@@ -4,7 +4,9 @@ import { View, Text, TextInput, StyleSheet, Alert, Pressable } from 'react-nativ
 import firebaseApp from './firebaseConfig';
 import{getAuth, createUserWithEmailAndPassword} from 'firebase/auth';
 import {getDatabase, ref, set} from "firebase/database";
-
+// import Footer from './src/components/footer/footer.js';
+import ContentContainer from './src/components/contentContainer/contentContainer.js';
+import Container from './src/components/containerPink/containerPink.js';
 const Register = ({ navigation }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -33,8 +35,12 @@ const Register = ({ navigation }) => {
   };
 
   return (
+      <Container>
+          <ContentContainer>
     <View style={styles.container}>
-      <Text style={styles.title}>Registreren als nieuwe gebruiker</Text>
+        <View style={styles.box}>
+
+        <Text style={styles.title}>Registreren als nieuwe gebruiker</Text>
       <TextInput
         style={styles.input}
         placeholder="Gebruikersnaam"
@@ -58,24 +64,22 @@ const Register = ({ navigation }) => {
       <Pressable style={styles.button} onPress={handleRegister}>
         <Text style={styles.buttonText}>Registreren</Text>
       </Pressable>
+        </View>
       </View>
+</ContentContainer>
+    {/*<Footer navigation={navigation}/>*/}
+</Container>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    padding: 16,
-    backgroundColor: '#e07a5f'
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    textAlign: 'center',
-    marginBottom: 24,
-    color: '#fff',
-  },
+    title: {
+        fontSize: 24,
+        fontWeight: 'bold',
+        textAlign: 'center',
+        marginBottom: 24,
+        color: '#143635',
+    },
   input: {
     borderWidth: 1,
     borderColor: '#fff',
@@ -84,17 +88,35 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     backgroundColor: '#fff',
   },
-  button: {
-      backgroundColor: '#f0c6ba',
-      padding: 15,
-      borderRadius: 15,
-      alignItems: 'center',
+    button: {
+        backgroundColor: '#ffbdbd',
+        padding: 15,
+        borderRadius: 15,
+        alignItems: 'center',
     },
     buttonText: {
-      color: '#000',
-      fontSize: 16,
-      fontWeight: 'bold',
+        color: '#143635',
+        fontSize: 16,
+        fontWeight: 'bold',
     },
+
+    container: {
+        flex: 1,
+        justifyContent: 'center',
+        padding: 16,
+        // backgroundColor: '#faf9f7'
+    },
+    box: {
+        width: '90%',
+        backgroundColor: '#ffe5e5',
+        borderRadius: 20,
+        padding: '5%',
+        margin: '5%',
+        display: 'flex',
+        flexDirection: 'column',
+        elevation: 3,
+    },
+
 });
 
 export default Register;
