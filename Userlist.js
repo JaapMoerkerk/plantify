@@ -5,6 +5,8 @@ import {
   FlatList,
   StyleSheet,
   TouchableOpacity,
+  Image,
+  ActivityIndicator,
 } from "react-native";
 import firebaseApp from "./firebaseConfig";
 import { getAuth } from "firebase/auth";
@@ -23,11 +25,17 @@ const UserList = ({ navigation }) => {
   const [messagedUsers, setMessagedUsers] = useState([]);
   const [notMessagedUsers, setNotMessagedUsers] = useState([]);
   const [currentUser, setCurrentUser] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchUsers = async () => {
       const user = getAuth().currentUser;
       setCurrentUser(user);
+
+      if (!user) {
+        setLoading(false);
+        return;
+      }
 
       try {
         const usersSnapshot = await get(child(ref(db), `users`));
@@ -67,6 +75,8 @@ const UserList = ({ navigation }) => {
         }
       } catch (error) {
         console.error(error);
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -74,37 +84,40 @@ const UserList = ({ navigation }) => {
   }, []);
 
   const handleSelectUser = async (selectedUser) => {
-    if (currentUser) {
-      let chatId = null;
-      try {
-        const chatsSnapshot = await get(child(ref(db), "/Chats"));
-        if (chatsSnapshot.exists()) {
-          const chats = chatsSnapshot.val() || {};
-          for (const key in chats) {
-            const chat = chats[key];
-            if (
-              chat.participants[currentUser.uid] &&
-              chat.participants[selectedUser.uid]
-            ) {
-              chatId = key;
-              break;
-            }
+    if (!currentUser) {
+      console.error("Current user is null");
+      return;
+    }
+
+    let chatId = null;
+    try {
+      const chatsSnapshot = await get(child(ref(db), "/Chats"));
+      if (chatsSnapshot.exists()) {
+        const chats = chatsSnapshot.val() || {};
+        for (const key in chats) {
+          const chat = chats[key];
+          if (
+            chat.participants[currentUser.uid] &&
+            chat.participants[selectedUser.uid]
+          ) {
+            chatId = key;
+            break;
           }
         }
+      }
 
-        if (!chatId) {
-          const newChatId = push(child(ref(db), "/Chats")).key;
-          await set(ref(db, "/Chats/" + newChatId), {
-            participants: {
-              [currentUser.uid]: true,
-              [selectedUser.uid]: true,
-            },
-            messages: {},
-          });
-          chatId = newChatId;
-        }
+      if (!chatId) {
+        const newChatId = push(child(ref(db), "/Chats")).key;
+        await set(ref(db, "/Chats/" + newChatId), {
+          participants: {
+            [currentUser.uid]: true,
+            [selectedUser.uid]: true,
+          },
+          messages: {},
+        });
+        chatId = newChatId;
 
-        // Update lists
+        // Update lists only when a new chat is created
         setMessagedUsers((prevMessagedUsers) => [
           ...prevMessagedUsers,
           selectedUser,
@@ -112,11 +125,11 @@ const UserList = ({ navigation }) => {
         setNotMessagedUsers((prevNotMessagedUsers) =>
           prevNotMessagedUsers.filter((user) => user.uid !== selectedUser.uid)
         );
-
-        navigation.navigate("ChatScreen", { chatId });
-      } catch (error) {
-        console.error(error);
       }
+
+      navigation.navigate("ChatScreen", { chatId });
+    } catch (error) {
+      console.error(error);
     }
   };
 
@@ -125,9 +138,21 @@ const UserList = ({ navigation }) => {
       style={styles.userContainer}
       onPress={() => handleSelectUser(user)}
     >
+      <Image
+        source={{ uri: user.avatarUrl || 'https://via.placeholder.com/150' }}
+        style={styles.avatar}
+      />
       <Text style={styles.username}>{user.username}</Text>
     </TouchableOpacity>
   );
+
+  if (loading) {
+    return (
+      <View style={styles.loadingContainer}>
+        <ActivityIndicator size="large" color="#0000ff" />
+      </View>
+    );
+  }
 
   return (
     <View style={styles.container}>
@@ -151,21 +176,36 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
+    backgroundColor: '#f0f0f0',
+  },
+  loadingContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   userContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
     padding: 10,
     borderBottomWidth: 1,
-    borderBottomColor: "#ccc",
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
+    borderBottomColor: '#ccc',
+    backgroundColor: '#fff',
+    borderRadius: 10,
+    marginVertical: 5,
+  },
+  avatar: {
+    width: 50,
+    height: 50,
+    borderRadius: 25,
+    marginRight: 15,
   },
   username: {
     fontSize: 18,
+    fontWeight: 'bold',
   },
   header: {
     fontSize: 20,
-    fontWeight: "bold",
+    fontWeight: 'bold',
     marginVertical: 10,
   },
 });
