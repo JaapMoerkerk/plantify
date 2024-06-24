@@ -89,6 +89,11 @@ const UserList = ({ navigation }) => {
       return;
     }
 
+    if (selectedUser.uid === currentUser.uid) {
+      console.warn("You can't message yourself");
+      return;
+    }
+
     let chatId = null;
     try {
       const chatsSnapshot = await get(child(ref(db), "/Chats"));
