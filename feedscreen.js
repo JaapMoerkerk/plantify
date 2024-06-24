@@ -29,6 +29,7 @@ const FeedScreen = ({ navigation, route }) => {
   useEffect(() => {
     const unsubscribe = navigation.addListener("focus", () => {
       const fetchData = async () => {
+        console.log("here:" + route.params) 
         if (route.params) {
           const { userId } = route.params;
           
@@ -159,7 +160,7 @@ const FeedScreen = ({ navigation, route }) => {
           {!route.params ? (
             <TouchableOpacity
               style={[styles.addButton]}
-              onPress={() => navigation.navigate("Feed", { userId: auth.currentUser.uid })}
+              onPress={() => navigation.navigate("FeedScreen", { userId: auth.currentUser.uid })}
             >
               <Text style={styles.tagButtonText}>Jouw toegevoegde planten</Text>
             </TouchableOpacity>
