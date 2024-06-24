@@ -4,6 +4,9 @@ import { View, Text, TextInput, Pressable, StyleSheet, Alert } from 'react-nativ
 import firebaseApp from './firebaseConfig';
 import{getAuth, signInWithEmailAndPassword} from 'firebase/auth';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import Footer from './src/components/footer/footer.js';
+import ContentContainer from './src/components/contentContainer/contentContainer.js';
+import Container from './src/components/containerPink/containerPink.js';
 
 const Login = ({ navigation }) => {
   const [email, setEmail] = useState('');
@@ -24,7 +27,10 @@ const Login = ({ navigation }) => {
   };
 
   return (
-    <View style={styles.container}>
+      <Container>
+          <ContentContainer>
+      <View style={styles.container}>
+          <View style={styles.box}>
       <Text style={styles.title}>Login</Text>
       <TextInput
         style={styles.input}
@@ -49,7 +55,11 @@ const Login = ({ navigation }) => {
       >
         Nog geen account? Klik hier.
       </Text>
+          </View>
     </View>
+          </ContentContainer>
+          <Footer navigation={navigation}/>
+      </Container>
   );
 };
 
@@ -58,14 +68,24 @@ const styles = StyleSheet.create({
       flex: 1,
       justifyContent: 'center',
       padding: 16,
-      backgroundColor: '#e07a5f'
+        backgroundColor: '#faf9f7'
+    },
+    box: {
+        width: '90%',
+        backgroundColor: '#ffe5e5',
+        borderRadius: 20,
+        padding: '5%',
+        margin: '5%',
+        display: 'flex',
+        flexDirection: 'column',
+        elevation: 3,
     },
     title: {
       fontSize: 24,
       fontWeight: 'bold',
       textAlign: 'center',
       marginBottom: 24,
-      color: '#fff',
+      color: '#143635',
     },
     input: {
       borderWidth: 1,
@@ -76,19 +96,19 @@ const styles = StyleSheet.create({
       backgroundColor: '#fff',
     },
     button: {
-        backgroundColor: '#f0c6ba',
+        backgroundColor: '#ffbdbd',
         padding: 15,
         borderRadius: 15,
         alignItems: 'center',
       },
       buttonText: {
-        color: '#000',
+        color: '#143635',
         fontSize: 16,
         fontWeight: 'bold',
       },
   registerText: {
     marginTop: 16,
-    color: '#fff',
+    color: '#143635',
     textAlign: 'center',
   },
 });
