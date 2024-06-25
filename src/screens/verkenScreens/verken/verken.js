@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import {View, Text, Alert, Button, TextInput, ScrollView, Pressable, Image, ActivityIndicator} from "react-native";
-import Container from '../../../components/containerRed/containerRed.js';
+import Container from '../../../components/containerGreen/containerGreen.js';
 import Navbar from '../../../components/navbar/navbar.js';
 import Footer from '../../../components/footer/footer.js';
 import styles from './verkenStyle';
