@@ -8,6 +8,8 @@ import kNear from "./knear";
 import SwipeBox from "../../../components/swipeBox/SwipeBox";
 import swipeOptions from './swipeoptions.json';
 import title from "react-native-paper/src/components/Typography/v2/Title";
+import contentContainer from "../../../components/contentContainer/contentContainer";
+import ContentContainer from "../../../components/contentContainer/contentContainer";
 
 /**
  * Bij verkenScreens kan je alle onderdelen vinden die te maken hebben de Plantverkennert,
@@ -114,49 +116,67 @@ const Verken = ({navigation}) => {
     };
     return (
         <Container>
-            <Navbar/>
-            {showSwipeBox ? (
-                <View style={{alignItems: 'center', flex: 2}}>
-                    <SwipeBox
-                        text={`${swipeOptions[`option${currentIndex + 1}`].id}`}
-                        img={`${imgUrl}${swipeOptions[`option${currentIndex + 1}`].image_path}`}
-                        onSwipeLeft={handleSwipeLeft}
-                        onSwipeRight={handleSwipeRight}
-                    />
-                    <View style={{
-                        flex: 2,
-                        flexDirection: 'row',
-                        justifyContent: 'space-between',
-                        width: '90%',
-                        height: '20%'
-                    }}>
-                        <Image source={require('../../../../assets/red-cross.png')} style={{width: 40, height: 40}}/>
-                        <Image source={require('../../../../assets/green-check.png')} style={{width: 40, height: 40}}/>
-                    </View>
-                </View>
-            ) : (
-                <View style={{alignItems: 'center', flex: 2, padding: 20}}>
-                    <Text style={{color: 'white', fontSize: 20}}>Dat waren alle kaartjes.</Text>
-                    <Pressable
-                        title="Klik hier voor jouw perfecte plant!"
-                        onPress={makePrediction}
-                    >
-                        <Text
-                            style={{marginTop: 20, color: 'black', fontSize: 30, backgroundColor: '#d5e9bd', padding: 10, borderRadius: 20}}
-                        >Klik hier voor jouw perfecte plant!</Text>
-                    </Pressable>
-                    {loading && <ActivityIndicator style={{marginTop: 20}} size="large" color="#0000ff"/>}
-                    {!loading && prediction !== "No prediction has been made yet" && (
-                        <View style={{justifyContent: 'center'}}>
-                            <Text style={{marginTop: 20, color: 'white', fontSize: 25}}>De perfecte plant voor jou:</Text>
-                            <Text style={{color: 'white', fontSize: 40}}>{predictionData}</Text>
-                            <Pressable onPress={navigateToDashboard}>
-                                <Text style={{marginTop: 20, color: 'black', fontSize: 30, backgroundColor: '#d5e9bd', padding: 10, borderRadius: 20}}>Terug naar dashboard</Text>
-                            </Pressable>
+            <ContentContainer>
+                {showSwipeBox ? (
+                    <View style={{alignItems: 'center', flex: 2}}>
+                        <SwipeBox
+                            text={`${swipeOptions[`option${currentIndex + 1}`].id}`}
+                            img={`${imgUrl}${swipeOptions[`option${currentIndex + 1}`].image_path}`}
+                            onSwipeLeft={handleSwipeLeft}
+                            onSwipeRight={handleSwipeRight}
+                        />
+                        <View style={{
+                            flex: 2,
+                            flexDirection: 'row',
+                            justifyContent: 'space-between',
+                            width: '90%',
+                            height: '20%'
+                        }}>
+                            <Image source={require('../../../../assets/red-cross.png')}
+                                   style={{width: 40, height: 40}}/>
+                            <Image source={require('../../../../assets/green-check.png')}
+                                   style={{width: 40, height: 40}}/>
                         </View>
-                    )}
-                </View>
-            )}
+                    </View>
+                ) : (
+                    <View style={{alignItems: 'center', flex: 2, padding: 20}}>
+                        <Text style={{color: 'white', fontSize: 20}}>Dat waren alle kaartjes.</Text>
+                        <Pressable
+                            title="Klik hier voor jouw perfecte plant!"
+                            onPress={makePrediction}
+                        >
+                            <Text
+                                style={{
+                                    marginTop: 20,
+                                    color: 'black',
+                                    fontSize: 30,
+                                    backgroundColor: '#d5e9bd',
+                                    padding: 10,
+                                    borderRadius: 20
+                                }}
+                            >Klik hier voor jouw perfecte plant!</Text>
+                        </Pressable>
+                        {loading && <ActivityIndicator style={{marginTop: 20}} size="large" color="#0000ff"/>}
+                        {!loading && prediction !== "No prediction has been made yet" && (
+                            <View style={{justifyContent: 'center'}}>
+                                <Text style={{marginTop: 20, color: 'white', fontSize: 25}}>De perfecte plant voor
+                                    jou:</Text>
+                                <Text style={{color: 'white', fontSize: 40}}>{predictionData}</Text>
+                                <Pressable onPress={navigateToDashboard}>
+                                    <Text style={{
+                                        marginTop: 20,
+                                        color: 'black',
+                                        fontSize: 30,
+                                        backgroundColor: '#d5e9bd',
+                                        padding: 10,
+                                        borderRadius: 20
+                                    }}>Terug naar dashboard</Text>
+                                </Pressable>
+                            </View>
+                        )}
+                    </View>
+                )}
+            </ContentContainer>
             <Footer/>
         </Container>
     );
