@@ -23,54 +23,53 @@ const FeedScreen = ({ navigation, route }) => {
   const [tags, setTags] = useState([]);
   const [selectedTag, setSelectedTag] = useState(null);
   const [allPosts, setAllPosts] = useState([]); // Add state to hold all posts
-  const [value, setValue] = useState(); //reload for delete
+  const [value, setValue] = useState(0); //reload for delete
 
   // Fetch data from Firebase Realtime Database
   useEffect(() => {
     const unsubscribe = navigation.addListener("focus", () => {
       const fetchData = async () => {
-        console.log("here:" + route.params) 
+        console.log("here:" + route.params);
         if (route.params) {
           const { userId } = route.params;
-          
+
+          try {
+            const response = await fetch(
+              "https://plantify-50b4e-default-rtdb.europe-west1.firebasedatabase.app/Stekjes.json"
+            );
+            const data = await response.json();
+            if (data) {
+              const plantArray = Object.entries(data)
+                .filter(
+                  ([id, plantUser]) => plantUser && plantUser.userId === userId
+                )
+                .map(([id, plantUser]) => plantUser);
+              setPosts(plantArray);
+              setAllPosts(plantArray);
+            }
+          } catch (error) {
+            console.error("Error filtering posts:", error);
+          }
+        } else {
+          try {
+            const responsePosts = await fetch(
+              "https://plantify-50b4e-default-rtdb.europe-west1.firebasedatabase.app/Stekjes.json"
+            );
+            const dataPosts = await responsePosts.json();
+            if (dataPosts) {
+              const postArray = Object.entries(dataPosts).map(([id, post]) => ({
+                id,
+                ...post,
+              }));
+              setPosts(postArray);
+              setAllPosts(postArray); // Save all posts initially
+            }
+          } catch (error) {
+            console.error("Error fetching data:", error);
+          }
+        }
 
         try {
-          const response = await fetch(
-            "https://plantify-50b4e-default-rtdb.europe-west1.firebasedatabase.app/Stekjes.json"
-          );
-          const data = await response.json();
-          if (data) {
-            const plantArray = Object.entries(data)
-              .filter(
-                ([id, plantUser]) => plantUser && plantUser.userId === userId
-              )
-              .map(([id, plantUser]) => plantUser);
-            setPosts(plantArray);
-            setAllPosts(plantArray);
-          }
-        } catch (error) {
-          console.error("Error filtering posts:", error);
-        }
-      } else {
-        try {
-          const responsePosts = await fetch(
-            "https://plantify-50b4e-default-rtdb.europe-west1.firebasedatabase.app/Stekjes.json"
-          );
-          const dataPosts = await responsePosts.json();
-          if (dataPosts) {
-            const postArray = Object.entries(dataPosts).map(([id, post]) => ({
-              id,
-              ...post,
-            }));
-            setPosts(postArray);
-            setAllPosts(postArray); // Save all posts initially
-          }
-        } catch (error) {
-          console.error("Error fetching data:", error);
-        }
-      }
-
-      try {
           const responseTags = await fetch(
             "https://plantify-50b4e-default-rtdb.europe-west1.firebasedatabase.app/Tags.json"
           );
@@ -90,7 +89,7 @@ const FeedScreen = ({ navigation, route }) => {
       fetchData();
     });
     return unsubscribe;
-  }, [navigation, value]);
+  }, [navigation, value, route.params]);
 
   const deletePlant = (id) => {
     // console.log(id)
@@ -137,6 +136,14 @@ const FeedScreen = ({ navigation, route }) => {
     }
   };
 
+  const handleReload = () => {
+    navigation.navigate("FeedScreen", {
+      userId: auth.currentUser.uid,
+    });
+    setValue(value + 1);
+    console.log(value);
+  };
+
   return (
     <Container>
       <ContentContainer>
@@ -158,10 +165,7 @@ const FeedScreen = ({ navigation, route }) => {
             ))}
           </ScrollView>
           {!route.params ? (
-            <TouchableOpacity
-              style={[styles.addButton]}
-              onPress={() => navigation.navigate("FeedScreen", { userId: auth.currentUser.uid })}
-            >
+            <TouchableOpacity style={[styles.addButton]} onPress={handleReload}>
               <Text style={styles.tagButtonText}>Jouw toegevoegde planten</Text>
             </TouchableOpacity>
           ) : (
@@ -208,16 +212,16 @@ const FeedScreen = ({ navigation, route }) => {
             </View>
           ))}
 
-      <Button
-        title="Load More"
-        onPress={() => {}}
-        style={styles.loadMoreButton}
-        color="#7cd3c3"
-      />
-    </ScrollView>
-        </ContentContainer>
-        <Footer navigation={navigation}/>
-      </Container>
+          <Button
+            title="Load More"
+            onPress={() => {}}
+            style={styles.loadMoreButton}
+            color="#7cd3c3"
+          />
+        </ScrollView>
+      </ContentContainer>
+      <Footer navigation={navigation} />
+    </Container>
   );
 };
 
@@ -231,7 +235,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     marginBottom: 20,
     textAlign: "center",
-    color: '#faf9f7'
+    color: "#faf9f7",
   },
   tagsContainer: {
     flexDirection: "row",
@@ -255,7 +259,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#e07a5f",
   },
   tagButtonText: {
-    color: '#faf9f7',
+    color: "#faf9f7",
     fontWeight: "bold",
   },
   post: {
