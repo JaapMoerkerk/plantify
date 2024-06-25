@@ -72,7 +72,7 @@ const Verken = ({navigation}) => {
             const formattedData = Object.keys(ApiData).reduce((acc, key) => {
                 if (key.startsWith("plant")) {
                     const plant = ApiData[key];
-                    const { environment, preferences, care } = plant;
+                    const {environment, preferences, care} = plant;
                     // Converting values true to 10 and false to 0, so it is easier to compare with user data
                     const convertValue = (value) => (value === true ? 10 : value === false ? 0 : value);
                     // Converting data to array
@@ -114,34 +114,50 @@ const Verken = ({navigation}) => {
     };
     return (
         <Container>
-            <Navbar />
+            <Navbar/>
             {showSwipeBox ? (
-                <View style={{ alignItems: 'center', flex: 2 }}>
+                <View style={{alignItems: 'center', flex: 2}}>
                     <SwipeBox
                         text={`${swipeOptions[`option${currentIndex + 1}`].id}`}
                         img={`${imgUrl}${swipeOptions[`option${currentIndex + 1}`].image_path}`}
                         onSwipeLeft={handleSwipeLeft}
                         onSwipeRight={handleSwipeRight}
                     />
-                    <View style={{ flex: 2, flexDirection: 'row', justifyContent: 'space-between', width: '90%', height: '20%' }}>
-                        <Image source={require('../../../../assets/red-cross.png')} style={{ width: 40, height: 40 }} />
-                        <Image source={require('../../../../assets/green-check.png')} style={{ width: 40, height: 40 }} />
+                    <View style={{
+                        flex: 2,
+                        flexDirection: 'row',
+                        justifyContent: 'space-between',
+                        width: '90%',
+                        height: '20%'
+                    }}>
+                        <Image source={require('../../../../assets/red-cross.png')} style={{width: 40, height: 40}}/>
+                        <Image source={require('../../../../assets/green-check.png')} style={{width: 40, height: 40}}/>
                     </View>
                 </View>
             ) : (
-                <View style={{ alignItems: 'center', flex: 2, padding: 20 }}>
-                    <Text>Dat waren alle kaartjes.</Text>
-                    <Button
+                <View style={{alignItems: 'center', flex: 2, padding: 20}}>
+                    <Text style={{color: 'white', fontSize: 20}}>Dat waren alle kaartjes.</Text>
+                    <Pressable
                         title="Klik hier voor jouw perfecte plant!"
                         onPress={makePrediction}
-                    />
-                    {loading && <ActivityIndicator style={{ marginTop: 20 }} size="large" color="#0000ff" />}
+                    >
+                        <Text
+                            style={{marginTop: 20, color: 'black', fontSize: 30, backgroundColor: '#d5e9bd', padding: 10, borderRadius: 20}}
+                        >Klik hier voor jouw perfecte plant!</Text>
+                    </Pressable>
+                    {loading && <ActivityIndicator style={{marginTop: 20}} size="large" color="#0000ff"/>}
                     {!loading && prediction !== "No prediction has been made yet" && (
-                        <Text style={{ marginTop: 20 }}>Voorspelde plant: {predictionData}</Text>
+                        <View style={{justifyContent: 'center'}}>
+                            <Text style={{marginTop: 20, color: 'white', fontSize: 25}}>De perfecte plant voor jou:</Text>
+                            <Text style={{color: 'white', fontSize: 40}}>{predictionData}</Text>
+                            <Pressable onPress={navigateToDashboard}>
+                                <Text style={{marginTop: 20, color: 'black', fontSize: 30, backgroundColor: '#d5e9bd', padding: 10, borderRadius: 20}}>Terug naar dashboard</Text>
+                            </Pressable>
+                        </View>
                     )}
                 </View>
             )}
-            <Footer />
+            <Footer/>
         </Container>
     );
 };
