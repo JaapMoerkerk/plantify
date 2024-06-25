@@ -14,6 +14,7 @@ import KnnVerken from "./src/screens/verkenScreens/verken/verken.js";
 import ChatScreen from "./Chatscreen"; // Importing the new ChatScreen
 import Chat from "./Chat"; // Importing the new Chat/
 import UserList from "./Userlist";
+import Footer from './src/components/footer/footer.js';
 
 const Stack = createStackNavigator();
 
@@ -242,6 +243,18 @@ const App = () => {
                     component={Chat}
                     options={{
                         title: "Chats",
+                        headerStyle: {
+                            backgroundColor: "#7cd3c3",
+                            borderBottomColor: "#faf9f7",
+                            borderBottomWidth: 1,
+                        },
+                    }}
+                />
+                <Stack.Screen
+                    name="Userlist"
+                    component={UserList}
+                    options={{
+                        title: "Gebruikerslijst",
                         headerStyle: {
                             backgroundColor: "#7cd3c3",
                             borderBottomColor: "#faf9f7",

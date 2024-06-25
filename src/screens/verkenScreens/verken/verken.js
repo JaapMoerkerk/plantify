@@ -8,7 +8,6 @@ import kNear from "./knear";
 import SwipeBox from "../../../components/swipeBox/SwipeBox";
 import swipeOptions from './swipeoptions.json';
 import title from "react-native-paper/src/components/Typography/v2/Title";
-import contentContainer from "../../../components/contentContainer/contentContainer";
 import ContentContainer from "../../../components/contentContainer/contentContainer";
 
 /**
@@ -116,9 +115,10 @@ const Verken = ({navigation}) => {
     };
     return (
         <Container>
-            <ContentContainer>
+            {/*<ContentContainer>*/}
                 {showSwipeBox ? (
-                    <View style={{alignItems: 'center', flex: 2}}>
+                    <View style={{alignItems: 'center', flex: 2, backgroundColor: 'rgba(250, 249, 247, 0.3)',
+                    }}>
                         <SwipeBox
                             text={`${swipeOptions[`option${currentIndex + 1}`].id}`}
                             img={`${imgUrl}${swipeOptions[`option${currentIndex + 1}`].image_path}`}
@@ -176,8 +176,8 @@ const Verken = ({navigation}) => {
                         )}
                     </View>
                 )}
-            </ContentContainer>
-            <Footer/>
+            {/*</ContentContainer>*/}
+            <Footer navigation={navigation}/>
         </Container>
     );
 };
