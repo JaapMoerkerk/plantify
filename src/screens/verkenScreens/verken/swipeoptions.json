@@ -1,0 +1,122 @@
+{
+    "option1": {
+      "id": 1,
+      "category": "environment",
+      "sub_category": "sun",
+      "rel_value": 2,
+      "not_rel_value": 8,
+      "image_path": "img/option1.png"
+    },
+    "option2": {
+      "id": 2,
+      "category": "environment",
+      "sub_category": "outside",
+      "rel_value": 10,
+      "not_rel_value": 0,
+      "image_path": "img/option2.png"
+    },
+    "option3": {
+      "id": 3,
+      "category": "environment",
+      "sub_category": "space",
+      "rel_value": 2,
+      "not_rel_value": 8,
+      "image_path": "img/option3.jpg"
+    },
+    "option4": {
+      "id": 4,
+      "category": "environment",
+      "sub_category": "poisones_to_pets",
+      "rel_value": 9,
+      "not_rel_value": 1,
+      "image_path": "img/option4.png"
+    },
+    "option5": {
+      "id": 5,
+      "category": "environment",
+      "sub_category": "pets",
+      "rel_value": 9,
+      "not_rel_value": 1,
+      "image_path": "img/option5.png"
+    },
+    "option6": {
+      "id": 6,
+      "category": "preferences",
+      "sub_category": "flowers",
+      "rel_value": 6,
+      "not_rel_value": 4,
+      "image_path": "img/option6.png"
+    },
+    "option7": {
+      "id": 7,
+      "category": "preferences",
+      "sub_category": "size",
+      "rel_value": 9,
+      "not_rel_value": 1,
+      "image_path": "img/option7.png"
+    },
+    "option8": {
+      "id": 8,
+      "category": "preferences",
+      "sub_category": "sizeleaf",
+      "rel_value": 10,
+      "not_rel_value": 0,
+      "image_path": "img/option8.png"
+    },
+    "option9": {
+      "id": 9,
+      "category": "preferences",
+      "sub_category": "thicknessleaf",
+      "rel_value": 7,
+      "not_rel_value": 3,
+      "image_path": "img/option9.jpg"
+    },
+    "option10": {
+      "id": 10,
+      "category": "preferences",
+      "sub_category": "colorleaf",
+      "rel_value": 6,
+      "not_rel_value": 4,
+      "image_path": "img/option10.png"
+    },
+    "option11": {
+      "id": 11,
+      "category": "preferences",
+      "sub_category": "edible",
+      "rel_value": 9,
+      "not_rel_value": 1,
+      "image_path": "img/option11.png"
+    },
+    "option12": {
+      "id": 12,
+      "category": "care",
+      "sub_category": "water",
+      "rel_value": 8,
+      "not_rel_value": 2,
+      "image_path": "img/option12.jpg"
+    },
+    "option13": {
+      "id": 13,
+      "category": "care",
+      "sub_category": "effort",
+      "rel_value": 10,
+      "not_rel_value": 0,
+      "image_path": "img/option13.jpg"
+    },
+    "option14": {
+      "id": 14,
+      "category": "care",
+      "sub_category": "illness",
+      "rel_value": 10,
+      "not_rel_value": 0,
+      "image_path": "img/option14.png"
+    },
+    "option15": {
+      "id": 15,
+      "category": "care",
+      "sub_category": "growth",
+      "rel_value": 10,
+      "not_rel_value": 0,
+      "image_path": "img/option15.jpg"
+    }
+  }

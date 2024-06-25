@@ -13,7 +13,7 @@ import { getAuth } from "firebase/auth";
 import { getDatabase, ref, remove, child } from "firebase/database";
 import firebaseApp from "./firebaseConfig";
 import Footer from "./src/components/footer/footer.js";
-import ContentContainer from "./src/components/contentContainer/contentContainer.js";
+import ContentContainer from "./src/components/scrollContentContainer/scrollContentContainer.js";
 import Container from "./src/components/containerRed/containerRed.js";
 
 const auth = getAuth();
@@ -23,53 +23,53 @@ const FeedScreen = ({ navigation, route }) => {
   const [tags, setTags] = useState([]);
   const [selectedTag, setSelectedTag] = useState(null);
   const [allPosts, setAllPosts] = useState([]); // Add state to hold all posts
-  const [value, setValue] = useState(0); //reload for delete
+  const [value, setValue] = useState(); //reload for delete
 
   // Fetch data from Firebase Realtime Database
   useEffect(() => {
     const unsubscribe = navigation.addListener("focus", () => {
       const fetchData = async () => {
-        console.log("here:" + route.params);
+        console.log("here:" + route.params) 
         if (route.params) {
           const { userId } = route.params;
 
-          try {
-            const response = await fetch(
-              "https://plantify-50b4e-default-rtdb.europe-west1.firebasedatabase.app/Stekjes.json"
-            );
-            const data = await response.json();
-            if (data) {
-              const plantArray = Object.entries(data)
-                .filter(
-                  ([id, plantUser]) => plantUser && plantUser.userId === userId
-                )
-                .map(([id, plantUser]) => plantUser);
-              setPosts(plantArray);
-              setAllPosts(plantArray);
-            }
-          } catch (error) {
-            console.error("Error filtering posts:", error);
-          }
-        } else {
-          try {
-            const responsePosts = await fetch(
-              "https://plantify-50b4e-default-rtdb.europe-west1.firebasedatabase.app/Stekjes.json"
-            );
-            const dataPosts = await responsePosts.json();
-            if (dataPosts) {
-              const postArray = Object.entries(dataPosts).map(([id, post]) => ({
-                id,
-                ...post,
-              }));
-              setPosts(postArray);
-              setAllPosts(postArray); // Save all posts initially
-            }
-          } catch (error) {
-            console.error("Error fetching data:", error);
-          }
-        }
-
         try {
+          const response = await fetch(
+            "https://plantify-50b4e-default-rtdb.europe-west1.firebasedatabase.app/Stekjes.json"
+          );
+          const data = await response.json();
+          if (data) {
+            const plantArray = Object.entries(data)
+              .filter(
+                ([id, plantUser]) => plantUser && plantUser.userId === userId
+              )
+              .map(([id, plantUser]) => plantUser);
+            setPosts(plantArray);
+            setAllPosts(plantArray);
+          }
+        } catch (error) {
+          console.error("Error filtering posts:", error);
+        }
+      } else {
+        try {
+          const responsePosts = await fetch(
+            "https://plantify-50b4e-default-rtdb.europe-west1.firebasedatabase.app/Stekjes.json"
+          );
+          const dataPosts = await responsePosts.json();
+          if (dataPosts) {
+            const postArray = Object.entries(dataPosts).map(([id, post]) => ({
+              id,
+              ...post,
+            }));
+            setPosts(postArray);
+            setAllPosts(postArray); // Save all posts initially
+          }
+        } catch (error) {
+          console.error("Error fetching data:", error);
+        }
+      }
+
+      try {
           const responseTags = await fetch(
             "https://plantify-50b4e-default-rtdb.europe-west1.firebasedatabase.app/Tags.json"
           );
@@ -89,7 +89,7 @@ const FeedScreen = ({ navigation, route }) => {
       fetchData();
     });
     return unsubscribe;
-  }, [navigation, value, route.params]);
+  }, [navigation, value]);
 
   const deletePlant = (id) => {
     // console.log(id)
@@ -147,8 +147,8 @@ const FeedScreen = ({ navigation, route }) => {
   return (
     <Container>
       <ContentContainer>
-        <ScrollView style={styles.container}>
-          <Text style={styles.header}>Your Personalized Feed</Text>
+        <View style={styles.container}>
+          <Text style={styles.header}>Jouw Feed</Text>
 
           <ScrollView horizontal style={styles.tagsContainer}>
             {tags.map((tag) => (
@@ -212,16 +212,18 @@ const FeedScreen = ({ navigation, route }) => {
             </View>
           ))}
 
-          <Button
-            title="Load More"
-            onPress={() => {}}
-            style={styles.loadMoreButton}
-            color="#7cd3c3"
-          />
-        </ScrollView>
-      </ContentContainer>
-      <Footer navigation={navigation} />
-    </Container>
+      <Button
+        title="Load More"
+        onPress={() => {}}
+        style={styles.loadMoreButton}
+        color="#7cd3c3"
+      />
+    </View>
+        {/*<View style={styles.containertwo}/>*/}
+        </ContentContainer>
+      {/*</ScrollView>*/}
+        <Footer navigation={navigation}/>
+      </Container>
   );
 };
 
@@ -230,12 +232,16 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 20,
   },
+  containertwo: {
+    flex: 2,
+    padding: 5,
+  },
   header: {
     fontSize: 24,
     fontWeight: "bold",
     marginBottom: 20,
     textAlign: "center",
-    color: "#faf9f7",
+    color: '#faf9f7'
   },
   tagsContainer: {
     flexDirection: "row",
@@ -259,7 +265,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#e07a5f",
   },
   tagButtonText: {
-    color: "#faf9f7",
+    color: '#faf9f7',
     fontWeight: "bold",
   },
   post: {
