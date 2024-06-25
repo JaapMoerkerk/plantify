@@ -20,32 +20,32 @@ const Stack = createStackNavigator();
 const HomeScreen = ({ navigation }) => {
     return (
         <View style={styles.containerMain}>
-            <Pressable onPress={() => navigation.navigate('FeedScreen')}>
-                <View style={styles.marketBox} >
-                    <View style={styles.logoCircle}>
-                        <Image source={require('./assets/img/footer/greenhouse.png')} style={styles.footerImg} style={styles.logo}/>
-                    </View>
-                    <Text style={styles.boxText}> Ruil Kas </Text>
-                </View>
-            </Pressable>
+            {/*<Pressable onPress={() => navigation.navigate('FeedScreen')}>*/}
+            {/*    <View style={styles.marketBox} >*/}
+            {/*        <View style={styles.logoCircle}>*/}
+            {/*            <Image source={require('./assets/img/footer/greenhouse.png')} style={styles.footerImg} style={styles.logo}/>*/}
+            {/*        </View>*/}
+            {/*        <Text style={styles.boxText}> Ruil Kas </Text>*/}
+            {/*    </View>*/}
+            {/*</Pressable>*/}
 
-            <Pressable onPress={() => navigation.navigate('KnnVerken')}>
-                <View style={styles.plantfinderBox}>
-                    <View style={styles.logoCircle}>
-                        <Image source={require('./assets/img/footer/creativity.png')} style={styles.footerImg} style={styles.logo}/>
-                    </View>
-                    <Text style={styles.boxText}> Plantverkennert </Text>
-                </View>
-            </Pressable>
+            {/*<Pressable onPress={() => navigation.navigate('KnnVerken')}>*/}
+            {/*    <View style={styles.plantfinderBox}>*/}
+            {/*        <View style={styles.logoCircle}>*/}
+            {/*            <Image source={require('./assets/img/footer/creativity.png')} style={styles.footerImg} style={styles.logo}/>*/}
+            {/*        </View>*/}
+            {/*        <Text style={styles.boxText}> Plantverkennert </Text>*/}
+            {/*    </View>*/}
+            {/*</Pressable>*/}
 
-            <Pressable onPress={() => navigation.navigate('ChatScreen')}>
-                <View style={styles.galleryBox}>
-                    <View style={styles.logoCircle}>
-                        <Image source={require('./assets/img/footer/chat.png')} style={styles.footerImg} style={styles.logo}/>
-                    </View>
-                    <Text style={styles.boxText}> Chats </Text>
-                </View>
-            </Pressable>
+            {/*<Pressable onPress={() => navigation.navigate('ChatScreen')}>*/}
+            {/*    <View style={styles.galleryBox}>*/}
+            {/*        <View style={styles.logoCircle}>*/}
+            {/*            <Image source={require('./assets/img/footer/chat.png')} style={styles.footerImg} style={styles.logo}/>*/}
+            {/*        </View>*/}
+            {/*        <Text style={styles.boxText}> Chats </Text>*/}
+            {/*    </View>*/}
+            {/*</Pressable>*/}
 
             <Pressable onPress={() => navigation.navigate("Login")}>
                 <View style={styles.marketBox}>
