@@ -7,6 +7,8 @@ const containerBlueStyles = StyleSheet.create({
         margin: 0,
         padding: 0,
         color: '#faf9f7',
+        borderTopColor: 'white',
+        borderTopWidth: 1,
     },
 });
 
