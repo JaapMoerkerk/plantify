@@ -13,7 +13,7 @@ import { getAuth } from "firebase/auth";
 import { getDatabase, ref, remove, child } from "firebase/database";
 import firebaseApp from "./firebaseConfig";
 import Footer from "./src/components/footer/footer.js";
-import ContentContainer from "./src/components/contentContainer/contentContainer.js";
+import ContentContainer from "./src/components/scrollContentContainer/scrollContentContainer.js";
 import Container from "./src/components/containerRed/containerRed.js";
 
 const auth = getAuth();
@@ -139,9 +139,10 @@ const FeedScreen = ({ navigation, route }) => {
 
   return (
     <Container>
+      <ScrollView>
       <ContentContainer>
-        <ScrollView style={styles.container}>
-          <Text style={styles.header}>Your Personalized Feed</Text>
+        <View style={styles.container}>
+          <Text style={styles.header}>Jouw Feed</Text>
 
           <ScrollView horizontal style={styles.tagsContainer}>
             {tags.map((tag) => (
@@ -214,8 +215,10 @@ const FeedScreen = ({ navigation, route }) => {
         style={styles.loadMoreButton}
         color="#7cd3c3"
       />
-    </ScrollView>
+    </View>
+        {/*<View style={styles.containertwo}/>*/}
         </ContentContainer>
+      </ScrollView>
         <Footer navigation={navigation}/>
       </Container>
   );
@@ -225,6 +228,10 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
+  },
+  containertwo: {
+    flex: 2,
+    padding: 5,
   },
   header: {
     fontSize: 24,
