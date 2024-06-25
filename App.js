@@ -109,7 +109,7 @@ const App = () => {
                     name="Home"
                     component={HomeScreen}
                     options={{
-                        title: "Start pagina",
+                        title: "Welkom op Bakkie Plant!",
                         headerStyle: {
                             backgroundColor: "#ffbdbd",
                             borderBottomColor: "#faf9f7",
@@ -121,7 +121,7 @@ const App = () => {
                     name="Dashboard"
                     component={Dashboard}
                     options={{
-                        title: "Dashboard",
+                        title: "Bakkie Plant",
                         headerStyle: {
                             backgroundColor: "#ffbdbd",
                             borderBottomColor: "#faf9f7",
