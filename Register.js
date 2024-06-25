@@ -1,38 +1,38 @@
 // Register.js
-import React, { useState } from 'react';
-import { View, Text, TextInput, Pressable, StyleSheet, Alert } from 'react-native';
+import React, {useState} from 'react';
+import {View, Text, TextInput, Pressable, StyleSheet, Alert } from 'react-native';
 import firebaseApp from './firebaseConfig';
-import{getAuth, createUserWithEmailAndPassword} from 'firebase/auth';
+import {getAuth, createUserWithEmailAndPassword} from 'firebase/auth';
 import {getDatabase, ref, set} from "firebase/database";
 // import Footer from './src/components/footer/footer.js';
 import ContentContainer from './src/components/contentContainer/contentContainer.js';
 import Container from './src/components/containerPink/containerPink.js';
-const Register = ({ navigation }) => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [username, setUsername] = useState('');
+const Register = ({navigation}) => {
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [username, setUsername] = useState('');
 
-  const handleRegister = async () => {
-    try {
-      // Create user with email and password
-      const auth = getAuth();
-      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-      const user = userCredential.user;
+    const handleRegister = async () => {
+        try {
+            // Create user with email and password
+            const auth = getAuth();
+            const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+            const user = userCredential.user;
 
-      // Save user data to Realtime Database
-      const db = getDatabase(firebaseApp)
-      await set(ref(db, `/users/${user.uid}`), {
-        email: user.email,
-        username: username,
-      });
+            // Save user data to Realtime Database
+            const db = getDatabase(firebaseApp)
+            await set(ref(db, `/users/${user.uid}`), {
+                email: user.email,
+                username: username,
+            });
 
-      Alert.alert('Gelukt!', 'Je wordt nu omgeleid naar de login pagina.');
-      navigation.navigate('Login'); // Navigate to login screen after successful registration
-    } catch (error) {
-      console.error(error);
-      Alert.alert('Fout opgetreden', 'Er ging helaas iets mis bij het registeren. Error:' + error.message);
-    }
-  };
+            Alert.alert('Gelukt!', 'Je wordt nu omgeleid naar de login pagina.');
+            navigation.navigate('Login'); // Navigate to login screen after successful registration
+        } catch (error) {
+            console.error(error);
+            Alert.alert('Fout opgetreden', 'Er ging helaas iets mis bij het registeren. Error:' + error.message);
+        }
+    };
 
   return (
       <Container>
@@ -73,7 +73,7 @@ const Register = ({ navigation }) => {
 };
 
 const styles = StyleSheet.create({
-    title: {
+      title: {
         fontSize: 24,
         fontWeight: 'bold',
         textAlign: 'center',
