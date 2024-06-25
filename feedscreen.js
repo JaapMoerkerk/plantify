@@ -139,7 +139,7 @@ const FeedScreen = ({ navigation, route }) => {
 
   return (
     <Container>
-      <ScrollView>
+      {/*<ScrollView>*/}
       <ContentContainer>
         <View style={styles.container}>
           <Text style={styles.header}>Jouw Feed</Text>
@@ -218,7 +218,7 @@ const FeedScreen = ({ navigation, route }) => {
     </View>
         {/*<View style={styles.containertwo}/>*/}
         </ContentContainer>
-      </ScrollView>
+      {/*</ScrollView>*/}
         <Footer navigation={navigation}/>
       </Container>
   );

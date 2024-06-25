@@ -1,13 +1,13 @@
 import React from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, ScrollView } from 'react-native';
 import contentContainerStyles from './scrollContentContainerStyles'
 
 
 const scrollContentContainer = ({ children }) => {
     return (
-        <View style={contentContainerStyles.container}>
+        <ScrollView style={contentContainerStyles.container}>
             {children}
-        </View>
+        </ScrollView>
     );
 };
 export default scrollContentContainer;
