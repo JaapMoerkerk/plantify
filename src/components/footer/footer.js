@@ -35,7 +35,7 @@ const Footer = ({navigation}) => {
             </Pressable>
 
             <Pressable style={[styles.footerItem, styles.collection]} onPress={() => navigation.navigate('UserList')}>
-                <Image source={require('../../../assets/img/footer/chat.jpg')} style={styles.footerImg} />
+                <Image source={require('../../../assets/img/footer/chat.png')} style={styles.footerImg} />
             </Pressable>
 
 
